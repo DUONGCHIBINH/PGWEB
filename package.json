@@ -1,0 +1,20 @@
+{
+  "name": "vue_mongo",
+  "version": "1.0.0",
+  "description": "vue + mongoDB + nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "web": "cd client  & npm run serve  "
+  },
+  "author": "DuongChiBinh",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.2",
+    "nodemon": "^1.19.3"
+  }
+}
