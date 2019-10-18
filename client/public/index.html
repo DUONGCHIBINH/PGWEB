@@ -11,6 +11,24 @@
     <noscript>
       <strong>We're sorry but client doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
+    <form action="http://localhost:5000/api/user/" method="POST">
+      <input type="text" name="id" id="id"> <br>
+      <input type="text" name="userid" id="userid"> <br>
+      <input type="text" name="username" id="username"><br>
+      <input type="text" name="type" id="type"><br>
+      <input type="submit" value="Add User">
+    </form>
+
+
+    <form action="http://localhost:5000/api/user/update" method="POST">
+      <input type="text" name="id" id="id"> <br>
+      <input type="text" name="userid" id="userid"> <br>
+      <input type="text" name="username" id="username"><br>
+      <input type="text" name="type" id="type"><br>
+      <input type="submit" value="Add User">
+    </form>
+
+
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
