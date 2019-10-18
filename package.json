@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "nodemon server/index.js",
-    "web": "cd client  & npm run serve  "
+    "web": "cd client  & npm run serve  ",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "author": "DuongChiBinh",
   "license": "ISC",
@@ -18,5 +20,6 @@
     "mongodb": "^3.3.2",
     "mongoose": "^5.7.5",
     "nodemon": "^1.19.3"
-  }
+  },
+  "devDependencies": {}
 }
