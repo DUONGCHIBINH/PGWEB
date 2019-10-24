@@ -6,6 +6,8 @@ const DefaultContainer = () => import('@/containers/DefaultContainer')
 
 // Views
 const Dashboard = () => import('@/views/Dashboard')
+const About = () => import('@/views/About')
+const AdUser = () => import('@/views/AdUser')
 
 const Colors = () => import('@/views/theme/Colors')
 const Typography = () => import('@/views/theme/Typography')
@@ -64,7 +66,7 @@ function configRoutes() {
   return [
     {
       path: '/',
-      redirect: '/dashboard',
+      redirect: '/about',
       name: 'Home',
       component: DefaultContainer,
       children: [
@@ -72,6 +74,16 @@ function configRoutes() {
           path: 'dashboard',
           name: 'Dashboard',
           component: Dashboard
+        },
+        {
+          path: 'about',
+          name: 'About',
+          component: Dashboard
+        },
+        {
+          path: 'aduser',
+          name: 'AdUser',
+          component: AdUser
         },
         {
           path: 'theme',

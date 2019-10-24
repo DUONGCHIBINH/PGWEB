@@ -7,18 +7,19 @@ require('dotenv').config();
 
 
 //cloud
-mongoose.connect('mongodb+srv://'+process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@PGWEBDB-nk8tp.azure.mongodb.net/PGWEB?retryWrites=true&w=majority',{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify:false,
-    useCreateIndex:true,
-});
+// mongoose.connect('mongodb+srv://'+process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@PGWEBDB-nk8tp.azure.mongodb.net/PGWEB?retryWrites=true&w=majority',{
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     useFindAndModify:false,
+//     useCreateIndex:true,
+// });
 
 //local '+process.env.MONGO_USERS+' '+process.env.MONGO_PASS+'
-// mongoose.connect('mongodb://localhost:27017/WEBDB',{
-//          useNewUrlParser: true,
-//          useUnifiedTopology: true
-//      });
+
+mongoose.connect('mongodb://localhost:27017/WEBDB',{
+         useNewUrlParser: true,
+         useUnifiedTopology: true
+     });
 
 
 const app = express();

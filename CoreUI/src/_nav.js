@@ -1,15 +1,15 @@
 export default {
   items: [
     {
-      name: 'Giới thiệu',
-      url: '/dashboard',
+      name: 'ABOUT',
+      url: '/about',
       icon: 'icon-like',
       badge: {
         variant: 'primary',
         text: 'NEW'
       }
     },
-    {
+     {
       title: true,
       name: 'Hệ thống',
       class: '',
@@ -19,8 +19,8 @@ export default {
       }
     },
     {
-      name: 'Tài khoản',
-      url: '/theme/colors',
+      name: 'Tài khoản Admin',
+      url: '/aduser',
       icon: 'icon-user'
     },
     {

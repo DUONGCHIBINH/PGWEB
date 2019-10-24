@@ -25,8 +25,6 @@ router.get('/remove', async (req, res) => {
         })
 });
 
-
-
 //UPDATE by id   /api/user/update?id=5da89ed01c9d440000a149fa&type=admin&userid=0
 router.get('/update', async (req, res) => {
     const query = req.query; 
@@ -52,6 +50,25 @@ router.get('/update', async (req, res) => {
 router.post('/update', async (req, res) => {
     const body = req.body; 
     const id = body.id;
+    User.findByIdAndUpdate(id,body,{new:true})
+        .then(user => {
+            res.json({
+                confirmation: 'success',
+                data: user
+            })
+        })
+        .catch(err => {
+            res.json({
+                confirmation: 'fail',
+                message: 'User '+id+' not found'
+            })
+        })
+});
+
+//UPDATE by id 
+router.post('/update/:id', async (req, res) => {
+    const body = req.body; 
+    const id = req.params.id
     User.findByIdAndUpdate(id,body,{new:true})
         .then(user => {
             res.json({
@@ -106,11 +123,11 @@ router.get('/:id', async (req, res) => {
 
 //POST ADD
 router.post('/', async (req, res) => {
-    
     User.create(req.body)
     .then(user => {
+        console.log(user);
         res.json({
-            confirmation: 'success',
+            confirmation: 'add success',
             data: user
         })
     })
