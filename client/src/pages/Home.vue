@@ -11,19 +11,20 @@
       </v-carousel-item>
     </v-carousel>
     <!-- end banner -->
-    <br />
+ 
 
     <!-- banner -->
 
-    <v-row class="fill-height" align="center" justify="center">
+    <!-- timeline -->
+
+    <div class="pa-10">
+         <v-row class="fill-height" align="center" justify="center">
       <div class="display-1">SỰ KIỆN GẦN ĐÂY</div>
     </v-row>
-
-    <!-- timeline -->
-    <div class="pa-10">
+       <br />
       <v-timeline align-top :dense="$vuetify.breakpoint.smAndDown">
         <v-timeline-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in sukien"
           :key="i"
           :color="item.color"
           :icon="item.icon"
@@ -33,13 +34,15 @@
           <v-card :color="item.color" :elevation="10" dark>
             <v-card-title class="title">Sự kiện {{i+1}}</v-card-title>
             <v-card-text class="white text--primary">
-              <p>Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, ..... Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, ..... Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, .....</p>
+              <p style=" color: blue;">Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, ..... Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, ..... Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, .....</p>
               <v-btn :color="item.color" class="mx-0" outlined>Đăng ký</v-btn>
             </v-card-text>
           </v-card>
         </v-timeline-item>
       </v-timeline>
     </div>
+
+    <br /><br /><br /><br />
   </div>
 </template>
 
@@ -55,7 +58,7 @@ export default {
         "deep-purple accent-4"
       ],
       slides: ["Sự kiện", "PG", "PB", "Giới thiệu", "Quảng cáo"],
-      items: [
+      sukien: [
         {
           color: "red lighten-2",
           icon: "mdi-star"

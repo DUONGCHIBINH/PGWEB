@@ -7,6 +7,7 @@
     "start": "node server/index.js",
     "dev": "nodemon server/index.js",
     "web": "cd client  & npm run serve  ",
+    "ad": "cd coreui  & npm run serve  ",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
