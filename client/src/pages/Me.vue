@@ -1,14 +1,21 @@
 <template>
-  <div>
+  <div class="white">
     <b-container>
       <b-row class="mb-4">
         <b-col cols="4" class="text-center">
           <v-avatar size="150">
             <img
-              src="https://scontent.fsgn5-5.fna.fbcdn.net/v/t34.0-12/16176889_112685309244626_578204711_n.jpg?_nc_cat=1&_nc_oc=AQkcPteDHtjHzJNGiL76rRGYmVMa7U-_khRzk0Vk-zeJd-Wqe2pqNuXhwtkHYfGR846-e6bBT5MbS0t29DmAKnjk&_nc_ht=scontent.fsgn5-5.fna&oh=981053b18a347d6ec0c2b4561370a76d&oe=5DCB8E28"
-              alt="John"
+              src="https://scontent.fsgn5-5.fna.fbcdn.net/v/t34.0-12/16176889_112685309244626_578204711_n.jpg?_nc_cat=1&_nc_oc=AQk5UmVlAaguowXMrT8uGSXXSS5nuLp3052eAUdz2k_X5qMkBHvqImws5FT0yuiN8jo&_nc_ht=scontent.fsgn5-5.fna&oh=45e45a678e4595c99a3df52dedb5ef76&oe=5DCE3128"
+              alt="AVATAR"
             />
           </v-avatar>
+          <br>
+          <br>
+          <b-col sm="12">
+              <v-btn class="ma-2" tile outlined color="success">
+                <v-icon left>mdi-phone</v-icon>Liên hệ
+              </v-btn>
+            </b-col>
         </b-col>
         <b-col>
           <!-- style="background-color:blue" -->
@@ -26,6 +33,11 @@
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
             </b-col>
+            <!-- <b-col sm="3">
+              <v-btn class="ma-2" tile outlined color="success">
+                <v-icon left>mdi-phone</v-icon>Liên hệ
+              </v-btn>
+            </b-col> -->
           </b-row>
 
           <b-row align-v="center" align-h="start">
@@ -114,11 +126,28 @@
                 <v-tab-item>
                   <v-card flat>
                     <v-card-text>
-                      <h4>Tiêu đề sự kiện</h4>
-                      <p>Miêu tả chi tiết sự kiện diễn ra</p>
-                      <p
-                        class="mb-0"
-                      >Phasellus dolor. Fusce neque. Fusce fermentum odio nec arcu. Pellentesque libero tortor, tincidunt et, tincidunt eget, semper nec, quam. Phasellus blandit leo ut odio.</p>
+                      <h4>Khai trương Công ty PG-Work</h4>
+                      <br />
+                      <h6>Nhà tuyển dụng</h6>
+                      <div>
+                        <a class="mr-2" href>PG-Work team</a>
+                      </div>
+                      <br />
+                      <h6>Giới thiệu</h6>
+                      <p>Sự kiện giới thiệu ra mắt Công ty PG-Work họp báo</p>
+                      <h6>Địa điểm</h6>
+                      <p>quận 1</p>
+                      <h6>Thời gian</h6>
+                      <p>7giờ sáng đến 5giờ chiều</p>
+                      <h6>PG tham gia</h6>
+                      <div>
+                        <a class="mr-2" href>Đức Anh</a>
+                        <a class="mr-2" href>Ngọc Lợi</a>
+                        <a class="mr-2" href>Duy Khiêm</a>
+                        <a class="mr-2" href>Chí Bình</a>
+                      </div>
+                      <br />
+                      <h6>Hình ảnh</h6>
                       <v-container fluid style=" padding:0px">
                         <v-row>
                           <v-col v-for="n in 9" :key="n" class="d-flex child-flex" cols="2">
@@ -145,28 +174,96 @@
                 <v-tab-item>
                   <v-card flat>
                     <v-card-text>
-                      <p>Morbi nec metus. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id tortor. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Nunc sed turpis.</p>
-
-                      <p>Suspendisse feugiat. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id tortor. Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien, a accumsan nisi mauris ac eros. In hac habitasse platea dictumst. Fusce ac felis sit amet ligula pharetra condimentum.</p>
-
-                      <p>Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Nam commodo suscipit quam. In consectetuer turpis ut velit. Sed cursus turpis vitae tortor. Aliquam eu nunc.</p>
-
-                      <p>Etiam ut purus mattis mauris sodales aliquam. Ut varius tincidunt libero. Aenean viverra rhoncus pede. Duis leo. Fusce fermentum odio nec arcu.</p>
-
-                      <p
-                        class="mb-0"
-                      >Donec venenatis vulputate lorem. Aenean viverra rhoncus pede. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Fusce commodo aliquam arcu. Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi.</p>
+                      <h4>Ra mắt VinFast</h4>
+                      <br />
+                      <h6>Nhà tuyển dụng</h6>
+                      <div>
+                        <a class="mr-2" href>VinFast event</a>
+                      </div>
+                      <br />
+                      <h6>Giới thiệu</h6>
+                      <p>Sự kiện giới thiệu ra mắt Công ty PG-Work họp báo</p>
+                      <h6>Địa điểm</h6>
+                      <p>quận 1</p>
+                      <h6>Thời gian</h6>
+                      <p>7giờ sáng đến 5giờ chiều</p>
+                      <h6>PG tham gia</h6>
+                      <div>
+                        <a class="mr-2" href>Đức Anh</a>
+                        <a class="mr-2" href>Ngọc Lợi</a>
+                        <a class="mr-2" href>Duy Khiêm</a>
+                        <a class="mr-2" href>Chí Bình</a>
+                      </div>
+                      <br />
+                      <h6>Hình ảnh</h6>
+                      <v-container fluid style=" padding:0px">
+                        <v-row>
+                          <v-col v-for="n in 9" :key="n" class="d-flex child-flex" cols="2">
+                            <v-card flat tile class="d-flex">
+                              <v-img
+                                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
+                                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                                aspect-ratio="1"
+                                class="grey lighten-2"
+                              >
+                                <template v-slot:placeholder>
+                                  <v-row class="fill-height ma-0" align="center" justify="center">
+                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                  </v-row>
+                                </template>
+                              </v-img>
+                            </v-card>
+                          </v-col>
+                        </v-row>
+                      </v-container>
                     </v-card-text>
                   </v-card>
                 </v-tab-item>
                 <v-tab-item>
                   <v-card flat>
                     <v-card-text>
-                      <p>Fusce a quam. Phasellus nec sem in justo pellentesque facilisis. Nam eget dui. Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien, a accumsan nisi mauris ac eros. In dui magna, posuere eget, vestibulum et, tempor auctor, justo.</p>
-
-                      <p
-                        class="mb-0"
-                      >Cras sagittis. Phasellus nec sem in justo pellentesque facilisis. Proin sapien ipsum, porta a, auctor quis, euismod ut, mi. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nam at tortor in tellus interdum sagittis.</p>
+                      <h4>Ra mắt Heniken</h4>
+                      <br />
+                      <h6>Nhà tuyển dụng</h6>
+                      <div>
+                        <a class="mr-2" href>Heniken q2</a>
+                      </div>
+                      <br />
+                      <h6>Giới thiệu</h6>
+                      <p>Sự kiện giới thiệu ra mắt bia HENIKEN mới</p>
+                      <h6>Địa điểm</h6>
+                      <p>quận 1</p>
+                      <h6>Thời gian</h6>
+                      <p>7giờ sáng đến 5giờ chiều</p>
+                      <h6>PG tham gia</h6>
+                      <div>
+                        <a class="mr-2" href>Đức Anh</a>
+                        <a class="mr-2" href>Ngọc Lợi</a>
+                        <a class="mr-2" href>Duy Khiêm</a>
+                        <a class="mr-2" href>Chí Bình</a>
+                      </div>
+                      <br />
+                      <h6>Hình ảnh</h6>
+                      <v-container fluid style=" padding:0px">
+                        <v-row>
+                          <v-col v-for="n in 9" :key="n" class="d-flex child-flex" cols="2">
+                            <v-card flat tile class="d-flex">
+                              <v-img
+                                :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
+                                :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                                aspect-ratio="1"
+                                class="grey lighten-2"
+                              >
+                                <template v-slot:placeholder>
+                                  <v-row class="fill-height ma-0" align="center" justify="center">
+                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                  </v-row>
+                                </template>
+                              </v-img>
+                            </v-card>
+                          </v-col>
+                        </v-row>
+                      </v-container>
                     </v-card-text>
                   </v-card>
                 </v-tab-item>
@@ -194,6 +291,13 @@
                 </v-col>
               </v-row>
             </v-container>
+          </v-tab-item>
+          <v-tab-item>
+            <br />
+            <br />
+            <div class="text-center">
+              <v-btn rounded outlined color="pink" dark>Lấy thông tin liên hệ</v-btn>
+            </div>
           </v-tab-item>
         </v-tabs-items>
       </v-card>

@@ -1,20 +1,25 @@
-
 * {
     box-shadow: none !important;
-   -moz-box-shadow: none !important;
-   -webkit-box-shadow: none !important;
-   }
-   .v-btn  {
-       outline: none !important;
-   }
+    -moz-box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
 
-   .toolbar
-   {
-       background-color: #00BEDB !important;
-       color: white !important;
-   }
+.v-btn {
+    outline: none !important;
+}
 
-   /* chữ menu màu trắng */
-   .chumenu > .v-btn__content { 
+.toolbar {
+    background-color: #00BEDB !important;
     color: white !important;
-   }
+}
+
+
+/* chữ menu màu trắng */
+
+.chumenu>.v-btn__content {
+    color: white !important;
+}
+
+a:hover {
+    text-decoration: none !important;
+}

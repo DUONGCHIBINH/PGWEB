@@ -9,7 +9,7 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-        <v-btn class="chumenu" text>Trang chủ</v-btn>
+        <v-btn class="chumenu" href="/" text>Trang chủ</v-btn>
         <!-- <v-divider  vertical></v-divider> -->
         <v-btn class="chumenu" text>Sự kiện</v-btn>
         <v-btn class="chumenu" text>Quản lý</v-btn>
