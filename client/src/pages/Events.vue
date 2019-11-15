@@ -1,15 +1,14 @@
 <template>
   <div class="white">
     <b-container>
-      <v-card      >
+      <v-card>
         <div
           class="display-1"
           align="center"
           justify="center"
           style="color:#34495e;"
-            
-        >Tìm sự kiện, việc làm mới nhất</div>
-       
+        >123Tìm sự kiện, việc làm mới nhất</div>
+
         <v-tabs centered color="#34495e">
           <v-tab>Full time</v-tab>
           <v-tab>Part time</v-tab>
@@ -40,7 +39,7 @@
                 <!-- Sự kiện hiện ở trong cols này -->
                 <b-col cols="9">
                   <v-alert
-                    v-for="n in 4"
+                    v-for="n in posts"
                     :key="n"
                     prominent
                     type="info"
@@ -52,24 +51,24 @@
                   >
                     <v-row style="  max-height: 4.5em; " align="center">
                       <v-col sm="9">
-                        <h6>Sự kiện {{n}}</h6>
+                        <h6>{{n.ten}}  ( {{ n.ngaydienra.slice(0,10).split("-").reverse().join("/")  }} )</h6>
 
                         <p style="font-size:14px">
                           tại
-                          <strong>123/2 ABC</strong> - phường 1, Thủ Đức, HCM
+                          <strong>{{n.diadiem}}</strong>
+                          - {{n.congty}}
                         </p>
                       </v-col>
                       <v-col align="end">
-                        <div style="font-size:14px; opacity:0.33">2 ngày trước</div>
+                        <div
+                          style="font-size:14px; opacity:0.33"
+                        >{{(new Date()).getDate() - n.ngaytao.slice(0,10).split("-")[2] }} ngày trước</div>
                       </v-col>
                     </v-row>
                     <v-divider class="info" style="opacity: 0.22; margin:0"></v-divider>
                     <v-row align="center">
                       <v-col class="grow">
-                        <div
-                          class="text2line"
-                          style="font-size:15px;"
-                        >Công ty ABC cần tuyển 12 PG thời vụ, khai trương ra mắt sự kiện abc. Yêu cầu abc xyz. Thưởng thêm cho Pg tích cực, chi tiết xin liên hệ số dien thoai</div>
+                        <div class="text2line" style="font-size:15px;">{{n.mieutacv}}</div>
                       </v-col>
                       <v-col class="shrink">
                         <v-btn color="pink" style="color:white">Xem ngay</v-btn>
@@ -106,7 +105,7 @@
                 <!-- Sự kiện hiện ở trong cols này -->
                 <b-col cols="8">
                   <v-alert
-                    v-for="n in 4"
+                    v-for="n in 2"
                     :key="n"
                     prominent
                     type="info"
@@ -222,5 +221,30 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+
+export default {
+  name: "Event",
+  data: () => {
+    return {
+      posts: []
+    };
+  },
+  methods: {
+    reload() {
+      axios
+        .get(`http://localhost:5000/api/event`)
+        .then(response => {
+          this.posts = response.data.data;
+  
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    }
+  },
+  mounted() {
+    this.reload();
+  }
+};
 </script>

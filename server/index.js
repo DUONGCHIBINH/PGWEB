@@ -1,5 +1,5 @@
 const express = require("express");
-const bodyParser =  require("body-parser");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 var mongoose = require('mongoose');
 
@@ -16,10 +16,10 @@ require('dotenv').config();
 
 //local '+process.env.MONGO_USERS+' '+process.env.MONGO_PASS+'
 
-mongoose.connect('mongodb://localhost:27017/WEBDB',{
-         useNewUrlParser: true,
-         useUnifiedTopology: true
-     });
+mongoose.connect('mongodb://localhost:27017/WEBDB', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
 
 
 const app = express();
@@ -30,18 +30,20 @@ app.use(bodyParser.urlencoded({ //nhan body cua form submit
     extended: true
 }));
 
-app.use(bodyParser.json());  //chi nhan body json
+app.use(bodyParser.json()); //chi nhan body json
 app.use(cors());
 
 //dieu huong
 const posts = require('./routes/api/posts');
-app.use('/api/posts',posts);
+app.use('/api/posts', posts);
 
 const user = require('./routes/api/users');
-app.use('/api/user',user);
+app.use('/api/user', user);
 
+const event = require('./routes/api/event');
+app.use('/api/event', event);
 
-app.get('/',function (req,res){
+app.get('/', function(req, res) {
     res.send("WELCOM TO PG_Web API");
 })
 
@@ -50,5 +52,4 @@ app.get('/',function (req,res){
 
 const port = process.env.port || 5000;
 
-app.listen(port,() => console.log('Server started on port '+ port ));
-
+app.listen(port, () => console.log('Server started on port ' + port));

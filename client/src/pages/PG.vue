@@ -59,7 +59,7 @@
                                 <div class="caption font-weight-bold">123</div>
                               </b-col>
                               <b-col>
-                                <v-icon color="#34495e" small>mdi-heart</v-icon>
+                                <v-icon color="#34495e" small>mdi-arrow-down-bold-hexagon-outline</v-icon>
                                 <div class="caption font-weight-bold">123</div>
                               </b-col>
                             </b-row>
