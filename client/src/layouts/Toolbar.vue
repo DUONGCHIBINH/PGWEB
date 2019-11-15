@@ -11,9 +11,9 @@
       <v-toolbar-items>
         <v-btn class="chumenu" href="/" text>Trang chủ</v-btn>
         <!-- <v-divider  vertical></v-divider> -->
-        <v-btn class="chumenu" text>Sự kiện</v-btn>
-        <v-btn class="chumenu" text>Quản lý</v-btn>
-        <v-btn class="chumenu" text>PG/PB</v-btn>
+        <v-btn class="chumenu" href="/event" text>Sự kiện</v-btn>
+        <v-btn class="chumenu" href="/quanly" text>Quản lý</v-btn>
+        <v-btn class="chumenu" href="/pg" text>PG/PB</v-btn>
       </v-toolbar-items>
       <v-spacer></v-spacer>
       <template v-if="$vuetify.breakpoint.smAndUp">

@@ -7,6 +7,8 @@ import Page404 from './pages/Page404.vue'
 
 import Me from './pages/Me.vue'
 import Events from './pages/Events.vue'
+import Quanly from './pages/Quanly.vue'
+import PG from './pages/PG.vue'
 Vue.use(Router)
 
 
@@ -29,9 +31,19 @@ export default new Router({
             component: Events
         },
         {
-            path: '/Sukien',
-            name: 'Sukien',
+            path: '/sukien',
+            name: 'sukien',
             component: Events
+        },
+        {
+            path: '/quanly',
+            name: 'quanly',
+            component: Quanly
+        },
+        {
+            path: '/pg',
+            name: 'pg',
+            component: PG
         },
         {
             path: '/me',

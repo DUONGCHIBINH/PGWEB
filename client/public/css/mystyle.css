@@ -23,3 +23,16 @@
 a:hover {
     text-decoration: none !important;
 }
+
+.text2line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 1.6em;
+    /* fallback */
+    max-height: 3.2em;
+    /* fallback */
+    -webkit-line-clamp: 2;
+    /* number of lines to show */
+    -webkit-box-orient: vertical;
+}

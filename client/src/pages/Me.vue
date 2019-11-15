@@ -5,17 +5,18 @@
         <b-col cols="4" class="text-center">
           <v-avatar size="150">
             <img
-              src="https://scontent.fsgn5-5.fna.fbcdn.net/v/t34.0-12/16176889_112685309244626_578204711_n.jpg?_nc_cat=1&_nc_oc=AQk5UmVlAaguowXMrT8uGSXXSS5nuLp3052eAUdz2k_X5qMkBHvqImws5FT0yuiN8jo&_nc_ht=scontent.fsgn5-5.fna&oh=45e45a678e4595c99a3df52dedb5ef76&oe=5DCE3128"
+              style="object-fit: cover"
+              src="https://assets.entrepreneur.com/content/3x2/2000/20160425134600-mark-zuckerberg-facebook-mobile-world-congress-ceo-technology-barcelona.jpeg"
               alt="AVATAR"
             />
           </v-avatar>
-          <br>
-          <br>
+          <br />
+          <br />
           <b-col sm="12">
-              <v-btn class="ma-2" tile outlined color="success">
-                <v-icon left>mdi-phone</v-icon>Liên hệ
-              </v-btn>
-            </b-col>
+            <v-btn class="ma-2" tile outlined color="success">
+              <v-icon left>mdi-phone</v-icon>Liên hệ
+            </v-btn>
+          </b-col>
         </b-col>
         <b-col>
           <!-- style="background-color:blue" -->
@@ -37,7 +38,7 @@
               <v-btn class="ma-2" tile outlined color="success">
                 <v-icon left>mdi-phone</v-icon>Liên hệ
               </v-btn>
-            </b-col> -->
+            </b-col>-->
           </b-row>
 
           <b-row align-v="center" align-h="start">
