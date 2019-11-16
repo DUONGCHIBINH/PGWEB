@@ -34,7 +34,7 @@
           <v-card :color="item.color" :elevation="10" dark>
             <v-card-title class="title">Sự kiện {{i+1}}</v-card-title>
             <v-card-text class="white text--primary">
-              <p style=" color: blue;">Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, ..... Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, ..... Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, .....</p>
+              <p style=" color: gray;">Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, ..... Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, ..... Thông tin về sự kiện, Địa điểm, thời gian, Nhà tuyển dụng, .....</p>
               <v-btn :color="item.color" class="mx-0" outlined>Đăng ký</v-btn>
             </v-card-text>
           </v-card>

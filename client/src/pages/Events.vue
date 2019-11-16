@@ -7,7 +7,7 @@
           align="center"
           justify="center"
           style="color:#34495e;"
-        >123Tìm sự kiện, việc làm mới nhất</div>
+        >Tìm sự kiện, việc làm mới nhất</div>
 
         <v-tabs centered color="#34495e">
           <v-tab>Full time</v-tab>
@@ -245,6 +245,7 @@ export default {
   },
   mounted() {
     this.reload();
+    console.log(this.posts)
   }
 };
 </script>

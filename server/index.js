@@ -43,6 +43,16 @@ app.use('/api/user', user);
 const event = require('./routes/api/event');
 app.use('/api/event', event);
 
+const pg = require('./routes/api/pg');
+app.use('/api/pg', pg);
+
+const momo = require('./routes/api/momo');
+app.use('/api/momo', momo);
+
+app.get('/momo', function(req, res) {
+    res.send("MÔMMOO");
+})
+
 app.get('/', function(req, res) {
     res.send("WELCOM TO PG_Web API");
 })
