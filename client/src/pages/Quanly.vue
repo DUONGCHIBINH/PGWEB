@@ -44,15 +44,19 @@
                       >
                         <div>
                           <b-col class="text-center">
-                            <v-avatar size="120" style="margin-bottom:5px;">
+                            <v-avatar class="handhover" size="120" style="margin-bottom:5px;">
                               <img
+                                @click="$router.push({ path: 'me', query: { id: n._id } })"
                                 style="object-fit: cover"
                                 :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
                                 alt="AVATAR"
                               />
                             </v-avatar>
 
-                            <div class="caption font-weight-bold">{{n.ten}}</div>
+                            <div
+                              class="caption font-weight-bold handhover"
+                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                            >{{n.ten}}</div>
                             <div style="color:gray" class="caption">Quản lý</div>
 
                             <b-row class="pa-0">
@@ -91,6 +95,7 @@
               </b-row>
             </b-container>
           </v-tab-item>
+
           <v-tab-item>
             <b-container>
               <b-row align-h="center">
@@ -126,15 +131,19 @@
                       >
                         <div>
                           <b-col class="text-center">
-                            <v-avatar size="120" style="margin-bottom:5px;">
+                            <v-avatar class="handhover" size="120" style="margin-bottom:5px;">
                               <img
+                                @click="$router.push({ path: 'me', query: { id: n._id } })"
                                 style="object-fit: cover"
                                 :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
                                 alt="AVATAR"
                               />
                             </v-avatar>
 
-                            <div class="caption font-weight-bold">{{n.ten}}</div>
+                            <div
+                              class="caption font-weight-bold handhover"
+                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                            >{{n.ten}}</div>
                             <div style="color:gray" class="caption">Quản lý</div>
 
                             <b-row class="pa-0">
@@ -173,6 +182,7 @@
               </b-row>
             </b-container>
           </v-tab-item>
+
           <v-tab-item>
             <b-container>
               <b-row align-h="center">
@@ -208,15 +218,19 @@
                       >
                         <div>
                           <b-col class="text-center">
-                            <v-avatar size="120" style="margin-bottom:5px;">
+                            <v-avatar class="handhover" size="120" style="margin-bottom:5px;">
                               <img
+                                @click="$router.push({ path: 'me', query: { id: n._id } })"
                                 style="object-fit: cover"
                                 :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
                                 alt="AVATAR"
                               />
                             </v-avatar>
 
-                            <div class="caption font-weight-bold">{{n.ten}}</div>
+                            <div
+                              class="caption font-weight-bold handhover"
+                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                            >{{n.ten}}</div>
                             <div style="color:gray" class="caption">Quản lý</div>
 
                             <b-row class="pa-0">

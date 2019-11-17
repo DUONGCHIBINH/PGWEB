@@ -6,7 +6,7 @@
           <v-avatar size="150">
             <img
               style="object-fit: cover"
-              src="https://assets.entrepreneur.com/content/3x2/2000/20160425134600-mark-zuckerberg-facebook-mobile-world-congress-ceo-technology-barcelona.jpeg"
+              :src="`https://picsum.photos/500/300?image=${PG.data[0].avatar * 5 + 10}`"
               alt="AVATAR"
             />
           </v-avatar>
@@ -22,7 +22,7 @@
           <!-- style="background-color:blue" -->
           <b-row align-v="center" align-h="start">
             <b-col sm="*">
-              <div class="font-weight-light display-1">Dương Chí Bình</div>
+              <div class="font-weight-light display-1">{{PG.data[0].ten}}</div>
             </b-col>
             <b-col sm="1">
               <v-btn text icon color="pink">
@@ -44,17 +44,17 @@
           <b-row align-v="center" align-h="start">
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
-                <b>23</b> sự kiện
+                <b>{{PG.data[0].sosukien }}</b> sự kiện
               </div>
             </b-col>
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
-                <b>420</b> lượt mua
+                <b>{{PG.data[0].soluotmua }}</b> lượt mua
               </div>
             </b-col>
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
-                <b>730</b> theo dõi
+                <b>{{PG.data[0].soyeuthich }}</b> theo dõi
               </div>
             </b-col>
           </b-row>
@@ -63,7 +63,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Làm việc tại:
-                <b>Học viện hàng không</b>
+                <b>{{PG.data[0].noilamviec }}</b>
               </div>
             </b-col>
           </b-row>
@@ -71,7 +71,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Ngày sinh:
-                <b>15/7/1996</b>
+                <b>{{PG.data[0].ngaysinh.slice(0,10).split("-").reverse().join("/") }}</b>
               </div>
             </b-col>
           </b-row>
@@ -79,7 +79,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Sống tại:
-                <b>Q.8 Tp.HCM</b>
+                <b>{{PG.data[0].songtai}}</b>
               </div>
             </b-col>
           </b-row>
@@ -87,7 +87,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Đến từ:
-                <b>Lâm Đồng</b>
+                <b>{{PG.data[0].dentu}}</b>
               </div>
             </b-col>
           </b-row>
@@ -96,7 +96,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Đã tham gia từ:
-                <b>11/11/2019</b>
+                <b>{{PG.data[0].ngaythamgia.slice(0,10).split("-").reverse().join("/") }}</b>
               </div>
             </b-col>
           </b-row>
@@ -310,14 +310,37 @@
 
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
       tab: null,
+      PG: [],
       items: ["Sự kiện đã tham gia", "Hình ảnh", "Thông tin"],
       text:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
-  }
+  },
+  methods: {
+    reload(id) {
+      axios
+        .get(`http://localhost:5000/api/pg?_id=`+id)
+        .then(response => {
+          this.PG = response.data;
+          if(this.PG.confirmation !='success' )
+          {
+            this.$router.push({ path: 'Page404', query: { 'id': id  , 'mess':'Không tìm thấy PG có id này'} })
+          }
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+      
+    },
+
+  },
+  mounted() {
+    this.reload(this.$route.query.id);
+  },
 };
 </script>

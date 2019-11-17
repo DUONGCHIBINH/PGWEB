@@ -104,7 +104,7 @@ router.get('/', async(req, res) => {
 });
 //GET by id   /api/user/5da89ed01c9d440000a149fa
 router.get('/:id', async(req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
 
     User.findById(id)
         .then(user => {

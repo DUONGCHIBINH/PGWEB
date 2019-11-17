@@ -36,3 +36,7 @@ a:hover {
     /* number of lines to show */
     -webkit-box-orient: vertical;
 }
+
+.handhover {
+    cursor: pointer;
+}

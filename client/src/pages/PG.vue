@@ -44,7 +44,12 @@
                       >
                         <div>
                           <b-col class="text-center">
-                            <v-avatar size="120" style="margin-bottom:5px;">
+                            <v-avatar
+                              class="handhover"
+                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                              size="120"
+                              style="margin-bottom:5px;"
+                            >
                               <img
                                 style="object-fit: cover"
                                 :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
@@ -52,7 +57,7 @@
                               />
                             </v-avatar>
 
-                            <div class="caption font-weight-bold">{{n.ten}}</div>
+                            <div class="caption font-weight-bold handhover">{{n.ten}}</div>
                             <div style="color:gray" class="caption">{{n.loai}}</div>
 
                             <b-row class="pa-0">
@@ -127,7 +132,12 @@
                       >
                         <div>
                           <b-col class="text-center">
-                            <v-avatar size="120" style="margin-bottom:5px;">
+                            <v-avatar
+                              class="handhover"
+                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                              size="120"
+                              style="margin-bottom:5px;"
+                            >
                               <img
                                 style="object-fit: cover"
                                 :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
@@ -135,7 +145,7 @@
                               />
                             </v-avatar>
 
-                            <div class="caption font-weight-bold">{{n.ten}}</div>
+                            <div class="caption font-weight-bold handhover">{{n.ten}}</div>
                             <div style="color:gray" class="caption">{{n.loai}}</div>
 
                             <b-row class="pa-0">
@@ -210,7 +220,12 @@
                       >
                         <div>
                           <b-col class="text-center">
-                            <v-avatar size="120" style="margin-bottom:5px;">
+                            <v-avatar
+                              class="handhover"
+                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                              size="120"
+                              style="margin-bottom:5px;"
+                            >
                               <img
                                 style="object-fit: cover"
                                 :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
@@ -218,7 +233,7 @@
                               />
                             </v-avatar>
 
-                            <div class="caption font-weight-bold">{{n.ten}}</div>
+                            <div class="caption font-weight-bold handhover">{{n.ten}}</div>
                             <div style="color:gray" class="caption">{{n.loai}}</div>
 
                             <b-row class="pa-0">
@@ -282,11 +297,13 @@ export default {
         .get(`http://localhost:5000/api/pg`)
         .then(response => {
           this.PGS = response.data.data;
-          console.log(this.PGS);
         })
         .catch(e => {
           this.errors.push(e);
         });
+    },
+    avaclick() {
+      alert("chaocacban");
     }
   },
   mounted() {
