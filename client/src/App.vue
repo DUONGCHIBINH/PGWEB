@@ -1,47 +1,32 @@
 <template>
-  <!-- App.vue -->
-
   <v-app>
-    <!-- <v-navigation-drawer app> -->
-    <!-- -->
-    <!-- </v-navigation-drawer> -->
     <Toolbar />
-    <!-- Sizes your content based upon application components -->
-    <!-- <v-content>
-    
-         <v-container fluid>
-       
-        <router-view>
-          
-        </router-view>
-      </v-container>
-    </v-content> -->
-
     <router-view>
-          
         </router-view>
-
     <!--Footer -->
-     <Footer/>
-     
+     <Footer :online= luottruycap />
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+
 import Toolbar from "./layouts/Toolbar";
 import Footer from "./layouts/Footer";
+import io from "socket.io-client";
 
 export default {
   name: "App",
   components: {
-    HelloWorld,
+  
     Toolbar,
     Footer,
   },
 
-  data: () => ({
+  data: function() {
+    return{
+      socket:io("http://localhost:5000"),
     drawer: null,
+    luottruycap:0,
     items: [
       { heading: "Hệ thống" },
       { icon: "mdi-hand-peace", text: "Giới thiệu", url: "goole.com" },
@@ -56,7 +41,13 @@ export default {
       { divider: true },
       { icon: "mdi-logout", text: "Đăng xuất" }
     ]
-  })
+  }
+  },
+  mounted() {
+    this.socket.on("online",data =>{
+      this.luottruycap = data;
+    })
+  },
 };
 </script>
 

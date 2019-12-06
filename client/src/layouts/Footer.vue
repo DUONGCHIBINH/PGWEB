@@ -10,7 +10,7 @@
       tile
     >
       <v-card-title class="toolbar">
-        <strong class="subheading">Liên hệ với chúng tôi!</strong>
+        <strong class="subheading">Số lượt online: {{online}}</strong>
 
         <v-spacer></v-spacer>
 
@@ -34,6 +34,7 @@
 
 <script>
 export default {
+   props: ['online'],
    data: () => ({
       icons: [
         'mdi-facebook',

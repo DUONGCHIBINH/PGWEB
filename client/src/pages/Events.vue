@@ -245,7 +245,7 @@ export default {
   },
   mounted() {
     this.reload();
-    console.log(this.posts)
+   
   }
 };
 </script>

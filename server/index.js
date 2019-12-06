@@ -1,4 +1,6 @@
 const express = require("express");
+
+
 const bodyParser = require("body-parser");
 const cors = require("cors");
 var mongoose = require('mongoose');
@@ -23,7 +25,6 @@ mongoose.connect('mongodb://localhost:27017/WEBDB', {
 
 
 const app = express();
-
 //middleware
 
 app.use(bodyParser.urlencoded({ //nhan body cua form submit
@@ -54,12 +55,36 @@ app.get('/momo', function(req, res) {
 })
 
 app.get('/', function(req, res) {
-    res.send("WELCOM TO PG_Web API");
+    // res.send("WELCOM TO PG_Web API");
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify([{
+        "text": "MaKH",
+        "value": "MaKH"
+    }, {
+        "text": "ID",
+        "value": "ID"
+    }, {
+        "text": "Key",
+        "value": "MaKH"
+    }]));
 })
 
 
-
-
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+var online = 0;
 const port = process.env.port || 5000;
 
-app.listen(port, () => console.log('Server started on port ' + port));
+server.listen(port, () => console.log('Server started on port ' + port));
+// app.listen(port, () => console.log('Server started on port ' + port));
+//socket.io
+io.on('connection', function(socket) {
+    online++;
+    console.log("Tổng lượt kết nối: " + online);
+    socket.on('disconnect', function(socket) {
+        online--;
+        console.log("Tổng lượt kết nối: " + online);
+    });
+
+    io.emit("online", online);
+});
