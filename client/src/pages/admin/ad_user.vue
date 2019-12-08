@@ -48,12 +48,23 @@
       <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
     </template>
     <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Reset</v-btn>
+      <v-btn color="primary" @click="initialize">Thêm mới</v-btn>
     </template>
   </v-data-table>
 </template>
 <script>
 import axios from "axios";
+
+// import into project
+import Vue from "vue";
+import VuejsDialog from "vuejs-dialog";
+import VuejsDialogMixin from "vuejs-dialog/dist/vuejs-dialog-mixin.min.js"; // only needed in custom components
+
+// include the default style
+import "vuejs-dialog/dist/vuejs-dialog.min.css";
+
+// Tell Vue to install the plugin.
+Vue.use(VuejsDialog);
 
 export default {
   data: () => ({
@@ -108,7 +119,7 @@ export default {
   },
 
   created() {
-    this.initialize();
+    // this.initialize();
   },
   mounted() {
     this.reload();
@@ -125,7 +136,9 @@ export default {
           this.errors.push(e);
         });
     },
-    initialize() {},
+    initialize() {
+      this.dialog =true;
+    },
 
     editItem(item) {
       this.editedIndex = this.desserts.indexOf(item);
@@ -133,10 +146,40 @@ export default {
       this.dialog = true;
     },
 
-    deleteItem(item) {
+    async deleteItem(item) {
       const index = this.desserts.indexOf(item);
-      if (confirm("Bạn có chắc muốn xóa dòng này?"))
-        this.desserts.splice(index, 1);
+      var dongy = false;
+      await this.$dialog
+        .confirm("Bạn có muốn xóa user " + item.username + " ?",{okText : 'Có'})
+        .then(function(e) {
+          console.log(item._id);
+          dongy = true;
+        })
+        .catch(function() {
+          console.log("Clicked on cancel");
+        });
+      if (dongy) {
+        axios
+          .get(`http://localhost:5000/api/user/remove?id=` + item._id)
+          .then(response => {
+            console.log(response.data);
+            if (response.data.confirmation == "remove success") {
+              this.$dialog
+                .alert("Xóa thành công!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+              this.reload();
+            } else
+              this.$dialog
+                .alert("Xóa thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+          })
+          .catch(e => {
+            this.$dialog
+              .alert("Xóa thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            console.log(e);
+          });
+      }
     },
 
     close() {
@@ -149,17 +192,48 @@ export default {
 
     async save() {
       if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
+        // > -1 tương ứng với edit
+        // Object.assign(this.desserts[this.editedIndex], this.editedItem);
+        this.capnhat(this.editedItem);
+      } //trường hợp này là add
+      else {
+        // this.desserts.push(this.editedItem);
+        this.themmoi();
       }
-      this.themmoi();
-         this.close();
-    
+
+      this.close();
+    },
+    capnhat(item) {
+      axios
+        .post(`http://localhost:5000/api/user/update/` + item._id, item, {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          console.log(response.data);
+          if (response.data.confirmation == "update success") {
+            this.$dialog
+              .alert("Cập nhật thành công!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            this.reload();
+          } else
+            this.$dialog
+              .alert("Cập nhật thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+        })
+        .catch(e => {
+          console.log(e);
+          this.$dialog
+            .alert("Cập nhật thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+        });
+
+      this.reload();
     },
     themmoi() {
       console.log("----------------------------------------------------");
-      if (this.editedItem.userid == '') {
+      if (this.editedItem.userid == "") {
         console.log("userid null");
         return;
       }
@@ -172,15 +246,23 @@ export default {
         })
         .then(response => {
           console.log(response.data.confirmation);
-          if(response.data.confirmation =='add success')
-          {
-            alert('Thêm thành công!');
+          if (response.data.confirmation == "add success") {
+           this.$dialog
+                .alert("Thêm thành công!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+            this.reload();
             return true;
+          } else {
+           this.$dialog
+                .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+            return false;
           }
-          else {alert('Thêm KHÔNG thành công!');return false;}
         })
         .catch(e => {
-          alert('Thêm KHÔNG thành công!');
+         this.$dialog
+                .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
           console.log(e);
           return false;
         });
