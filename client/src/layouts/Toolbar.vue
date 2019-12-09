@@ -22,10 +22,13 @@
           <v-icon>mdi-bell-circle</v-icon>
         </v-btn>
         <v-btn class="chumenu" icon>
-          <v-icon @click="logout">mdi-heart-circle</v-icon>
+          <v-icon >mdi-heart-circle</v-icon>
         </v-btn>
         <v-btn class="chumenu" :to="{name: 'admin'}" icon>
           <v-icon>mdi-account-circle</v-icon>
+        </v-btn>
+          <v-btn   class="chumenu" icon>
+          <v-icon @click="logout">mdi-logout</v-icon>
         </v-btn>
       </template>
     </v-toolbar>
@@ -35,6 +38,7 @@
 <script>
 import Store from '../store/store'
 export default {
+
   methods: {
     logout(){
       Store.dispatch('auth0Logout');
