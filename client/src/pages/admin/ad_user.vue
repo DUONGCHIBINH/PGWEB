@@ -29,6 +29,7 @@
                   <v-col cols="12" sm="6" md="6">
                     <v-combobox v-model="editedItem.type" :items="user_types" label="Loại user"></v-combobox>
                   </v-col>
+            
                 </v-row>
               </v-container>
             </v-card-text>

@@ -14,7 +14,7 @@
         <v-btn class="chumenu" :to="{name: 'sukien'}" text>Sự kiện</v-btn>
         <v-btn class="chumenu" :to="{name: 'quanly'}" text>Quản lý</v-btn>
         <v-btn class="chumenu" :to="{name: 'pg'}" text>PG/PB</v-btn>
-  
+        <v-btn class="chumenu" :to="{name: 'ducanh'}" text>ducanh</v-btn>
       </v-toolbar-items>
       <v-spacer></v-spacer>
       <template v-if="$vuetify.breakpoint.smAndUp">
