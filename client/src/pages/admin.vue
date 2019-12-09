@@ -35,9 +35,9 @@ export default {
       items: [
         { title: "Dashboard", icon: "mdi-view-dashboard", link: "/admin/1" },
         { title: "Người dùng", icon: "mdi-image", link: "/admin/aduser" },
-        { title: "PG/PB", icon: "mdi-help-box", link: "/admin/3" },
-        { title: "Quản lý", icon: "mdi-help-box", link: "/admin/4" },
-        { title: "Sự kiện", icon: "mdi-help-box", link: "/admin/5" },
+        { title: "PG/PB", icon: "mdi-help-box", link: "/admin/adpg" },
+        { title: "Quản lý", icon: "mdi-help-box", link: "/admin/adql" },
+        { title: "Sự kiện", icon: "mdi-help-box", link: "/admin/adevent" },
         { title: "Thanh toán", icon: "mdi-help-box", link: "/admin/6" }
       ],
       right: null

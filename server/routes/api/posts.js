@@ -34,7 +34,6 @@ router.delete('/:id', async(req, res) => {
 
 });
 
-
 async function get_users() {
     const client = await mongodb.MongoClient.connect(
         'mongodb://localhost:27017', {

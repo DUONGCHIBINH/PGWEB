@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     tang() {
-      this.$store.commit("tang");
+     //this.$store.commit("tang");
     }
   }
 };
