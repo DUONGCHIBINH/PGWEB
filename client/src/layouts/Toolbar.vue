@@ -27,7 +27,7 @@
         <v-btn class="chumenu" :to="{name: 'admin'}" icon>
           <v-icon>mdi-account-circle</v-icon>
         </v-btn>
-          <v-btn   class="chumenu" icon>
+          <v-btn  v-if="this.$store.state.userIsAuthorized"  class="chumenu" icon>
           <v-icon @click="logout">mdi-logout</v-icon>
         </v-btn>
       </template>

@@ -3,13 +3,15 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router'
 
+
+
+
 Vue.config.productionTip = true
 
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
-
-import { store } from './store/store'
+import store from './store/store'
 
 new Vue({
     vuetify,
