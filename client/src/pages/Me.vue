@@ -1,5 +1,5 @@
 <template>
-  <div class="white">
+  <div>
     <b-container>
       <b-row class="mb-4">
         <b-col cols="4" class="text-center">
@@ -30,9 +30,85 @@
               </v-btn>
             </b-col>
             <b-col sm="2">
-              <v-btn class="ma-2" outlined small fab color="indigo">
+              <!-- <v-btn class="ma-2" outlined small fab color="indigo">
                 <v-icon>mdi-pencil</v-icon>
-              </v-btn>
+              </v-btn>-->
+              <v-dialog v-model="dialog" persistent max-width="600px">
+                <template v-slot:activator="{ on }">
+                  <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
+                  <v-btn class="ma-2" outlined small fab color="indigo" v-on="on">
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">Chỉnh sửa thông tin</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-container>
+                      <v-row>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field label="Họ và tên*" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                           <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                      >
+                        <template v-slot:activator="{ on }">
+                          <v-text-field
+                            v-model="date"
+                            label="Ngày sinh"
+                            prepend-icon
+                            readonly
+                            v-on="on"
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="date" no-title scrollable>
+                          <v-spacer></v-spacer>
+                          <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                          <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                        </v-date-picker>
+                      </v-menu>
+                        </v-col>
+                        
+                         <v-col cols="12" sm="6" md="4">
+                          <v-text-field label="Đến từ" required></v-text-field>
+                        </v-col>
+                      <v-col cols="12" sm="6" md="4">
+                          <v-text-field label="Đang sống tại" required></v-text-field>
+                        </v-col>
+                     <v-col cols="12" sm="6" md="4">
+                          <v-text-field label="Làm việc tại" required></v-text-field>
+                        </v-col>
+
+                          <v-col cols="12" sm="6" md="4">
+                          <v-text-field label="Số điện thoại*" required></v-text-field>
+                        </v-col>
+<!-- 
+                        <v-col cols="12" sm="6">
+                          <v-select
+                            :items="['18','19','20','21','22','23','24',]"
+                            label="Age*"
+                            required
+                          ></v-select>
+                        </v-col> -->
+                      </v-row>
+                    </v-container>
+                    <small>* là những trường bắt buộc</small>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                    <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </b-col>
             <!-- <b-col sm="3">
               <v-btn class="ma-2" tile outlined color="success">
@@ -314,6 +390,8 @@ import axios from "axios";
 export default {
   data() {
     return {
+      dialogm1: "",
+      dialog: false,
       tab: null,
       PG: [],
       items: ["Sự kiện đã tham gia", "Hình ảnh", "Thông tin"],
@@ -324,23 +402,23 @@ export default {
   methods: {
     reload(id) {
       axios
-        .get(`http://localhost:5000/api/pg?_id=`+id)
+        .get(`http://localhost:5000/api/pg?_id=` + id)
         .then(response => {
           this.PG = response.data;
-          if(this.PG.confirmation !='success' )
-          {
-            this.$router.push({ path: 'Page404', query: { 'id': id  , 'mess':'Không tìm thấy PG có id này'} })
+          if (this.PG.confirmation != "success") {
+            this.$router.push({
+              path: "Page404",
+              query: { id: id, mess: "Không tìm thấy PG có id này" }
+            });
           }
         })
         .catch(e => {
           this.errors.push(e);
         });
-      
-    },
-
+    }
   },
   mounted() {
     this.reload(this.$route.query.id);
-  },
+  }
 };
 </script>
