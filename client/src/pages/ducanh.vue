@@ -1,5 +1,6 @@
 <template>
-  <form>
+<v-container >
+   <form>
   <div
           class="display-1"
           align="center"
@@ -119,6 +120,8 @@
     <v-btn class="mr-4" @click="submit">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
   </form>
+  <div class="ma-10"></div>
+</v-container>
 </template>
 
 <script>

@@ -83,6 +83,10 @@ export default {
         value: "userid"
       },
       { text: "User Name", value: "username" },
+      { text: "Email", value: "email" },
+      { text: "Họ tên", value: "hoten" },
+      { text: "SĐT", value: "sdt" },
+      { text: "Giới tính", value: "gioitinh" },
       {
         text: "Type",
         align: "left",

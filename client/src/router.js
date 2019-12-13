@@ -15,7 +15,7 @@ import Store from './store/store'
 import Login from './pages/Login.vue'
 import Auth0Callback from './pages/Auth0Callback.vue'
 import ducanh from './pages/ducanh.vue'
-
+import dangky from './pages/login/dangky.vue'
 
 Vue.use(Router)
 
@@ -87,6 +87,12 @@ const router = new Router({
             meta: { requiresAuth: true }
         },
         {
+            path: '/dangky',
+            name: 'dangky',
+            component: dangky,
+            meta: { requiresAuth: true }
+        },
+        {
             path: '*',
             component: Page404
         },
@@ -109,8 +115,10 @@ router.beforeEach((to, from, next) => {
         console.log('found local storage tokens');
         // Check whether the current time is past the Access Token's expiry time
         let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+        Store.state.cur_user = JSON.parse(localStorage.getItem('cur_user'));
         // set localAuthTokenCheck true if unexpired / false if expired
         routerAuthCheck = new Date().getTime() < expiresAt;
+
     }
 
     // set global ui understanding of authentication
@@ -124,6 +132,7 @@ router.beforeEach((to, from, next) => {
             next();
         } else {
             // user is not authenticated - redirect to login
+
             router.replace('/login');
         }
 

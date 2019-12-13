@@ -26,7 +26,7 @@
       </v-card-title>
 
       <v-card-text class="py-2 white--text text-center">
-        {{ new Date().getFullYear() }} — <strong>PGWork</strong>
+        {{ new Date().getFullYear() }} — <strong>PGWork {{this.$store.state.cur_userdb}}</strong>
       </v-card-text>
     </v-card>
   </v-footer>

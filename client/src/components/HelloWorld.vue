@@ -1,5 +1,8 @@
 <template>
- <h1>Hello world</h1>
+   <v-img
+                        height="250"
+                        src="require('../assets/dangky/pg.png')"
+                      ></v-img>
 </template>
 
 <script>

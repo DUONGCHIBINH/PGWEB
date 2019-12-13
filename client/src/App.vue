@@ -4,6 +4,7 @@
 
     <router-view>
         </router-view>
+        <div   style="margin-top: 25px;"></div>
     <!--Footer -->
      <Footer :online= luottruycap />
   </v-app>

@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import Store from '../store/store'
+
 export default {
 
   methods: {
     logout(){
-      Store.dispatch('auth0Logout');
+      this.$store.dispatch('auth0Logout');
       console.log('logging out');
     }
   },
