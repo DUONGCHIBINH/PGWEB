@@ -1,121 +1,121 @@
 <template>
-<v-container >
-   <form>
-  <div
-          class="display-1"
-          align="center"
-          justify="center"
-          style="color:#34495e;"
-        >Tạo sự kiện, việc làm bạn đang muốn tuyển dụng</div>
-    <v-text-field
-      v-model="name"
-      :error-messages="nameErrors"
-      :counter="200"
-      label="Nhập tên sự kiện"
-      required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
-    ></v-text-field>
-    <v-text-field
-      v-model="name"
-      :error-messages="nameErrors"
-      :counter="200"
-      label="Địa điểm tổ chức"
-      required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
-    ></v-text-field>
-    <v-text-field
-      v-model="name"
-      :error-messages="nameErrors"
-      :counter="200"
-      label="Mô tả về sự kiện"
-      required  
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
-    ></v-text-field>
-    <v-text-field
-      v-model="name"
-      :error-messages="nameErrors"
-      :counter="200"
-      label="Tên Công ty địa diện"
-      required
-      @input="$v.name.$touch()"
-      @blur="$v.name.$touch()"
-    ></v-text-field>
-    <v-text-field
-      v-model="email"
-      :error-messages="emailErrors"
-      label="E-mail"
-      required
-      @input="$v.email.$touch()"
-      @blur="$v.email.$touch()"
-    ></v-text-field>
-    <v-select
-      v-model="select"
-      :items="number"
-      :error-messages="selectErrors"
-      label="Chọn số lượng PG/PB bạn cần"
-      required
-      @change="$v.select.$touch()"
-      @blur="$v.select.$touch()"
-    ></v-select>
-    <v-select
-      v-model="select"
-      :items="salary"
-      :error-messages="selectErrors"
-      label="Chọn mức lương bạn trả cho 1h"
-      required
-      @change="$v.select.$touch()"
-      @blur="$v.select.$touch()"
-    ></v-select>
-    <v-select
-      v-model="select"
-      :items="items"
-      :error-messages="selectErrors"
-      label="Chọn loại PG/PB bạn cần"
-      required
-      @change="$v.select.$touch()"
-      @blur="$v.select.$touch()"
-    ></v-select>
+  <v-container >
+    <form>
+    <div
+            class="display-1"
+            align="center"
+            justify="center"
+            style="color:#34495e;"
+          >Tạo sự kiện, việc làm bạn đang muốn tuyển dụng</div>
+      <v-text-field
+        v-model="name_event"
+        :error-messages="nameErrors"
+        :counter="200"
+        label="Nhập tên sự kiện"
+        required
+        @input="$v.name_event.$touch()"
+        @blur="$v.name_event.$touch()"
+      ></v-text-field>
+      <v-text-field
+        v-model="location"
+        :error-messages="nameErrors"
+        :counter="200"
+        label="Địa điểm tổ chức"
+        required
+        @input="$v.location.$touch()"
+        @blur="$v.location.$touch()"
+      ></v-text-field>
+      <v-text-field
+        v-model="description"
+        :error-messages="nameErrors"
+        :counter="200"
+        label="Mô tả về sự kiện"
+        required  
+        @input="$v.description.$touch()"
+        @blur="$v.description.$touch()"
+      ></v-text-field>
+      <v-text-field
+        v-model="name_company"
+        :error-messages="nameErrors"
+        :counter="200"
+        label="Tên Công ty địa diện"
+        required
+        @input="$v.name_company.$touch()"
+        @blur="$v.name_company.$touch()"
+      ></v-text-field>
+      <v-text-field
+        v-model="email"
+        :error-messages="emailErrors"
+        label="E-mail"
+        required
+        @input="$v.email.$touch()"
+        @blur="$v.email.$touch()"
+      ></v-text-field>
+      <v-select
+        v-model="type_bg"
+        :items="number"
+        :error-messages="selectErrors"
+        label="Chọn số lượng PG/PB bạn cần"
+        required
+        @change="$v.type_bg.$touch()"
+        @blur="$v.type_bg.$touch()"
+      ></v-select>
+      <v-select
+        v-model="select"
+        :items="salary"
+        :error-messages="selectErrors"
+        label="Chọn mức lương bạn trả cho 1h"
+        required
+        @change="$v.select.$touch()"
+        @blur="$v.select.$touch()"
+      ></v-select>
+      <v-select
+        v-model="count_bg"
+        :items="items"
+        :error-messages="selectErrors"
+        label="Chọn loại PG/PB bạn cần"
+        required
+        @change="$v.count_bg.$touch()"
+        @blur="$v.count_bg.$touch()"
+      ></v-select>
 
-    <v-row>
-    <v-col cols="12" sm="6" md="4">
-      <v-menu
-        ref="menu"
-        v-model="menu"
-        :close-on-content-click="false"
-        :return-value.sync="date"
-        transition="scale-transition"
-        offset-y
-        min-width="290px"
-      >
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="date"
-            label="Chọn ngày tổ chức sự kiện"
-            prepend-icon=""
-            readonly
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="date" no-title scrollable>
-          <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-          <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-        </v-date-picker>
-      </v-menu>
-    </v-col>
-  </v-row>
+      <v-row>
+      <v-col cols="12" sm="6" md="4">
+        <v-menu
+          ref="menu"
+          v-model="menu"
+          :close-on-content-click="false"
+          :return-value.sync="date"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on }">
+            <v-text-field
+              v-model="date"
+              label="Chọn ngày tổ chức sự kiện"
+              prepend-icon=""
+              readonly
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="date" no-title scrollable>
+            <v-spacer></v-spacer>
+            <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+            <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+          </v-date-picker>
+        </v-menu>
+      </v-col>
+    </v-row>
 
-    <v-checkbox
-      v-model="checkbox"
-      :error-messages="checkboxErrors"
-      label="Bạn có đồng ý với các điều khoản của chúng tôi"
-      required
-      @change="$v.checkbox.$touch()"
-      @blur="$v.checkbox.$touch()"
-    ></v-checkbox>
+      <v-checkbox
+        v-model="checkbox"
+        :error-messages="checkboxErrors"
+        label="Bạn có đồng ý với các điều khoản của chúng tôi"
+        required
+        @change="$v.checkbox.$touch()"
+        @blur="$v.checkbox.$touch()"
+      ></v-checkbox>
 
     <v-btn class="mr-4" @click="submit">submit</v-btn>
     <v-btn @click="clear">clear</v-btn>
@@ -141,6 +141,10 @@
     mixins: [validationMixin],
 
     validations: {
+      name_event: { required, maxLength: maxLength(200) },
+      location: { required, maxLength: maxLength(300) },
+      description: { required, maxLength: maxLength(200) },
+      name_company: { required, maxLength: maxLength(200) },
       name: { required, maxLength: maxLength(200) },
       email: { required, email },
       select: { required },
@@ -162,7 +166,8 @@
     data: () => ({
       name: '',
       email: '',
-      select: null,
+      type_bg: null,
+      count_bg: null,
       items: [
         'PG/PB loại 1',
         'PG/PB loại 2',
@@ -212,6 +217,10 @@
       },
       clear () {
         this.$v.$reset()
+        this.name_event= ''
+        this.location= ''
+        this.name_company = ''
+        this.description = ''
         this.name = ''
         this.email = ''
         this.select = null
