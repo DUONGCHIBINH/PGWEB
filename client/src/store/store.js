@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        cur_usedb: { id: '123', name: '12312' },
+
         cur_user: {},
         userIsAuthorized: false,
         auth0: new auth0.WebAuth({
@@ -17,6 +17,7 @@ export default new Vuex.Store({
             responseType: process.env.VUE_APP_AUTH0_CONFIG_RESPONSETYPE,
             scope: process.env.VUE_APP_AUTH0_CONFIG_SCOPE,
         }),
+        cur_userdb: null,
     },
     mutations: {
         setUserIsAuthenticated(state, replacement) {
@@ -25,10 +26,7 @@ export default new Vuex.Store({
 
     },
     actions: {
-        updateuserdb(context, ob) {
 
-            context.state.cur_usedb = ob;
-        },
         auth0Login(context) {
             console.log("in a store action named auth0Login");
             context.state.auth0.authorize()
@@ -50,7 +48,7 @@ export default new Vuex.Store({
 
                     router.replace('/auth0callback');
                 } else if (err) {
-                    alert('login failed. Error #KJN838');
+                    alert('Đăng nhập không thành công');
                     router.replace('/login');
                     console.log(err);
                 }
@@ -63,6 +61,7 @@ export default new Vuex.Store({
             localStorage.removeItem('id_token');
             localStorage.removeItem('expires_at');
             localStorage.removeItem('cur_user');
+            localStorage.removeItem('cur_userdb');
             context.state.cur_user = '';
             // redirect to auth0 logout to completely log the user out
             window.location.href = process.env.VUE_APP_AUTH0_CONFIG_DOMAINURL + "/v2/logout?returnTo=" + process.env.VUE_APP_DOMAINURL + "/login&client_id=" + process.env.VUE_APP_AUTH0_CONFIG_CLIENTID;

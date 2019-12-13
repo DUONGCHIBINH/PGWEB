@@ -26,8 +26,9 @@ export default {
            this.$router.push({path: "/dangky"})
         }
         else{
-          console.log(response.data.data[0]);
-              this.$store.dispatch('updateuserdb',response.data.data[0]);  
+          //console.log(response.data.data[0]);
+          //  this.$store.dispatch('updateuserdb',response.data.data[0]);  
+            localStorage.setItem('cur_userdb', JSON.stringify(response.data.data[0]));
             this.$router.push({path: "/home"});
         }
       })

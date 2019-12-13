@@ -20,6 +20,7 @@ export default {
   methods: {
     tang() {
      //this.$store.commit("tang");
+  //   console.log(  this.$store.state.cur_userdb)
     }
   }
 };

@@ -116,6 +116,7 @@ router.beforeEach((to, from, next) => {
         // Check whether the current time is past the Access Token's expiry time
         let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
         Store.state.cur_user = JSON.parse(localStorage.getItem('cur_user'));
+        if (localStorage.getItem('cur_userdb')) Store.state.cur_userdb = JSON.parse(localStorage.getItem('cur_userdb'));
         // set localAuthTokenCheck true if unexpired / false if expired
         routerAuthCheck = new Date().getTime() < expiresAt;
 
@@ -128,10 +129,20 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         // Check if user is Authenticated
         if (routerAuthCheck) {
+            if (to.name == 'dangky') {
+                next()
+            } else {
+                if (Store.state.cur_userdb == null || Store.state.cur_userdb.type == '') {
+                    router.replace('/dangky');
+                    alert('Bạn phải hoàn thành cập nhật thông tin trước khi sử dụng chức năng này');
+                } else next();
+            }
             // user is Authenticated - allow access
-            next();
+
         } else {
             // user is not authenticated - redirect to login
+            // console.log("-----DA LOGIN NHUNG CHUA CO DANG KY");
+            // console.log(Store.state.cur_userdb);
 
             router.replace('/login');
         }

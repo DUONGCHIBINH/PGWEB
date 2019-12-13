@@ -26,13 +26,14 @@
       </v-card-title>
 
       <v-card-text class="py-2 white--text text-center">
-        {{ new Date().getFullYear() }} — <strong>PGWork {{this.$store.state.cur_userdb}}</strong>
+        {{ new Date().getFullYear() }} — <strong>PGWork </strong>
       </v-card-text>
     </v-card>
   </v-footer>
 </template>
 
 <script>
+//  {{this.$store.state.cur_userdb.hoten}}
 export default {
    props: ['online'],
    data: () => ({
@@ -44,5 +45,9 @@ export default {
         'mdi-instagram',
       ],
     }),
+    created() {
+       console.log("-----cur_userdb");
+      console.log(this.$store.state.cur_userdb);
+    },
 };
 </script>
