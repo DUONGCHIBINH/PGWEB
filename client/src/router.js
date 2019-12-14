@@ -14,7 +14,7 @@ import adpg from './pages/admin/ad_pg.vue'
 import Store from './store/store'
 import Login from './pages/Login.vue'
 import Auth0Callback from './pages/Auth0Callback.vue'
-import ducanh from './pages/ducanh.vue'
+import createEvent from './pages/createEvent.vue'
 import dangky from './pages/login/dangky.vue'
 
 Vue.use(Router)
@@ -81,9 +81,9 @@ const router = new Router({
             component: Me
         },
         {
-            path: '/ducanh',
-            name: 'ducanh',
-            component: ducanh,
+            path: '/createEvent',
+            name: 'createEvent',
+            component: createEvent,
             meta: { requiresAuth: true }
         },
         {
