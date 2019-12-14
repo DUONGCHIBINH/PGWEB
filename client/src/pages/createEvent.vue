@@ -166,6 +166,7 @@ export default {
   // }),
 
   data: () => ({
+
     formval: false,
     edit_item: {
       type: "",
@@ -182,6 +183,7 @@ export default {
       mucluong: "",
       duyet: ""
     },
+
     name: "",
     email: "",
     type_bg: null,
@@ -213,6 +215,8 @@ export default {
     checkbox: false
   }),
 
+
+
   computed: {
     checkboxErrors() {
       const errors = [];
@@ -232,6 +236,14 @@ export default {
       !this.$v.name.maxLength &&
         errors.push("Name must be at most 10 characters long");
       !this.$v.name.required && errors.push("Name is required.");
+      return errors;
+    },
+    name_eventErrors() {
+      const errors = [];
+      if (!this.$v.name_event.$dirty) return errors;
+      !this.$v.name_event.maxLength &&
+        errors.push("Name must be at most 200 characters long");
+      !this.$v.name_event.required && errors.push("Name is required.");
       return errors;
     },
     emailErrors() {
@@ -287,6 +299,9 @@ export default {
       this.name = "";
       this.email = "";
       this.select = null;
+      this.count_bg = null;
+      this.type_bg = null;
+      this.date = null;
       this.checkbox = false;
     }
   }
