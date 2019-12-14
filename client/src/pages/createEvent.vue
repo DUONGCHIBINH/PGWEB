@@ -131,11 +131,11 @@
                 required
               ></v-checkbox>
 
-              <v-btn class="mr-4" @click="submit" color="primary">submit</v-btn>
-              <v-btn @click="clear">clear</v-btn>
+              <v-btn class="mr-4" @click="submit" color="primary">Tạo mới</v-btn>
+              <v-btn @click="clear">Xóa</v-btn>
             </v-col>
           </v-container>
-        </v-form>
+        </form>
       </v-container>
     </v-card>
     <br />
@@ -154,6 +154,21 @@ export default {
   computed: {
     computedDateFormatted() {
       return this.formatDate(this.date);
+    }
+  },
+
+  validations: {
+    name_event: { required, maxLength: maxLength(200) },
+    location: { required, maxLength: maxLength(300) },
+    description: { required, maxLength: maxLength(200) },
+    name_company: { required, maxLength: maxLength(200) },
+    name: { required, maxLength: maxLength(200) },
+    email: { required, email },
+    select: { required },
+    checkbox: {
+      checked(val) {
+        return val;
+      }
     }
   },
 
@@ -221,13 +236,13 @@ export default {
     checkboxErrors() {
       const errors = [];
       if (!this.$v.checkbox.$dirty) return errors;
-      !this.$v.checkbox.checked && errors.push("You must agree to continue!");
+      !this.$v.checkbox.checked && errors.push("Vui lòng chọn đồng ý để tiếp tục");
       return errors;
     },
     selectErrors() {
       const errors = [];
       if (!this.$v.select.$dirty) return errors;
-      !this.$v.select.required && errors.push("Item is required");
+      !this.$v.select.required && errors.push("Mục này không được để trống");
       return errors;
     },
     nameErrors() {
@@ -242,15 +257,15 @@ export default {
       const errors = [];
       if (!this.$v.name_event.$dirty) return errors;
       !this.$v.name_event.maxLength &&
-        errors.push("Name must be at most 200 characters long");
-      !this.$v.name_event.required && errors.push("Name is required.");
+        errors.push("Không dài quá 200 kí tự");
+      !this.$v.name_event.required && errors.push("Mục này không được để trống");
       return errors;
     },
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
-      !this.$v.email.email && errors.push("Must be valid e-mail");
-      !this.$v.email.required && errors.push("E-mail is required");
+      !this.$v.email.email && errors.push("Vui lòng nhập đúng Email");
+      !this.$v.email.required && errors.push("E-mail không được để trống");
       return errors;
     }
   },
