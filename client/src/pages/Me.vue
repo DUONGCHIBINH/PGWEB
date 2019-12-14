@@ -6,7 +6,7 @@
           <v-avatar size="150">
             <img
               style="object-fit: cover"
-              :src="`https://picsum.photos/500/300?image=${PG.data[0].avatar * 5 + 10}`"
+              :src="`https://picsum.photos/500/300?image=${cur_PG.avatar * 5 + 10}`"
               alt="AVATAR"
             />
           </v-avatar>
@@ -22,7 +22,7 @@
           <!-- style="background-color:blue" -->
           <b-row align-v="center" align-h="start">
             <b-col sm="*">
-              <div class="font-weight-light display-1">{{PG.data[0].ten}}</div>
+              <div class="font-weight-light display-1">{{cur_PG.ten}}</div>
             </b-col>
             <b-col sm="1">
               <v-btn text icon color="pink">
@@ -48,7 +48,7 @@
                     <v-container>
                       <v-row>
                         <v-col cols="12" sm="6" md="4">
-                          <v-text-field label="Họ và tên*" required></v-text-field>
+                          <v-text-field v-model="edit_item.ten" label="Họ và tên*" required></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
                            <v-menu
@@ -62,14 +62,14 @@
                       >
                         <template v-slot:activator="{ on }">
                           <v-text-field
-                            v-model="date"
+                            v-model="edit_item.ngaysinh"
                             label="Ngày sinh"
                             prepend-icon
                             readonly
                             v-on="on"
                           ></v-text-field>
                         </template>
-                        <v-date-picker v-model="date" no-title scrollable>
+                        <v-date-picker v-model="edit_item.ngaysinh" no-title scrollable>
                           <v-spacer></v-spacer>
                           <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
                           <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -78,17 +78,17 @@
                         </v-col>
                         
                          <v-col cols="12" sm="6" md="4">
-                          <v-text-field label="Đến từ" required></v-text-field>
+                          <v-text-field v-model="edit_item.dentu" label="Đến từ" required></v-text-field>
                         </v-col>
                       <v-col cols="12" sm="6" md="4">
-                          <v-text-field label="Đang sống tại" required></v-text-field>
+                          <v-text-field v-model="edit_item.songtai" label="Đang sống tại" required></v-text-field>
                         </v-col>
                      <v-col cols="12" sm="6" md="4">
-                          <v-text-field label="Làm việc tại" required></v-text-field>
+                          <v-text-field v-model="edit_item.noilamviec" label="Làm việc tại" required></v-text-field>
                         </v-col>
 
                           <v-col cols="12" sm="6" md="4">
-                          <v-text-field label="Số điện thoại*" required></v-text-field>
+                          <v-text-field v-model="edit_item.sdt" label="Số điện thoại*" required></v-text-field>
                         </v-col>
 <!-- 
                         <v-col cols="12" sm="6">
@@ -105,7 +105,7 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                    <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                    <v-btn color="blue darken-1" text @click="save">Save</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-dialog>
@@ -120,17 +120,17 @@
           <b-row align-v="center" align-h="start">
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
-                <b>{{PG.data[0].sosukien }}</b> sự kiện
+                <b>{{cur_PG.sosukien }}</b> sự kiện
               </div>
             </b-col>
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
-                <b>{{PG.data[0].soluotmua }}</b> lượt mua
+                <b>{{cur_PG.soluotmua }}</b> lượt mua
               </div>
             </b-col>
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
-                <b>{{PG.data[0].soyeuthich }}</b> theo dõi
+                <b>{{cur_PG.soyeuthich }}</b> theo dõi
               </div>
             </b-col>
           </b-row>
@@ -139,7 +139,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Làm việc tại:
-                <b>{{PG.data[0].noilamviec }}</b>
+                <b>{{cur_PG.noilamviec }}</b>
               </div>
             </b-col>
           </b-row>
@@ -147,7 +147,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Ngày sinh:
-                <b>{{PG.data[0].ngaysinh.slice(0,10).split("-").reverse().join("/") }}</b>
+                <b>{{cur_PG.ngaysinh.slice(0,10).split("-").reverse().join("/") }}</b>
               </div>
             </b-col>
           </b-row>
@@ -155,7 +155,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Sống tại:
-                <b>{{PG.data[0].songtai}}</b>
+                <b>{{cur_PG.songtai}}</b>
               </div>
             </b-col>
           </b-row>
@@ -163,7 +163,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Đến từ:
-                <b>{{PG.data[0].dentu}}</b>
+                <b>{{cur_PG.dentu}}</b>
               </div>
             </b-col>
           </b-row>
@@ -172,7 +172,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Đã tham gia từ:
-                <b>{{PG.data[0].ngaythamgia.slice(0,10).split("-").reverse().join("/") }}</b>
+                <b>{{cur_PG.ngaythamgia.slice(0,10).split("-").reverse().join("/") }}</b>
               </div>
             </b-col>
           </b-row>
@@ -375,6 +375,8 @@
             <div class="text-center">
               <v-btn rounded outlined color="pink" dark>Lấy thông tin liên hệ</v-btn>
             </div>
+                <br />
+                    <br />
           </v-tab-item>
         </v-tabs-items>
       </v-card>
@@ -393,7 +395,8 @@ export default {
       dialogm1: "",
       dialog: false,
       tab: null,
-      PG: [],
+     edit_item:{},
+      cur_PG:{},
       items: ["Sự kiện đã tham gia", "Hình ảnh", "Thông tin"],
       text:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
@@ -404,7 +407,8 @@ export default {
       axios
         .get(`http://localhost:5000/api/pg?_id=` + id)
         .then(response => {
-          this.PG = response.data;
+          this.cur_PG = response.data.data[0];
+          this.edit_item ={...this.cur_PG};
           if (this.PG.confirmation != "success") {
             this.$router.push({
               path: "Page404",
@@ -415,6 +419,10 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
+    },
+    save(){
+      this.dialog = false;
+      this.cur_PG = {...this.edit_item};
     }
   },
   mounted() {
