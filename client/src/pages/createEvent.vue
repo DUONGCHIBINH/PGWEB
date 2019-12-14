@@ -135,7 +135,6 @@
               <v-btn @click="clear">Xóa</v-btn>
             </v-col>
           </v-container>
-        </form>
         </v-form>
       </v-container>
     </v-card>
@@ -158,20 +157,6 @@ export default {
     }
   },
 
-  validations: {
-    name_event: { required, maxLength: maxLength(200) },
-    location: { required, maxLength: maxLength(300) },
-    description: { required, maxLength: maxLength(200) },
-    name_company: { required, maxLength: maxLength(200) },
-    name: { required, maxLength: maxLength(200) },
-    email: { required, email },
-    select: { required },
-    checkbox: {
-      checked(val) {
-        return val;
-      }
-    }
-  },
 
   //scrip cho calendar
   // date: () => ({
