@@ -13,7 +13,7 @@
               >Tạo sự kiện, việc làm bạn đang muốn tuyển dụng</div>
 
               <v-row>
-                <v-col cols="8">
+                <v-col>
                   <v-text-field
                     v-model="edit_item.ten"
                     :rules="[v => !!v || 'Vui lòng nhập']"
@@ -22,7 +22,7 @@
                     required
                   ></v-text-field>
                 </v-col>
-                <v-col  cols="4">
+                <v-col>
                   <v-text-field
                     v-model="edit_item.diadiem"
                     :rules="[v => !!v || 'Vui lòng nhập']"
@@ -63,7 +63,7 @@
                   >
                     <template v-slot:activator="{ on }">
                       <v-text-field
-                        v-model="edit_item.ngaydienra"
+                        v-model="date"
                         label="Chọn ngày tổ chức sự kiện"
                         :rules="[v => !!v || 'Vui lòng nhập']"
                         prepend-icon
@@ -71,7 +71,7 @@
                         v-on="on"
                       ></v-text-field>
                     </template>
-                    <v-date-picker v-model="edit_item.ngaydienra" no-title scrollable>
+                    <v-date-picker v-model="date" no-title scrollable>
                       <v-spacer></v-spacer>
                       <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
                       <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -166,7 +166,6 @@ export default {
   // }),
 
   data: () => ({
-
     formval: false,
     edit_item: {
       type: "",
@@ -175,7 +174,7 @@ export default {
       diadiem: "",
       mieutacv: "",
       ngaydienra: "",
-      ngaytao: null,
+      ngaytao: "",
       loai: "",
       congty: "",
       soluongtuyen: "",
@@ -183,7 +182,6 @@ export default {
       mucluong: "",
       duyet: ""
     },
-
     name: "",
     email: "",
     type_bg: null,
@@ -215,8 +213,6 @@ export default {
     checkbox: false
   }),
 
-
-
   computed: {
     checkboxErrors() {
       const errors = [];
@@ -238,14 +234,6 @@ export default {
       !this.$v.name.required && errors.push("Name is required.");
       return errors;
     },
-    name_eventErrors() {
-      const errors = [];
-      if (!this.$v.name_event.$dirty) return errors;
-      !this.$v.name_event.maxLength &&
-        errors.push("Name must be at most 200 characters long");
-      !this.$v.name_event.required && errors.push("Name is required.");
-      return errors;
-    },
     emailErrors() {
       const errors = [];
       if (!this.$v.email.$dirty) return errors;
@@ -259,9 +247,6 @@ export default {
     submit() {
       if (this.$refs.form1.validate()) {
         //ham save o day
-        var today= new Date();
-       // this.edit_item.ngaytao = today.getDate() +"/"+today.getMonth() +"/"+ today.getFullYear(); 
-       this.edit_item.ngaytao = today;
         console.log(this.editedItem);
         axios
           .post(`http://localhost:5000/api/event/`, this.edit_item, {
@@ -302,9 +287,6 @@ export default {
       this.name = "";
       this.email = "";
       this.select = null;
-      this.count_bg = null;
-      this.type_bg = null;
-      this.date = null;
       this.checkbox = false;
     }
   }

@@ -15,7 +15,7 @@
           <v-tab>Freelance</v-tab>
 
           <v-tab-item>
-            <b-container>
+            <b-container >
               <b-row align-h="center">
                 <b-col cols="9" align-h="center">
                   <v-card height="50px" class="text-center" elevation="3">
@@ -62,7 +62,7 @@
                       <v-col align="end">
                         <div
                           style="font-size:14px; opacity:0.33"
-                        >{{(new Date()).getDate() - n.ngaytao.slice(0,10).split("-")[2] }} ngày trước</div>
+                        >{{    (new Date()).getDate() - n.ngaytao.slice(0,10).split("-")[2] ==0?'Hôm nay':  (new Date()).getDate() - n.ngaytao.slice(0,10).split("-")[2]+" ngày trước" }} </div>
                       </v-col>
                     </v-row>
                     <v-divider class="info" style="opacity: 0.22; margin:0"></v-divider>

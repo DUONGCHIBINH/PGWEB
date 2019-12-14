@@ -173,7 +173,7 @@ export default {
         name: "Nhà tuyển dụng",
         cap: "Promotion Girl",
         ima: require("../../assets/dangky/congty1.png")
-      }
+      },
     ],
     editedItem: {
       userid: "",
