@@ -2,7 +2,7 @@
   <v-container>
     <v-col>
       <v-row>
-        <v-col cols="9">
+        <v-col cols="12">
           <v-card class="mx-auto pa-3" elevation="5">
             <v-row>
               <v-col cols="auto">
@@ -11,8 +11,77 @@
                 </v-avatar>
               </v-col>
               <v-col>
-                <h3>Tên sự kiện</h3>
-                <h5>Công ty SHPT</h5>
+                <v-row>
+                  <v-col style="padding: 0px 15px 0px 15px"> 
+                    <h3>Tên sự kiện</h3>
+                    <h5>Công ty SHPT</h5>
+                  </v-col>
+                  <v-col align="end" style="padding: 0px 15px 0px 15px">
+                    <v-dialog v-model="dialog" persistent max-width="600px">
+                      <template v-slot:activator="{ on }">
+                        <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
+                        <v-btn class="ma-2" outlined small fab color="indigo" v-on="on">
+                          <v-icon>mdi-pencil</v-icon>
+                        </v-btn>
+                      </template>
+
+                      <v-card>
+                        <v-card-title>
+                          <span class="headline">Chỉnh sửa thông tin Sự kiện</span>
+                        </v-card-title>
+                        <v-card-text>
+                          <v-container>
+                            <v-row>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field label="Legal first name*" required></v-text-field>
+                              </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  label="Legal middle name"
+                                  hint="example of helper text only on focus"
+                                ></v-text-field>
+                              </v-col>
+                              <v-col cols="12" sm="6" md="4">
+                                <v-text-field
+                                  label="Legal last name*"
+                                  hint="example of persistent helper text"
+                                  persistent-hint
+                                  required
+                                ></v-text-field>
+                              </v-col>
+                              <v-col cols="12">
+                                <v-text-field label="Email*" required></v-text-field>
+                              </v-col>
+                              <v-col cols="12">
+                                <v-text-field label="Password*" type="password" required></v-text-field>
+                              </v-col>
+                              <v-col cols="12" sm="6">
+                                <v-select
+                                  :items="['0-17', '18-29', '30-54', '54+']"
+                                  label="Age*"
+                                  required
+                                ></v-select>
+                              </v-col>
+                              <v-col cols="12" sm="6">
+                                <v-autocomplete
+                                  :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
+                                  label="Interests"
+                                  multiple
+                                ></v-autocomplete>
+                              </v-col>
+                            </v-row>
+                          </v-container>
+                          <small>*indicates required field</small>
+                        </v-card-text>
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+                          <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                        </v-card-actions>
+                      </v-card>
+                    </v-dialog>
+                  </v-col>
+                </v-row>
                 <v-divider></v-divider>
                 <v-row>
                   <v-col style="padding: 0px 15px 0px 15px">
@@ -31,7 +100,6 @@
             </v-row>
           </v-card>
         </v-col>
-        <v-col></v-col>
       </v-row>
       <v-row>
         <v-col cols="9">
@@ -96,37 +164,90 @@
           </v-card>
         </v-col>
         <v-col>
-         
-            <v-card class="pa-3" elevation="3">
-              <v-btn class="mt-2" block color="pink" dark>Ứng tuyển ngay</v-btn>
-              <v-btn class="mt-2" block outlined color="indigo">Thêm vào yêu thích</v-btn>
-              <v-divider></v-divider>
-              <div class="text-center">
-                <v-btn class="ma-2" outlined fab color="blue darken-3">
-                  <v-icon>mdi-facebook</v-icon>
-                </v-btn>
-                <v-btn class="ma-2" outlined fab color="blue">
-                  <v-icon>mdi-twitter</v-icon>
-                </v-btn>
-              </div>
-            </v-card>
+          <v-card class="pa-3" elevation="3">
+            <v-btn class="mt-2" block color="pink" dark>Ứng tuyển ngay</v-btn>
+            <v-btn class="mt-2" block outlined color="indigo">Thêm vào yêu thích</v-btn>
+            <v-divider></v-divider>
+            <div class="text-center">
+              <v-btn class="ma-2" outlined fab color="blue darken-3">
+                <v-icon>mdi-facebook</v-icon>
+              </v-btn>
+              <v-btn class="ma-2" outlined fab color="blue">
+                <v-icon>mdi-twitter</v-icon>
+              </v-btn>
+            </div>
+          </v-card>
 
+          <br />
 
-            <br>
-            
-            <v-card class="pa-3" elevation="3">
-              <div class="title font-weight-black" style="color:#01579B">Công ty đang tuyển</div>
-              <v-divider></v-divider>
-              <div class="text-center">
-                <v-btn class="ma-2" outlined fab color="blue darken-3">
-                  <v-icon>mdi-facebook</v-icon>
-                </v-btn>
-                <v-btn class="ma-2" outlined fab color="blue">
-                  <v-icon>mdi-twitter</v-icon>
-                </v-btn>
-              </div>
-            </v-card>
-        
+          <v-card class="pa-3" elevation="3">
+            <div class="title font-weight-black" style="color:#01579B">Công ty đang tuyển</div>
+            <v-divider></v-divider>
+            <div>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Công ty SHPT</v-list-item-title>
+                    <v-list-item-subtitle>Tên sự kiện abc</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Công ty SHPT</v-list-item-title>
+                    <v-list-item-subtitle>Tên sự kiện abc</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Công ty SHPT</v-list-item-title>
+                    <v-list-item-subtitle>Tên sự kiện abc</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </div>
+          </v-card>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="9">
+          <!-- <v-card class="mx-auto" elevation="5">
+            <v-toolbar>
+              <v-toolbar-title
+                class="title font-weight-black"
+                style="color:#01579B"
+              >Sự kiện tương tự</v-toolbar-title>
+
+              <v-spacer></v-spacer>
+
+            </v-toolbar>
+
+            <v-list two-line>
+              <v-list-item-group v-model="selected"  active-class="pink--text">
+                <template v-for="(item, index) in items">
+                  <v-list-item :key="item.title">
+                    <template v-slot:default="{ active, toggle }">
+                      <v-list-item-content>
+                        <v-list-item-title v-text="item.title"></v-list-item-title>
+                        <v-list-item-subtitle class="text--primary" v-text="item.headline"></v-list-item-subtitle>
+                        <v-list-item-subtitle v-text="item.subtitle"></v-list-item-subtitle>
+                      </v-list-item-content>
+
+                      <v-list-item-action>
+                        <v-list-item-action-text v-text="item.action"></v-list-item-action-text>
+                        <v-icon v-if="!active" color="grey lighten-1">mdi-star</v-icon>
+
+                        <v-icon v-else color="yellow">mdi-new</v-icon>
+                      </v-list-item-action>
+                    </template>
+                  </v-list-item>
+                  <v-divider v-if="index + 1 < items.length" :key="index"></v-divider>
+                </template>
+              </v-list-item-group>
+            </v-list>
+          </v-card>-->
         </v-col>
       </v-row>
     </v-col>
@@ -135,5 +256,45 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data: () => ({
+    dialog: false,
+    selected: [2],
+    items: [
+      {
+        action: "15 min",
+        headline: "Brunch this weekend?",
+        title: "Ali Connors",
+        subtitle:
+          "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
+      },
+      {
+        action: "2 hr",
+        headline: "Summer BBQ",
+        title: "me, Scrott, Jennifer",
+        subtitle: "Wish I could come, but I'm out of town this weekend."
+      },
+      {
+        action: "6 hr",
+        headline: "Oui oui",
+        title: "Sandra Adams",
+        subtitle: "Do you have Paris recommendations? Have you ever been?"
+      },
+      {
+        action: "12 hr",
+        headline: "Birthday gift",
+        title: "Trevor Hansen",
+        subtitle:
+          "Have any ideas about what we should get Heidi for her birthday?"
+      },
+      {
+        action: "18hr",
+        headline: "Recipe to try",
+        title: "Britta Holt",
+        subtitle:
+          "We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
+      }
+    ]
+  })
+};
 </script>
