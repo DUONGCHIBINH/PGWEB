@@ -12,9 +12,17 @@
               </v-col>
               <v-col>
                 <v-row>
-                  <v-col style="padding: 0px 15px 0px 15px"> 
-                    <h3>Tên sự kiện</h3>
-                    <h5>Công ty SHPT</h5>
+                  <v-col style="padding: 0px 15px 0px 15px">
+                    <component
+                       :transition="'scale-transition'"
+                     :is="'div'"
+                      hide-on-leave
+                    >
+                      <v-skeleton-loader v-if="loading"  type="article"></v-skeleton-loader>
+                    <h3>{{cur_event.ten}}</h3>
+                    <h5>{{cur_event.congty}}</h5>
+                    </component>
+                   
                   </v-col>
                   <v-col align="end" style="padding: 0px 15px 0px 15px">
                     <v-dialog v-model="dialog" persistent max-width="600px">
@@ -33,12 +41,14 @@
                           <v-container>
                             <v-row>
                               <v-col cols="12" sm="6" md="4">
-                                <v-text-field label="Legal first name*" required></v-text-field>
+                                <v-text-field v-model="edit_item.ten" label="Tên sự kiện*" required></v-text-field>
                               </v-col>
                               <v-col cols="12" sm="6" md="4">
                                 <v-text-field
-                                  label="Legal middle name"
-                                  hint="example of helper text only on focus"
+                                  v-model="edit_item.congty"
+                                  label="Tên công ty"
+                                  disabled
+                                  required
                                 ></v-text-field>
                               </v-col>
                               <v-col cols="12" sm="6" md="4">
@@ -76,7 +86,7 @@
                         <v-card-actions>
                           <v-spacer></v-spacer>
                           <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-                          <v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
+                          <v-btn color="blue darken-1" text @click="save">Save</v-btn>
                         </v-card-actions>
                       </v-card>
                     </v-dialog>
@@ -111,7 +121,7 @@
                 <v-row>
                   <v-col>
                     <div>
-                      <b>Đối tượng tuyển:</b> PG
+                      <b>Đối tượng tuyển:</b> EVENT
                     </div>
                   </v-col>
                   <v-col align="end">
@@ -185,21 +195,28 @@
             <v-divider></v-divider>
             <div>
               <v-list>
-                <v-list-item>
+                <v-list-item @click>
                   <v-list-item-content>
                     <v-list-item-title>Công ty SHPT</v-list-item-title>
                     <v-list-item-subtitle>Tên sự kiện abc</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
                 <v-divider></v-divider>
-                <v-list-item>
+                <v-list-item @click>
                   <v-list-item-content>
                     <v-list-item-title>Công ty SHPT</v-list-item-title>
                     <v-list-item-subtitle>Tên sự kiện abc</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
                 <v-divider></v-divider>
-                <v-list-item>
+                <v-list-item @click>
+                  <v-list-item-content>
+                    <v-list-item-title>Công ty SHPT</v-list-item-title>
+                    <v-list-item-subtitle>Tên sự kiện abc</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-divider></v-divider>
+                <v-list-item @click>
                   <v-list-item-content>
                     <v-list-item-title>Công ty SHPT</v-list-item-title>
                     <v-list-item-subtitle>Tên sự kiện abc</v-list-item-subtitle>
@@ -256,45 +273,49 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data: () => ({
+    loading:true,
     dialog: false,
-    selected: [2],
-    items: [
-      {
-        action: "15 min",
-        headline: "Brunch this weekend?",
-        title: "Ali Connors",
-        subtitle:
-          "I'll be in your neighborhood doing errands this weekend. Do you want to hang out?"
-      },
-      {
-        action: "2 hr",
-        headline: "Summer BBQ",
-        title: "me, Scrott, Jennifer",
-        subtitle: "Wish I could come, but I'm out of town this weekend."
-      },
-      {
-        action: "6 hr",
-        headline: "Oui oui",
-        title: "Sandra Adams",
-        subtitle: "Do you have Paris recommendations? Have you ever been?"
-      },
-      {
-        action: "12 hr",
-        headline: "Birthday gift",
-        title: "Trevor Hansen",
-        subtitle:
-          "Have any ideas about what we should get Heidi for her birthday?"
-      },
-      {
-        action: "18hr",
-        headline: "Recipe to try",
-        title: "Britta Holt",
-        subtitle:
-          "We should eat this: Grate, Squash, Corn, and tomatillo Tacos."
-      }
-    ]
-  })
+    edit_item: {},
+    cur_event: {}
+  }),
+  methods: {
+    reload(id) {
+      axios
+        .get(`http://localhost:5000/api/event?_id=` + id)
+        .then(response => {
+          console.log("Hkfsdjkflsdjkl============");
+          console.log(response.data);
+          if (
+            response.data.confirmation != "success" ||
+            response.data.data.length == 0
+          ) {
+            this.$router.push({
+              path: "Page404",
+              query: { id: id, mess: "Không_tìm_thấy_EVENT_có_id_này" }
+            });
+          }
+          this.cur_event = response.data.data[0];
+          this.edit_item = { ...this.cur_event };
+          this.loading =false;
+        })
+        .catch(e => {
+          this.errors.push(e);
+          this.$router.push({
+            path: "Page404",
+            query: { id: id, mess: "Có_lỗi_xảy_ra" }
+          });
+        });
+    },
+    save() {
+      this.dialog = false;
+      this.cur_event = { ...this.edit_item };
+    }
+  },
+  mounted() {
+    this.reload(this.$route.query.id);
+  }
 };
 </script>

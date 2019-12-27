@@ -407,17 +407,23 @@ export default {
       axios
         .get(`http://localhost:5000/api/pg?_id=` + id)
         .then(response => {
-          this.cur_PG = response.data.data[0];
-          this.edit_item ={...this.cur_PG};
-          if (this.PG.confirmation != "success") {
+     
+          if (response.data.confirmation != "success" || response.data.data.length==0) {
             this.$router.push({
               path: "Page404",
-              query: { id: id, mess: "Không tìm thấy PG có id này" }
+              query: { id: id, mess: "Không_tìm_thấy_PG_có_id_này" }
             });
           }
+          this.cur_PG = response.data.data[0];
+          this.edit_item ={...this.cur_PG};
+
         })
         .catch(e => {
           this.errors.push(e);
+           this.$router.push({
+              path: "Page404",
+              query: { id: id, mess: "Có_lỗi_xảy_ra" }
+            });
         });
     },
     save(){

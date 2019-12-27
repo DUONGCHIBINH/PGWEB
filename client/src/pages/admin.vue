@@ -38,7 +38,8 @@ export default {
         { title: "PG/PB", icon: "mdi-help-box", link: "/admin/adpg" },
         { title: "Quản lý", icon: "mdi-help-box", link: "/admin/adql" },
         { title: "Sự kiện", icon: "mdi-help-box", link: "/admin/adevent" },
-        { title: "Thanh toán", icon: "mdi-help-box", link: "/admin/6" }
+        { title: "Thanh toán", icon: "mdi-help-box", link: "/admin/6" },
+        { title: "Sự kiện của tôi", icon: "mdi-help-box", link: "/admin/myevent" }
       ],
       right: null
     };

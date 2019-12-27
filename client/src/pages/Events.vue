@@ -77,7 +77,7 @@
                         <div class="text2line" style="font-size:15px;">{{n.mieutacv}}</div>
                       </v-col>
                       <v-col class="shrink">
-                        <v-btn color="pink" style="color:white" :to="{name: 'eventchitiet'}" >Xem ngay</v-btn>
+                        <v-btn color="pink" style="color:white"  @click="$router.push({ path: 'eventchitiet', query: { id: n._id } })" >Xem ngay</v-btn>
                       </v-col>
                     </v-row>
                   </v-alert>
@@ -209,7 +209,7 @@
                         >Công ty ABC cần tuyển 12 PG thời vụ, khai trương ra mắt sự kiện abc. Yêu cầu abc xyz. Thưởng thêm cho Pg tích cực, chi tiết xin liên hệ số dien thoai</div>
                       </v-col>
                       <v-col class="shrink">
-                        <v-btn color="pink">Xem ngay</v-btn>
+                        <v-btn color="pink" >Xem ngay</v-btn>
                       </v-col>
                     </v-row>
                   </v-alert>
