@@ -2,7 +2,7 @@
   <v-app>
     <Toolbar />
 
-    <router-view>
+    <router-view > 
         </router-view>
         <div   style="margin-top: 25px;"></div>
     <!--Footer -->

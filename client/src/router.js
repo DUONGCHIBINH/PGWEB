@@ -16,6 +16,7 @@ import Login from './pages/Login.vue'
 import Auth0Callback from './pages/Auth0Callback.vue'
 import createEvent from './pages/createEvent.vue'
 import dangky from './pages/login/dangky.vue'
+import eventchitiet from './pages/Eventchitiet.vue'
 
 Vue.use(Router)
 
@@ -86,6 +87,12 @@ const router = new Router({
             component: createEvent,
             meta: { requiresAuth: true }
         },
+        {
+            path: '/eventchitiet',
+            name: 'eventchitiet',
+            component: eventchitiet
+        },
+
         {
             path: '/dangky',
             name: 'dangky',

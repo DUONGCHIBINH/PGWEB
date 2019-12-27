@@ -8,6 +8,12 @@
           justify="center"
           style="color:#34495e;"
         >Tìm sự kiện, việc làm mới nhất</div>
+        <br>
+        <div align="center" justify="center">
+          <v-btn class="m-1" rounded outlined color="primary">Tạo hồ sơ nhà tuyển dụng</v-btn>
+          <v-btn class="m-1" rounded outlined color="success"  :to="{name: 'createEvent'}"  >Đăng việc</v-btn>
+        </div>
+        <br>
 
         <v-tabs centered color="#34495e">
           <v-tab>Full time</v-tab>
@@ -15,7 +21,7 @@
           <v-tab>Freelance</v-tab>
 
           <v-tab-item>
-            <b-container >
+            <b-container>
               <b-row align-h="center">
                 <b-col cols="9" align-h="center">
                   <v-card height="50px" class="text-center" elevation="3">
@@ -51,7 +57,7 @@
                   >
                     <v-row style="  max-height: 4.5em; " align="center">
                       <v-col sm="9">
-                        <h6>{{n.ten}}  ( {{ n.ngaydienra.slice(0,10).split("-").reverse().join("/")  }} )</h6>
+                        <h6>{{n.ten}} ( {{ n.ngaydienra.slice(0,10).split("-").reverse().join("/") }} )</h6>
 
                         <p style="font-size:14px">
                           tại
@@ -62,7 +68,7 @@
                       <v-col align="end">
                         <div
                           style="font-size:14px; opacity:0.33"
-                        >{{    (new Date()).getDate() - n.ngaytao.slice(0,10).split("-")[2] ==0?'Hôm nay':  (new Date()).getDate() - n.ngaytao.slice(0,10).split("-")[2]+" ngày trước" }} </div>
+                        >{{ (new Date()).getDate() - n.ngaytao.slice(0,10).split("-")[2] ==0?'Hôm nay': (new Date()).getDate() - n.ngaytao.slice(0,10).split("-")[2]+" ngày trước" }}</div>
                       </v-col>
                     </v-row>
                     <v-divider class="info" style="opacity: 0.22; margin:0"></v-divider>
@@ -71,7 +77,7 @@
                         <div class="text2line" style="font-size:15px;">{{n.mieutacv}}</div>
                       </v-col>
                       <v-col class="shrink">
-                        <v-btn color="pink" style="color:white">Xem ngay</v-btn>
+                        <v-btn color="pink" style="color:white" :to="{name: 'eventchitiet'}" >Xem ngay</v-btn>
                       </v-col>
                     </v-row>
                   </v-alert>
@@ -236,7 +242,6 @@ export default {
         .get(`http://localhost:5000/api/event`)
         .then(response => {
           this.posts = response.data.data;
-  
         })
         .catch(e => {
           this.errors.push(e);
@@ -245,7 +250,6 @@ export default {
   },
   mounted() {
     this.reload();
-   
   }
 };
 </script>

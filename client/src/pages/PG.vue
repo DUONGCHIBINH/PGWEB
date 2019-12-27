@@ -2,8 +2,12 @@
   <div class="white">
     <b-container>
       <v-card>
-        <div class="display-1" align="center" justify="center" style="color:#34495e;">Tìm PG PB</div>
-
+        <div class="display-1" align="center" justify="center" style="color:#34495e;">Tìm nhân sự event</div>
+         <br>
+        <div align="center" justify="center">
+          <v-btn class="m-1" rounded outlined color="primary">Tạo hồ sơ PG/PB</v-btn>
+        </div>
+        <br>
         <v-tabs centered color="#34495e">
           <v-tab>PG loại I</v-tab>
           <v-tab>PG loại II</v-tab>

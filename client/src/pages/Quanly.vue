@@ -2,8 +2,12 @@
   <div class="white">
     <b-container>
       <v-card>
-        <div class="display-1" align="center" justify="center" style="color:#34495e;">Tìm QUẢN LÝ PB</div>
-
+        <div class="display-1" align="center" justify="center" style="color:#34495e;">Tìm người đại diện, quản lý nhân sự event</div>
+    <br>
+        <div align="center" justify="center">
+          <v-btn class="m-1" rounded outlined color="primary">Tạo hồ sơ quản lý</v-btn>
+        </div>
+        <br>
         <v-tabs centered color="#34495e">
           <v-tab>QUẢN LÝ loại I</v-tab>
           <v-tab>QUẢN LÝ loại II</v-tab>
