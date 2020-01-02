@@ -97,13 +97,16 @@
                   <v-col style="padding: 0px 15px 0px 15px">
                     <strong>Ngày duyệt:</strong> 12/12/2019
                   </v-col>
+                   <v-col align="end" style="padding: 0px 15px 0px 15px;  color: gray;">
+                    <strong>Đã ứng tuyển:</strong> 10
+                  </v-col>
                 </v-row>
                 <v-row>
                   <v-col style="padding: 0px 15px 0px 15px">
                     <strong>Hạn ứng tuyển:</strong> 24/12/2019
                   </v-col>
                   <v-col align="end" style="padding: 0px 15px 0px 15px;  color: gray;">
-                    <strong>Lượt xem:</strong> 222
+                    <strong>Đã xem:</strong> 222
                   </v-col>
                 </v-row>
               </v-col>
@@ -175,7 +178,7 @@
         </v-col>
         <v-col>
           <v-card class="pa-3" elevation="3">
-            <v-btn class="mt-2" block color="pink" dark>Ứng tuyển ngay</v-btn>
+            <v-btn class="mt-2" block color="pink" dark @click="themmoi">Ứng tuyển ngay</v-btn>
             <v-btn class="mt-2" block outlined color="indigo">Thêm vào yêu thích</v-btn>
             <v-divider></v-divider>
             <div class="text-center">
@@ -312,7 +315,47 @@ export default {
     save() {
       this.dialog = false;
       this.cur_event = { ...this.edit_item };
+    },
+    themmoi() {
+      console.log("----------------------------------------------------");
+
+      var temp = {
+        applyid:'123',
+        eventid:'456',
+        list_apply:[]
+      }
+   temp.list_apply.push(this.cur_event);
+
+      axios
+        .post(`http://localhost:5000/api/apply/`,temp, {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          console.log(response);
+          if (response.data.confirmation == "add success") {
+           this.$dialog
+                .alert("Thêm thành công!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+            // this.reload();
+            return true;
+          } else {
+           this.$dialog
+                .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+            return false;
+          }
+        })
+        .catch(e => {
+         this.$dialog
+                .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+          console.log(e);
+          return false;
+        });
     }
+   
   },
   mounted() {
     this.reload(this.$route.query.id);

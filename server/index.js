@@ -47,6 +47,9 @@ app.use('/api/event', event);
 const pg = require('./routes/api/pg');
 app.use('/api/pg', pg);
 
+const apply = require('./routes/api/apply');
+app.use('/api/apply', apply);
+
 const momo = require('./routes/api/momo');
 app.use('/api/momo', momo);
 

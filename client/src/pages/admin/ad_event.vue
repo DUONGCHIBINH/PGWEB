@@ -167,7 +167,7 @@ export default {
           .get(`http://localhost:5000/api/event/remove?id=` + item._id)
           .then(response => {
             console.log(response.data);
-            if (response.data.confirmation == "remove success") {
+            if (response.data.confirmation == "success") {
               this.$dialog
                 .alert("Xóa thành công!", { okText: "Tiếp tục" })
                 .then(function(dialog) {});

@@ -62,7 +62,7 @@
             <v-tab-item>
                <v-data-table :headers="headers" :items="ungtuyen" class="elevation-1">
                 <template v-slot:item.action="{ item }">
-                  <v-btn color="pink">Lấy thông tin</v-btn>
+                  <v-btn color="pink" @click="momo">Lấy thông tin</v-btn>
                 </template>
                 <template v-slot:no-data>
                   <v-btn color="primary">Chưa có dữ liệu</v-btn>
@@ -131,7 +131,11 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
-    }
+    },
+    momo(){
+     // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
+        window.location.href = 'https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM87419&amount=1100&orderId=MM87419&signature=90e946d6a3e74b228b685e9ce6d5283f3b9404f205746532e2991d2da89d430b&requestType=captureMoMoWallet'
+    },
   },
   mounted() {
     this.reload();
