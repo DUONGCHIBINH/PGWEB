@@ -1,22 +1,40 @@
 <template>
     <v-container>
       <v-slide-y-transition mode="out-in">
+     
           <v-layout row wrap align-center>
             <v-flex xs12 sm8 offset-sm2 md6 offset-md3 lg4 offset-lg4>
-              <v-card style="margin-bottom:200px;">
-                <div class="pa-3">
-                    LOGO GOES HERE
+                 <br>
+        <br>
+              <v-card style="margin-bottom:200px;" elevation="5">
+                <!-- <div class="pa-3">
+                  Đăng nhập
                 </div>
-                <hr>
+                <hr> -->
                 <v-card-title primary-title>
                   <div>
-                    <h3 class="headline mb-0">Welcome to PG-WORKS</h3>
-                    
-                  </div>
+                    <h3 class="headline mb-0">Chào các bạn đến với PGWork</h3>
+                    </div>
                 </v-card-title>
+                <v-card-text>
+                  Đăng nhập tiện lợi hơn với mạng xã hội
+                </v-card-text>
                 <v-card-actions>
-                  <v-btn color="success"  @click="auth0Login()">Login</v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn color="success" block  @click="auth0Login()">Đăng nhập với gmail</v-btn>
+                   <v-spacer></v-spacer>
                 </v-card-actions>
+                     <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="blue" block dark  @click="auth0Login()">Đăng nhập với Facebook</v-btn>
+                   <v-spacer></v-spacer>
+                </v-card-actions>
+                     <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn  block  dark @click="auth0Login()">Đăng nhập với Github</v-btn>
+                   <v-spacer></v-spacer>
+                </v-card-actions>
+                             
               </v-card>
             </v-flex>
           </v-layout>

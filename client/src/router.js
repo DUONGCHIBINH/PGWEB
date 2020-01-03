@@ -12,6 +12,7 @@ import aduser from './pages/admin/ad_user.vue'
 import adevent from './pages/admin/ad_event.vue'
 import adpg from './pages/admin/ad_pg.vue'
 import myevent from './pages/admin/myevent.vue'
+import mythanhtoan from './pages/admin/mythanhtoan.vue'
 import Store from './store/store'
 import Login from './pages/Login.vue'
 import Auth0Callback from './pages/Auth0Callback.vue'
@@ -64,6 +65,7 @@ const router = new Router({
                 { path: 'aduser', component: aduser, name: 'aduser' },
                 { path: 'adevent', component: adevent, name: 'adevent' },
                 { path: 'adpg', component: adpg, name: 'adpg' },
+                { path: 'mythanhtoan', component: mythanhtoan, name: 'mythanhtoan' },
                 { path: 'myevent', component: myevent, name: 'myevent' },
                 { path: ':id', component: UserInfo, props: true }
             ]

@@ -62,12 +62,19 @@
             <v-tab-item>
                <v-data-table :headers="headers" :items="ungtuyen" class="elevation-1">
                 <template v-slot:item.action="{ item }">
-                  <v-btn color="pink" @click="momo">Lấy thông tin</v-btn>
+                  <v-btn color="pink" @click="momo" dark>Lấy thông tin</v-btn>
                 </template>
                 <template v-slot:no-data>
                   <v-btn color="primary">Chưa có dữ liệu</v-btn>
                 </template>
               </v-data-table>
+             <v-col>
+                <v-row> 
+                <v-spacer></v-spacer>
+                <v-btn color="teal" @click="momo" dark> Lấy tất cả </v-btn>
+                      <v-spacer></v-spacer>
+              </v-row>
+             </v-col>
             </v-tab-item>
 
 

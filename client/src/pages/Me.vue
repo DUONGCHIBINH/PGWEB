@@ -13,7 +13,7 @@
           <br />
           <br />
           <b-col sm="12">
-            <v-btn class="ma-2" tile outlined color="success">
+            <v-btn class="ma-2" tile outlined color="success" @click="momo" >
               <v-icon left>mdi-phone</v-icon>Liên hệ
             </v-btn>
           </b-col>
@@ -373,7 +373,7 @@
             <br />
             <br />
             <div class="text-center">
-              <v-btn rounded outlined color="pink" dark>Lấy thông tin liên hệ</v-btn>
+              <v-btn @click="momo"  outline color="pink" dark >Lấy thông tin liên hệ</v-btn>
             </div>
                 <br />
                     <br />
@@ -429,7 +429,12 @@ export default {
     save(){
       this.dialog = false;
       this.cur_PG = {...this.edit_item};
-    }
+    },
+    momo(){
+     // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
+        window.location.href = 'https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM87419&amount=1100&orderId=MM87419&signature=90e946d6a3e74b228b685e9ce6d5283f3b9404f205746532e2991d2da89d430b&requestType=captureMoMoWallet'
+    },
+    
   },
   mounted() {
     this.reload(this.$route.query.id);
