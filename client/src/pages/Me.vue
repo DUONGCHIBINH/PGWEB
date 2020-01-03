@@ -432,9 +432,47 @@ export default {
     },
     momo(){
      // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
-        window.location.href = 'https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM87419&amount=1100&orderId=MM87419&signature=90e946d6a3e74b228b685e9ce6d5283f3b9404f205746532e2991d2da89d430b&requestType=captureMoMoWallet'
-    },
+        window.location.href = 'https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMOBKUN20180529&accessKey=klm05TvNBzhg7h7j&requestId=1578020735&amount=99999&orderId=1578020735&signature=752c9232f58958387dfc9c89dd73a6a3e87c98e584abfb52b4bb9909cc784eb7&requestType=captureMoMoWallet'
     
+      //   var order ={
+      //   "accessKey": "QIomPPOMzVHXcXMY",
+      //   "partnerCode": "MOMOAOBT20191229",
+      //   "requestType": "captureMoMoWallet",
+      //   "notifyUrl": "https://momo.vn",
+      //   "returnUrl": "https://momo.vn",
+      //   "orderId": "test01",
+      //   "amount": "99999",
+      //   "orderInfo": "testinfo",
+      //   "requestId": "test01",
+      //   "extraData": "name=binh",
+      //   "signature": "72818b03fe10e467414287b6eeb1973017db2cabf38ba67dbc0edb6f3beda34c"
+      // };
+
+    //     var order ={
+    //     "orderId": "test01",
+        
+    //     "orderInfo": "testinfo",
+    //     "requestId": "test01",
+    //     "extraData": "name=binh",    
+    //   };
+    //   var request = 'orderId=pg'+(new Date).toTimeString()+ '&requestId=pg'+(new Date).toTimeString()+ '&orderInfo=Lấy thông tin '+this.cur_PG.ten + '&extraData=pgid='+this.cur_PG._id
+    //   alert(request);
+    //   axios
+    //     .get(`http://localhost:5000/momo?`+request)
+    //     .then(response => {
+    //       if(response.date!='')
+    //  window.location.href = response.data;
+    
+    //     })
+    //     .catch(e => {
+    //       this.errors.push(e);
+    //        this.$router.push({
+    //           path: "Page404",
+    //           query: { id: id, mess: "Có_lỗi_xảy_ra" }
+    //         });
+    //     });
+    },
+           
   },
   mounted() {
     this.reload(this.$route.query.id);

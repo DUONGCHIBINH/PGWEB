@@ -53,8 +53,13 @@ app.use('/api/apply', apply);
 const momo = require('./routes/api/momo');
 app.use('/api/momo', momo);
 
+
+var CryptoJS = require("crypto-js");
+
 app.get('/momo', function(req, res) {
-    res.send("MÔMMOO");
+    var mess = 'partnerCode=MOMOAOBT20191229&accessKey=QIomPPOMzVHXcXMY&requestId=test01&amount=99999&orderId=test01&orderInfo=testinfo&returnUrl=https://momo.vn&notifyUrl=https://momo.vn&extraData=name=binh'
+    var key = '7OFeEEMd6JZj7xIXndDQw41zie2em3gZ'
+    res.send(CryptoJS.HmacSHA256(mess, key).toString());
 })
 
 app.get('/', function(req, res) {
