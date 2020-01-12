@@ -58,9 +58,8 @@
               </v-data-table>
             </v-tab-item>
 
-
             <v-tab-item>
-               <v-data-table :headers="headers" :items="ungtuyen" class="elevation-1">
+              <v-data-table :headers="headers" :items="ungtuyen" class="elevation-1">
                 <template v-slot:item.action="{ item }">
                   <v-btn color="pink" @click="momo" dark>Lấy thông tin</v-btn>
                 </template>
@@ -68,19 +67,17 @@
                   <v-btn color="primary">Chưa có dữ liệu</v-btn>
                 </template>
               </v-data-table>
-             <v-col>
-                <v-row> 
-                <v-spacer></v-spacer>
-                <v-btn color="teal" @click="momo" dark> Lấy tất cả </v-btn>
-                      <v-spacer></v-spacer>
-              </v-row>
-             </v-col>
+              <v-col>
+                <v-row>
+                  <v-spacer></v-spacer>
+                  <v-btn color="teal" @click="momo" dark>Lấy tất cả</v-btn>
+                  <v-spacer></v-spacer>
+                </v-row>
+              </v-col>
             </v-tab-item>
 
-
             <v-tab-item>
-                    <v-data-table :headers="headers" :items="ungtuyen" class="elevation-1">
-               
+              <v-data-table :headers="headers" :items="ungtuyen" class="elevation-1">
                 <template v-slot:no-data>
                   <v-btn color="primary">Chưa có dữ liệu</v-btn>
                 </template>
@@ -139,10 +136,37 @@ export default {
           this.errors.push(e);
         });
     },
-    momo(){
-     // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
-        window.location.href = 'https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM87419&amount=1100&orderId=MM87419&signature=90e946d6a3e74b228b685e9ce6d5283f3b9404f205746532e2991d2da89d430b&requestType=captureMoMoWallet'
-    },
+    momo() {
+      // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
+      // window.location.href = 'https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM87419&amount=1100&orderId=MM87419&signature=90e946d6a3e74b228b685e9ce6d5283f3b9404f205746532e2991d2da89d430b&requestType=captureMoMoWallet'
+      let req = {
+        requestId: "ID004",
+        amount: 99000,
+        orderId: "ID004",
+        orderInfo: "Chi tiet thanh toan",
+        returnUrl: "https://momo.vn",
+        notifyUrl: "https://momo.vn",
+        extraData: "name=binh"
+      };
+      axios
+
+        .get(`http://localhost:5000/api/momo`, { params: req })
+        .then(response => {
+          if (response.data.errorCode != 0) {
+            alert(response.data.localMessage);
+            console.log(response.data)
+
+          } else {
+            alert(response.data.localMessage);
+           //  console.log(response.data)
+               window.open(response.data.payUrl, "_blank");  
+          
+          }
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+    }
   },
   mounted() {
     this.reload();
