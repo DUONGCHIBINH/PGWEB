@@ -19,7 +19,7 @@ import Auth0Callback from './pages/Auth0Callback.vue'
 import createEvent from './pages/createEvent.vue'
 import dangky from './pages/login/dangky.vue'
 import eventchitiet from './pages/Eventchitiet.vue'
-
+import momo from './pages/Momoreturn.vue'
 Vue.use(Router)
 
 
@@ -102,6 +102,11 @@ const router = new Router({
             name: 'dangky',
             component: dangky,
             meta: { requiresAuth: true }
+        },
+        {
+            path: '/momo',
+            name: 'momo',
+            component: momo,
         },
         {
             path: '*',
