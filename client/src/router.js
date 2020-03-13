@@ -27,91 +27,91 @@ const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [{
-            path: '/auth0callback',
-            name: 'auth0callback',
-            component: Auth0Callback,
-        }, {
-            path: '/',
-            name: 'Home',
-            component: Home
-        },
-        {
-            path: '/home',
-            name: 'home',
-            component: Home
-        },
-        {
-            path: '/event',
-            name: 'event',
-            component: Events
-        },
-        {
-            path: '/sukien',
-            name: 'sukien',
-            component: Events
-        },
-        {
-            path: '/quanly',
-            name: 'quanly',
-            component: Quanly
-        },
-        {
-            path: '/admin',
-            name: 'admin',
-            component: admin,
-            meta: { requiresAuth: true },
-            children: [
-                //UserInfo component is rendered when /user/:id is matched
-                { path: 'aduser', component: aduser, name: 'aduser' },
-                { path: 'adevent', component: adevent, name: 'adevent' },
-                { path: 'adpg', component: adpg, name: 'adpg' },
-                { path: 'mythanhtoan', component: mythanhtoan, name: 'mythanhtoan' },
-                { path: 'myevent', component: myevent, name: 'myevent' },
-                { path: ':id', component: UserInfo, props: true }
-            ]
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: Login
-        },
-        {
-            path: '/pg',
-            name: 'pg',
-            component: PG
-        },
-        {
-            path: '/me',
-            name: 'me',
-            component: Me
-        },
-        {
-            path: '/createEvent',
-            name: 'createEvent',
-            component: createEvent,
-            meta: { requiresAuth: true }
-        },
-        {
-            path: '/eventchitiet',
-            name: 'eventchitiet',
-            component: eventchitiet
-        },
+        path: '/auth0callback',
+        name: 'auth0callback',
+        component: Auth0Callback,
+    }, {
+        path: '/',
+        name: 'Home',
+        component: Home
+    },
+    {
+        path: '/home',
+        name: 'home',
+        component: Home
+    },
+    {
+        path: '/event',
+        name: 'event',
+        component: Events
+    },
+    {
+        path: '/sukien',
+        name: 'sukien',
+        component: Events
+    },
+    {
+        path: '/quanly',
+        name: 'quanly',
+        component: Quanly
+    },
+    {
+        path: '/admin',
+        name: 'admin',
+        component: admin,
+        meta: { requiresAuth: true },
+        children: [
+            //UserInfo component is rendered when /user/:id is matched
+            { path: 'aduser', component: aduser, name: 'aduser' },
+            { path: 'adevent', component: adevent, name: 'adevent' },
+            { path: 'adpg', component: adpg, name: 'adpg' },
+            { path: 'mythanhtoan', component: mythanhtoan, name: 'mythanhtoan' },
+            { path: 'myevent', component: myevent, name: 'myevent' },
+            { path: ':id', component: UserInfo, props: true }
+        ]
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login
+    },
+    {
+        path: '/pg',
+        name: 'pg',
+        component: PG
+    },
+    {
+        path: '/me',
+        name: 'me',
+        component: Me
+    },
+    {
+        path: '/createEvent',
+        name: 'createEvent',
+        component: createEvent,
+        meta: { requiresAuth: true, requiresQL: true }
+    },
+    {
+        path: '/eventchitiet',
+        name: 'eventchitiet',
+        component: eventchitiet
+    },
 
-        {
-            path: '/dangky',
-            name: 'dangky',
-            component: dangky,
-            meta: { requiresAuth: true }
-        },
-        {
-            path: '/momo',
-            name: 'momo',
-            component: momo,
-        },
-        {
-            path: '*',
-            component: Page404
-        },
+    {
+        path: '/dangky',
+        name: 'dangky',
+        component: dangky,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/momo',
+        name: 'momo',
+        component: momo,
+    },
+    {
+        path: '*',
+        component: Page404
+    },
 
     ]
 });
@@ -132,7 +132,7 @@ router.beforeEach((to, from, next) => {
         // Check whether the current time is past the Access Token's expiry time
         let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
         Store.state.cur_user = JSON.parse(localStorage.getItem('cur_user'));
-        if (localStorage.getItem('cur_userdb')) Store.state.cur_userdb = JSON.parse(localStorage.getItem('cur_userdb'));
+        Store.state.cur_userdb = JSON.parse(localStorage.getItem('cur_userdb'));
         // set localAuthTokenCheck true if unexpired / false if expired
         routerAuthCheck = new Date().getTime() < expiresAt;
 
@@ -148,10 +148,19 @@ router.beforeEach((to, from, next) => {
             if (to.name == 'dangky') {
                 next()
             } else {
-                if (Store.state.cur_userdb == null || Store.state.cur_userdb.type == '') {
+                if (Store.state.cur_userdb ==null) {
                     router.replace('/dangky');
                     alert('Bạn phải hoàn thành cập nhật thông tin trước khi sử dụng chức năng này');
-                } else next();
+                } else {
+                    if (to.matched.some(record => record.meta.requiresQL)) //yêu cầu tạo tài khoản QL.
+                    {
+                        if (!Store.state.cur_userdb.NTD) {
+                            router.replace('/dangky');
+                            alert('Bạn phải hoàn thành cập nhật Hồ sơ Nhà Tuyển Dụng trước khi sử dụng chức năng này');
+                        }else   next();
+                    } else
+                        next();
+                }
             }
             // user is Authenticated - allow access
 

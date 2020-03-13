@@ -15,7 +15,7 @@
               <v-container>
                 <v-row>
                   <v-col v-for="n in listtype" :key="n" cols="12" md="3">
-                    <v-item v-slot:default="{ active, toggle }">
+                    <v-item v-slot:default="{ active, toggle }" >
                       <v-card
                         elevation="5"
                         class="nentrangfocus"
@@ -23,6 +23,7 @@
                         style="padding-top:10px;"
                         dark
                         @click="toggle"
+                        :disabled="n.allow"
                       >
                         <v-img contain height="200" :src="n.ima"></v-img>
 
@@ -33,6 +34,8 @@
 
                         <v-card-actions>
                           <v-btn v-if="active" block color="secondary" dark>Đã chọn {{n.name}}</v-btn>
+
+                           <v-btn v-if="n.allow" block color="pink" dark>Đã đăng ký</v-btn>
                         </v-card-actions>
                       </v-card>
                     </v-item>
@@ -60,9 +63,9 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-row>
-            <v-col></v-col>
-            <v-col cols="12" md="6">
+          <v-row justify="center">
+         
+            <v-col cols="6" >
               <v-form ref="form" v-model="formval">
                 <v-text-field
                   v-model="user.name"
@@ -75,7 +78,7 @@
                 <v-text-field
                   label="Số điện thoại"
                   :rules="[v => !!v || 'Vui lòng nhập']"
-                  v-model="user.phone"
+                  v-model="user.sdt"
                   required
                 ></v-text-field>
                 <v-text-field disabled v-model="user.email" label="Email"></v-text-field>
@@ -88,7 +91,25 @@
                 ></v-select>
               </v-form>
             </v-col>
-            <v-col></v-col>
+             <v-col cols="6"  v-show="usertype==3">
+              <v-form ref="formCTy" v-model="formvalCTy">
+               
+                <v-text-field
+                  label="Tên công ty (hoặc người đại diện)"
+                  :rules="[v => !!v || 'Vui lòng nhập']"
+                  v-model="user.tenCTy"
+                  required
+                ></v-text-field>
+                    <v-text-field
+                  label="Mã số thuê"
+                 
+                  v-model="user.MST"
+                
+                ></v-text-field>
+                
+              </v-form>
+            </v-col>
+          
           </v-row>
           <v-row>
             <v-spacer></v-spacer>
@@ -150,30 +171,34 @@ export default {
       // v => v.length <= 60 || "Name must be less than 10 characters"
     ],
     formval: false,
-    user: [{ name: "" }, { phone: "" }, { gioitinh: "" }, { email: "" }],
+    user: [{ name: "" }, { sdt: "" }, { gioitinh: "" }, { email: "" }],
 
     usertype: null,
     listtype: [
       {
         name: "PG",
         cap: "Promotion Girl",
-        ima: require("../../assets/dangky/pg.png")
+        ima: require("../../assets/dangky/pg.png"),
+        allow: false
       },
       {
         name: "PB",
         cap: "Promotion Girl",
-        ima: require("../../assets/dangky/pb1.png")
+        ima: require("../../assets/dangky/pb1.png"),
+        allow: false
       },
       {
         name: "Quản lý",
         cap: "Promotion Girl",
-        ima: require("../../assets/dangky/quanly2.png")
+        ima: require("../../assets/dangky/quanly2.png"),
+        allow: false
       },
       {
         name: "Nhà tuyển dụng",
         cap: "Promotion Girl",
-        ima: require("../../assets/dangky/congty1.png")
-      },
+        ima: require("../../assets/dangky/congty1.png"),
+        allow: false
+      }
     ],
     editedItem: {
       userid: "",
@@ -182,11 +207,17 @@ export default {
       hoten: "",
       sdt: "",
       gioitinh: "",
-      type: ""
-    },
-   
+      namsinh: "",
+      type: "",
+      QL: false,
+      PG: false,
+      PB: false,
+      NTD: false,
+           tenCTy: "",
+                MST: "",
+    }
   }),
-  
+
   mounted() {
     this.reload();
   },
@@ -199,7 +230,24 @@ export default {
         )
         .then(response => {
           if (response.data.data.length == 1) {
-            this.$router.push({ path: "/home" });
+            
+            if (
+              (response.data.data[0].PG || response.data.data[0].PB) &&
+              response.data.data[0].QL &&
+              response.data.data[0].NTD
+            ) {
+             
+              this.$router.push({ path: "/home" });
+            }else {
+               if (response.data.data[0].PG) this.listtype[0].allow = true;
+                   if (response.data.data[0].PB) this.listtype[1].allow = true;
+              if (response.data.data[0].QL) this.listtype[2].allow = true;
+            
+              if (response.data.data[0].NTD) this.listtype[3].allow = true;
+                this.user .sdt  = response.data.data[0].sdt;
+               this.user .gioitinh = response.data.data[0].gioitinh;
+               this.user .hoten = response.data.data[0].hoten;
+            }
           }
         })
         .catch(e => {
@@ -211,42 +259,70 @@ export default {
     },
     validate() {
       if (this.$refs.formdieukhoan.validate()) {
-       
         this.editedItem.hoten = this.user.name;
-          this.editedItem.sdt = this.user.phone;
-             this.editedItem.gioitinh = this.user.gioitinh;
-                this.editedItem.email = this.user.email;
-                   this.editedItem.type = this.usertype;
+        this.editedItem.sdt = this.user.sdt;
+        this.editedItem.gioitinh = this.user.gioitinh;
+        this.editedItem.email = this.user.email;
+        this.editedItem.type = this.usertype;
+         this.editedItem.tenCTy = this.user.tenCTy;
+          this.editedItem.MST = this.user.MST;
+        if (this.usertype == 0) this.editedItem.PG = true;
+        if (this.usertype == 1) this.editedItem.PB = true;
+        if (this.usertype == 2) this.editedItem.QL = true;
+        if (this.usertype == 3) this.editedItem.NTD = true;
+
+        let tontai = false; //kiem tra email co trong USER chưa
+        let tempuser = [];
         axios
-          .post(`http://localhost:5000/api/user/`, this.editedItem, {
-            headers: {
-              "content-type": "application/json"
-            }
-          })
+          .get(`http://localhost:5000/api/user?email=` + this.editedItem.email)
           .then(response => {
-            console.log(response.data.confirmation);
-            if (response.data.confirmation == "add success") {
-              this.$dialog
-                .alert("Đăng ký thành công!", { okText: "Tiếp tục" })
-                .then(function(dialog) {                   
+            if (response.data.data.length != 0) {
+              tontai = true;
+              tempuser = response.data.data;
+
+              let api = "http://localhost:5000/api/user/";
+              if (tontai)
+                api =
+                  "http://localhost:5000/api/user/update/" + tempuser[0]._id;
+
+              axios
+                .post(api, this.editedItem, {
+                  headers: {
+                    "content-type": "application/json"
+                  }
+                })
+                .then(response => {
+                  console.log(response.data.confirmation);
+                  if (
+                    response.data.confirmation == "add success" ||
+                    response.data.confirmation == "update success"
+                  ) {
+                    this.$dialog
+                      .alert("Đăng ký thành công!", { okText: "Tiếp tục" })
+                      .then(function(dialog) {});
+
+                      this.$store.state.cur_userdb = this.editedItem;
+                      localStorage.setItem('cur_userdb', JSON.stringify(this.editedItem));
+                    this.$router.push({ path: "/home" });
+                    //  this.reload();
+                    return true;
+                  } else {
+                    this.$dialog
+                      .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+                      .then(function(dialog) {});
+                    return false;
+                  }
+                })
+                .catch(e => {
+                  this.$dialog
+                    .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+                    .then(function(dialog) {});
+                  console.log(e);
+                  return false;
                 });
-            this.$router.push({ path: "/home" });
-            //  this.reload();
-              return true;
-            } else {
-              this.$dialog
-                .alert("Thêm thất bại!", { okText: "Tiếp tục" })
-                .then(function(dialog) {});
-              return false;
             }
           })
-          .catch(e => {
-            this.$dialog
-              .alert("Thêm thất bại!", { okText: "Tiếp tục" })
-              .then(function(dialog) {});
-            console.log(e);
-            return false;
-          });
+          .catch(e => {});
       }
     },
     validatethongtin() {

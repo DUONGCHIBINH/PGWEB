@@ -53,6 +53,9 @@ app.use('/api/apply', apply);
 const momo = require('./routes/api/momo');
 app.use('/api/momo', momo);
 
+const photo = require('./routes/api/photo');
+app.use('/api/photo', photo);
+
 
 var CryptoJS = require("crypto-js");
 
@@ -63,18 +66,18 @@ app.get('/momo', function(req, res) {
 })
 
 app.get('/', function(req, res) {
-    // res.send("WELCOM TO PG_Web API");
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify([{
-        "text": "MaKH",
-        "value": "MaKH"
-    }, {
-        "text": "ID",
-        "value": "ID"
-    }, {
-        "text": "Key",
-        "value": "MaKH"
-    }]));
+     res.send("WELCOM TO PG_Web API");
+    // res.setHeader('Content-Type', 'application/json');
+    // res.end(JSON.stringify([{
+    //     "text": "MaKH",
+    //     "value": "MaKH"
+    // }, {
+    //     "text": "ID",
+    //     "value": "ID"
+    // }, {
+    //     "text": "Key",
+    //     "value": "MaKH"
+    // }]));
 })
 
 

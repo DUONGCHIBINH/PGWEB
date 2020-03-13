@@ -8,6 +8,14 @@ var userSchema = new mongoose.Schema({
     sdt: { type: String, trim: true },
     gioitinh: { type: String, trim: true },
     type: { type: String, trim: true },
+    PG: Boolean,
+    PB: Boolean,
+    QL: Boolean,
+    NTD: Boolean,
+    tenCTy: { type: String, trim: true },
+    MST: { type: String, trim: true },
+
+
 
 });
 

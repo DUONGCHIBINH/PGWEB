@@ -4,7 +4,7 @@ import auth0 from 'auth0-js'
 import router from '../router'
 
 Vue.use(Vuex)
-
+import axios from "axios";
 export default new Vuex.Store({
     state: {
 
@@ -44,7 +44,23 @@ export default new Vuex.Store({
                     localStorage.setItem('expires_at', expiresAt);
                     localStorage.setItem('cur_user', JSON.stringify(authResult.idTokenPayload));
                     context.state.cur_user = authResult.idTokenPayload;
-
+                   
+                    axios
+                    .get(
+                      `http://localhost:5000/api/user?email=` +
+                        context.state.cur_user.email
+                    )
+                    .then(response => {
+                      if (response.data.data.length == 1) {
+                        context.state.cur_userdb =response.data.data;
+                        localStorage.setItem('cur_userdb', context.state.cur_userdb);
+                        //this.$router.push({ path: "/home" });
+                      }
+                    })
+                    .catch(e => {
+                      this.errors.push(e);
+                    });
+            
 
                     router.replace('/auth0callback');
                 } else if (err) {
