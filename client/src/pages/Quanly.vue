@@ -50,16 +50,16 @@
                           <b-col class="text-center">
                             <v-avatar class="handhover" size="120" style="margin-bottom:5px;">
                               <img
-                                @click="$router.push({ path: 'me', query: { id: n._id } })"
+                                @click="$router.push({ path: 'me', query: { email:n.email } })"
                                 style="object-fit: cover"
-                                :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
+                                :src="`http://localhost:5000/api/photo/${n.avatar}`"
                                 alt="AVATAR"
                               />
                             </v-avatar>
 
                             <div
                               class="caption font-weight-bold handhover"
-                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                              @click="$router.push({ path: 'me', query: { email:n.email } })"
                             >{{n.ten}}</div>
                             <div style="color:gray" class="caption">Quản lý</div>
 
@@ -137,16 +137,16 @@
                           <b-col class="text-center">
                             <v-avatar class="handhover" size="120" style="margin-bottom:5px;">
                               <img
-                                @click="$router.push({ path: 'me', query: { id: n._id } })"
+                                @click="$router.push({ path: 'me', query: { email:n.email } })"
                                 style="object-fit: cover"
-                                :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
+                                :src="`http://localhost:5000/api/photo/${n.avatar}`"
                                 alt="AVATAR"
                               />
                             </v-avatar>
 
                             <div
                               class="caption font-weight-bold handhover"
-                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                              @click="$router.push({ path: 'me', query: { email:n.email } })"
                             >{{n.ten}}</div>
                             <div style="color:gray" class="caption">Quản lý</div>
 
@@ -224,16 +224,16 @@
                           <b-col class="text-center">
                             <v-avatar class="handhover" size="120" style="margin-bottom:5px;">
                               <img
-                                @click="$router.push({ path: 'me', query: { id: n._id } })"
+                                @click="$router.push({ path: 'me', query: { email:n.email } })"
                                 style="object-fit: cover"
-                                :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
+                                :src="`http://localhost:5000/api/photo/${n.avatar}`"
                                 alt="AVATAR"
                               />
                             </v-avatar>
 
                             <div
                               class="caption font-weight-bold handhover"
-                              @click="$router.push({ path: 'me', query: { id: n._id } })"
+                              @click="$router.push({ path: 'me', query: { email:n.email } })"
                             >{{n.ten}}</div>
                             <div style="color:gray" class="caption">Quản lý</div>
 
@@ -288,6 +288,7 @@ export default {
   name: "QL",
   data: () => {
     return {
+    
       PGS: []
     };
   },
@@ -302,6 +303,8 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
+        
+      
     }
   },
   mounted() {

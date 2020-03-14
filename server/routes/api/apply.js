@@ -8,7 +8,8 @@ var Apply = require('../../models/apply.model')
 //Get GET     find: api/apply?username=Binh  
 router.get('/', async(req, res) => {
     const query = req.query
-    Apply.find(query)
+    Apply
+    .find(query)
         .then(apply => {
             res.json({
                 confirmation: 'success',
@@ -26,7 +27,7 @@ router.get('/', async(req, res) => {
 router.get('/:id', async(req, res) => {
     const id = req.params.id
 
-    Apply.findById(id)
+    ;(await Apply.findById(id))
         .then(apply => {
             res.json({
                 confirmation: 'success',

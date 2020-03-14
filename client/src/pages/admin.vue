@@ -33,10 +33,10 @@ export default {
   data() {
     return {
       items: [
-        { title: "Dashboard", icon: "mdi-view-dashboard", link: "/admin/1" },
+        // { title: "Dashboard", icon: "mdi-view-dashboard", link: "/admin/1" },
         { title: "Người dùng", icon: "mdi-image", link: "/admin/aduser" },
-        { title: "PG/PB", icon: "mdi-help-box", link: "/admin/adpg" },
-        { title: "Quản lý", icon: "mdi-help-box", link: "/admin/adql" },
+        { title: "PG/PB/QL", icon: "mdi-help-box", link: "/admin/adpg" },
+        // { title: "Quản lý", icon: "mdi-help-box", link: "/admin/adql" },
         { title: "Sự kiện", icon: "mdi-help-box", link: "/admin/adevent" },
                 { title: "Sự kiện của tôi", icon: "mdi-help-box", link: "/admin/myevent" },
         { title: "Thanh toán", icon: "mdi-help-box", link: "/admin/mythanhtoan" },

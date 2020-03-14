@@ -7,7 +7,7 @@
             <v-row>
               <v-col cols="auto">
                 <v-avatar color="blue-grey" size="150">
-                  <span class="white--text headline">SHPT</span>
+                  <span class="white--text display-4">{{cur_event.tencongty.substring(0, 1).toUpperCase()}}</span>
                 </v-avatar>
               </v-col>
               <v-col>
@@ -19,8 +19,8 @@
                       hide-on-leave
                     >
                       <v-skeleton-loader v-if="loading"  type="article"></v-skeleton-loader>
-                    <h3>{{cur_event.ten}}</h3>
-                    <h5>{{cur_event.congty}}</h5>
+                    <h3>{{cur_event.tensukien}}</h3>
+                    <h5>{{cur_event.tencongty}}</h5>
                     </component>
                    
                   </v-col>
@@ -94,19 +94,20 @@
                 </v-row>
                 <v-divider></v-divider>
                 <v-row>
-                  <v-col style="padding: 0px 15px 0px 15px">
-                    <strong>Ngày duyệt:</strong> 12/12/2019
+                <v-col style="padding: 0px 15px 0px 15px">
+                    <strong>Ngày đăng tin:</strong> {{edit_item.ngaytao.split("T")[0]}}
                   </v-col>
                    <v-col align="end" style="padding: 0px 15px 0px 15px;  color: gray;">
-                    <strong>Đã ứng tuyển:</strong> 10
+                     <strong>Ngày bắt đầu:</strong>  {{edit_item.ngaybatdau.split("T")[0]}}
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col style="padding: 0px 15px 0px 15px">
-                    <strong>Hạn ứng tuyển:</strong> 24/12/2019
+                    <strong>Đã ứng tuyển:</strong>  {{SLungtuyen}}
+                   
                   </v-col>
                   <v-col align="end" style="padding: 0px 15px 0px 15px;  color: gray;">
-                    <strong>Đã xem:</strong> 222
+                    <strong>Ngày kết thúc:</strong> {{edit_item.ngayketthuc.split("T")[0]}}
                   </v-col>
                 </v-row>
               </v-col>
@@ -124,7 +125,7 @@
                 <v-row>
                   <v-col>
                     <div>
-                      <b>Đối tượng tuyển:</b> EVENT
+                      <b>Đối tượng tuyển:</b> {{edit_item.doituong}}
                     </div>
                   </v-col>
                   <v-col align="end">
@@ -134,24 +135,24 @@
                 <v-row>
                   <v-col>
                     <div>
-                      <b>Thời gian:</b> 31/12/2019
+                      <b>Thời gian:</b> {{edit_item.ngaybatdau.split("T")[0]}}
                     </div>
                   </v-col>
                   <v-col align="end">
                     <div>
-                      <b>Địa điểm:</b> Giga mall Phạm Văn Đồng
+                      <b>Địa điểm:</b> {{edit_item.diadiem}}
                     </div>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col>
                     <div>
-                      <b>Số lượng tuyển:</b> 20
+                      <b>Số lượng tuyển:</b>  {{edit_item.soluongtuyen}}
                     </div>
                   </v-col>
                   <v-col align="end">
                     <div>
-                      <b>Mức lương:</b> 500k/ca/4h
+                      <b>Mức lương:</b>   {{edit_item.mucluong}} VNĐ/Giờ
                     </div>
                   </v-col>
                 </v-row>
@@ -159,18 +160,15 @@
                 <div class="title font-weight-black" style="color:#01579B">Yêu cầu</div>
                 <v-divider></v-divider>
                 <div>
-                  <p>- Chủ động trong công việc.</p>
-                  <p>- Từ 22-25 tuổi.</p>
+                  <p>  {{edit_item.soluongtuyen}}</p>
+                 
                 </div>
                 <br />
                 <div class="title font-weight-black" style="color:#01579B">Mô tả</div>
                 <v-divider></v-divider>
                 <div>
-                  <p>- Tư vấn, giới thiệu, bán các sản phẩm mới do công ty sản xuất tới khách hàng (sẽ được đào tạo).</p>
-                  <p>- Sắp xếp, trưng bày hàng hóa tại các khu vực phụ trách trong siêu thị.</p>
-                  <p>- Tổ chức sampling cho khách hàng</p>
-                  <p>- Chăm sóc khách hàng cũ qua điện thoại</p>
-                  <p>- Chi tiết công việc sẽ được trao đổi cụ thể trong quá trình phỏng vấn.</p>
+                  <p>  {{edit_item.mota}}</p>
+            
                 </div>
               </v-col>
             </v-row>
@@ -178,7 +176,7 @@
         </v-col>
         <v-col>
           <v-card class="pa-3" elevation="3">
-            <v-btn class="mt-2" block color="pink" dark @click="themmoi">Ứng tuyển ngay</v-btn>
+            <v-btn class="mt-2" block color="pink" :dark="!daungtuyen"  @click="ungtuyen" :disabled="daungtuyen">Ứng tuyển ngay</v-btn>
             <v-btn class="mt-2" block outlined color="indigo">Thêm vào yêu thích</v-btn>
             <v-divider></v-divider>
             <div class="text-center">
@@ -279,26 +277,27 @@
 import axios from "axios";
 export default {
   data: () => ({
+     daungtuyen:false,
+    SLungtuyen:0,
     loading:true,
     dialog: false,
     edit_item: {},
-    cur_event: {}
+    cur_event: {},
+      cur_pg: {}
   }),
   methods: {
     reload(id) {
       axios
         .get(`http://localhost:5000/api/event?_id=` + id)
         .then(response => {
-          console.log("Hkfsdjkflsdjkl============");
-          console.log(response.data);
           if (
             response.data.confirmation != "success" ||
             response.data.data.length == 0
           ) {
-            this.$router.push({
-              path: "Page404",
-              query: { id: id, mess: "Không_tìm_thấy_EVENT_có_id_này" }
-            });
+            // this.$router.push({
+            //   path: "Page404",
+            //   query: { id: id, mess: "Không_tìm_thấy_EVENT_có_id_này" }
+            // });
           }
           this.cur_event = response.data.data[0];
           this.edit_item = { ...this.cur_event };
@@ -306,28 +305,55 @@ export default {
         })
         .catch(e => {
           this.errors.push(e);
-          this.$router.push({
-            path: "Page404",
-            query: { id: id, mess: "Có_lỗi_xảy_ra" }
-          });
+          // this.$router.push({
+          //   path: "Page404",
+          //   query: { id: id, mess: "Có_lỗi_xảy_ra" }
+          // });
         });
+
+
+        axios
+        .get(`http://localhost:5000/api/apply?eventid=`+id)
+        .then(response => {
+          this.SLungtuyen = response.data.data.length;
+          response.data.data[0].forEach(element => {
+            if(element.obPG.email==this.$store.state.cur_user.email) this.daungtuyen=true;
+          });
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+
+         axios
+        .get(`http://localhost:5000/api/PG?email=`+this.$store.state.cur_user.email)
+        .then(response => {
+          this.cur_pg = response.data.data[0];
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+
     },
     save() {
       this.dialog = false;
       this.cur_event = { ...this.edit_item };
     },
-    themmoi() {
+    ungtuyen() {
       console.log("----------------------------------------------------");
-
-      var temp = {
-        applyid:'123',
-        eventid:'456',
-        list_apply:[]
-      }
-   temp.list_apply.push(this.cur_event);
-
+   
+    let today = new Date();
+    
+    var ob_ungtuyen = {
+    eventid: this.edit_item._id,
+    pgid: this.$store.state.cur_user.email,
+    ngayapply: today.toISOString() ,
+    obSukien : this.edit_item,
+    obPG : this.cur_pg,
+    duyet:false,
+    mua:false,
+    }
       axios
-        .post(`http://localhost:5000/api/apply/`,temp, {
+        .post(`http://localhost:5000/api/apply/`,ob_ungtuyen, {
           headers: {
             "content-type": "application/json"
           }
@@ -338,6 +364,7 @@ export default {
            this.$dialog
                 .alert("Thêm thành công!", { okText: "Tiếp tục" })
                 .then(function(dialog) {});
+            this.daungtuyen=true;
             // this.reload();
             return true;
           } else {

@@ -72,17 +72,17 @@ export default {
     users: [],
     dialog: false,
     headers: [
-      {
-        text: "ID",
-        align: "left",
-        value: "_id"
-      },
-      {
-        text: "User ID",
-        align: "left",
-        value: "userid"
-      },
-      { text: "User Name", value: "username" },
+      // {
+      //   text: "ID",
+      //   align: "left",
+      //   value: "_id"
+      // },
+      // {
+      //   text: "User ID",
+      //   align: "left",
+      //   value: "userid"
+      // },
+      // { text: "User Name", value: "username" },
       { text: "Email", value: "email" },
       { text: "Họ tên", value: "hoten" },
       { text: "SĐT", value: "sdt" },
@@ -92,6 +92,7 @@ export default {
         align: "left",
         value: "type"
       },
+      
       { text: "Actions", value: "action" }
     ],
     desserts: [],

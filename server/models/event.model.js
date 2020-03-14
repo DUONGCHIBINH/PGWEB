@@ -2,28 +2,28 @@ var mongoose = require('mongoose');
 
 var evtSchema = new mongoose.Schema({
 
-    thongtinchung: {
-        ten: String,
-        diadiem: String,
-        mieutacv: String,
-        ngaydienra: Date,
-        ngaytao: Date,
-        loai: String,
-        congty: String,
-        soluongtuyen: String,
-        mucluong: String,
-        yeucau: String,
-    },
-    nguoitao: Object,
-    dsapply: [{
-        pg: Object,
-        duyet: String,
-        thanhtoan: String,
-    }],
-    trangthai: String,
-    type: String,
-    mid: String,
-    duyet: String,
+   
+       tensukien: String,
+      tencongty: String,
+      diadiem: String,
+      email: String,
+      soluongtuyen: String,
+      mucluong: String,
+      doituong: [],
+      ngaybatdau: Date,
+      ngayketthuc: Date,
+      thoigianbatdau: String,
+      thoigianketthuc: String,
+      mota: String,
+      yeucau: String,
+      trangthai:String,
+      duyet: Boolean,
+      nguoitao:String,
+      ngaytao: Date,
+      SLxem: Number,
+      SLungtuyen: Number,
+
+    
 
 });
 

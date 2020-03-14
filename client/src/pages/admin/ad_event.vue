@@ -71,23 +71,23 @@ export default {
     events: [],
     dialog: false,
     headers: [
-      {
-        text: "ID",
-        align: "left",
-        value: "_id"
-      },
-      {
-        text: "Event ID",
-        align: "left",
-        value: "mid"
-      },
-      { text: "event Name", value: "ten" },
-      { text: "event Name", value: "diadiem" },
-      { text: "event Name", value: "mieutacv" },
-      { text: "event Name", value: "ngaytao" },
-      { text: "event Name", value: "ngaydienra" },
-      { text: "event Name", value: "loai" },
-      { text: "event Name", value: "congty" },
+      // {
+      //   text: "ID",
+      //   align: "left",
+      //   value: "_id"
+      // },
+      // {
+      //   text: "Event ID",
+      //   align: "left",
+      //   value: "mid"
+      // },
+       { text: "Người tạo", value: "nguoitao" },
+      { text: "Tên sự kiện", value: "tensukien" },
+      { text: "Địa điểm", value: "diadiem" },
+      { text: "Ngày tạo", value: "ngaytao" },
+      { text: "Ngày bắt đầu", value: "ngaybatdau" },
+
+      { text: "Công ty", value: "tencongty" },
 
       { text: "Actions", value: "action" }
     ],

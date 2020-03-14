@@ -47,6 +47,9 @@ app.use('/api/event', event);
 const pg = require('./routes/api/pg');
 app.use('/api/pg', pg);
 
+const ntd = require('./routes/api/ntd');
+app.use('/api/ntd', ntd);
+
 const apply = require('./routes/api/apply');
 app.use('/api/apply', apply);
 
@@ -68,7 +71,7 @@ app.get('/momo', function(req, res) {
 app.get('/', function(req, res) {
      res.send("WELCOM TO PG_Web API");
     // res.setHeader('Content-Type', 'application/json');
-    // res.end(JSON.stringify([{
+    // res.send(JSON.stringify([{
     //     "text": "MaKH",
     //     "value": "MaKH"
     // }, {

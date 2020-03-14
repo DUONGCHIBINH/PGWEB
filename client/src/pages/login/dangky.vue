@@ -15,7 +15,7 @@
               <v-container>
                 <v-row>
                   <v-col v-for="n in listtype" :key="n" cols="12" md="3">
-                    <v-item v-slot:default="{ active, toggle }" >
+                    <v-item v-slot:default="{ active, toggle }">
                       <v-card
                         elevation="5"
                         class="nentrangfocus"
@@ -35,7 +35,7 @@
                         <v-card-actions>
                           <v-btn v-if="active" block color="secondary" dark>Đã chọn {{n.name}}</v-btn>
 
-                           <v-btn v-if="n.allow" block color="pink" dark>Đã đăng ký</v-btn>
+                          <v-btn v-if="n.allow" block color="pink" dark>Đã đăng ký</v-btn>
                         </v-card-actions>
                       </v-card>
                     </v-item>
@@ -64,8 +64,7 @@
 
         <v-stepper-content step="2">
           <v-row justify="center">
-         
-            <v-col cols="6" >
+            <v-col cols="6">
               <v-form ref="form" v-model="formval">
                 <v-text-field
                   v-model="user.name"
@@ -91,25 +90,17 @@
                 ></v-select>
               </v-form>
             </v-col>
-             <v-col cols="6"  v-show="usertype==3">
+            <v-col cols="6" v-show="usertype==3">
               <v-form ref="formCTy" v-model="formvalCTy">
-               
                 <v-text-field
                   label="Tên công ty (hoặc người đại diện)"
                   :rules="[v => !!v || 'Vui lòng nhập']"
                   v-model="user.tenCTy"
                   required
                 ></v-text-field>
-                    <v-text-field
-                  label="Mã số thuê"
-                 
-                  v-model="user.MST"
-                
-                ></v-text-field>
-                
+                <v-text-field label="Mã số thuê" v-model="user.MST"></v-text-field>
               </v-form>
             </v-col>
-          
           </v-row>
           <v-row>
             <v-spacer></v-spacer>
@@ -213,8 +204,8 @@ export default {
       PG: false,
       PB: false,
       NTD: false,
-           tenCTy: "",
-                MST: "",
+      tenCTy: "",
+      MST: ""
     }
   }),
 
@@ -230,23 +221,24 @@ export default {
         )
         .then(response => {
           if (response.data.data.length == 1) {
-            
             if (
               (response.data.data[0].PG || response.data.data[0].PB) &&
               response.data.data[0].QL &&
               response.data.data[0].NTD
             ) {
-             
               this.$router.push({ path: "/home" });
-            }else {
-               if (response.data.data[0].PG) this.listtype[0].allow = true;
-                   if (response.data.data[0].PB) this.listtype[1].allow = true;
+            } else {
+              if (response.data.data[0].PG) this.listtype[0].allow = true;
+              if (response.data.data[0].PB) this.listtype[1].allow = true;
               if (response.data.data[0].QL) this.listtype[2].allow = true;
-            
               if (response.data.data[0].NTD) this.listtype[3].allow = true;
-                this.user .sdt  = response.data.data[0].sdt;
-               this.user .gioitinh = response.data.data[0].gioitinh;
-               this.user .hoten = response.data.data[0].hoten;
+              this.user.sdt = response.data.data[0].sdt;
+              this.user.gioitinh = response.data.data[0].gioitinh;
+              this.user.hoten = response.data.data[0].hoten;
+              this.user.QL= response.data.data[0].QL;
+              this.user.NTD= response.data.data[0].NTD;
+              this.user.PG =response.data.data[0].PG;
+              this.user.PB =response.data.data[0].PB;
             }
           }
         })
@@ -264,26 +256,100 @@ export default {
         this.editedItem.gioitinh = this.user.gioitinh;
         this.editedItem.email = this.user.email;
         this.editedItem.type = this.usertype;
-         this.editedItem.tenCTy = this.user.tenCTy;
-          this.editedItem.MST = this.user.MST;
+        this.editedItem.tenCTy = this.user.tenCTy;
+        this.editedItem.MST = this.user.MST;
+        ///gán trạng thái cũ
+         this.editedItem.PG = this.user.PG;
+         this.editedItem.PB =this.user.PB;
+         this.editedItem.QL = this.user.QL;
+         this.editedItem.NTD = this.user.NTD;
+
+
+
         if (this.usertype == 0) this.editedItem.PG = true;
         if (this.usertype == 1) this.editedItem.PB = true;
         if (this.usertype == 2) this.editedItem.QL = true;
         if (this.usertype == 3) this.editedItem.NTD = true;
+       
+      
+       /////////thêm vào bảng PG hoặc NTD ///////////
+        let today = new Date();
+        if (this.usertype == 3) {
+        
+          let obNTD = {
+            avatar: 'avt.png',
+            tenCTy: this.user.tenCTy,
+            MST: this.user.MST,
+            email: this.user.email,
+            sdt: this.user.sdt,
+            ten: this.user.name,
+            loai: "NTD",
+            sosukien: 0,
+            soyeuthich: 0,
+            soluotmua: 0,
+            ngaythamgia: today.toISOString().slice(0, 10),
+          };
+
+             axios
+            .post('http://localhost:5000/api/ntd/', obNTD, {
+              headers: {
+                "content-type": "application/json"
+              }
+            })
+            .then(response => {
+              console.log("Thêm NTD "+this.user.email +' thành công!');
+          
+            })
+            .catch(e => {
+               console.log("Thêm NTD "+this.user.email +' lỗi!');
+            });
+        }
+         else {
+          let obPG = {
+            email: this.user.email,
+            sdt: this.user.sdt,
+            ten: this.user.name,
+            loai: "PG",
+            sosukien: 0,
+            soyeuthich: 0,
+            soluotmua: 0,
+            ngaythamgia: today.toISOString().slice(0, 10),
+          };
+
+          if (this.usertype == 0) obPG.loai = "PG";
+          if (this.usertype == 1) obPG.loai = "PB";
+          if (this.usertype == 2) obPG.loai = "QL";
+
+          axios
+            .post('http://localhost:5000/api/pg/', obPG, {
+              headers: {
+                "content-type": "application/json"
+              }
+            })
+            .then(response => {
+              console.log("Thêm PG "+this.user.email +' thành công!');
+          
+            })
+            .catch(e => {
+               console.log("Thêm PG "+this.user.email +' lỗi!');
+            });
+        }
+
+
+      //////// Update thông tin vào Users /////
 
         let tontai = false; //kiem tra email co trong USER chưa
         let tempuser = [];
         axios
           .get(`http://localhost:5000/api/user?email=` + this.editedItem.email)
           .then(response => {
+         
             if (response.data.data.length != 0) {
               tontai = true;
               tempuser = response.data.data;
-
-              let api = "http://localhost:5000/api/user/";
-              if (tontai)
-                api =
-                  "http://localhost:5000/api/user/update/" + tempuser[0]._id;
+            }
+              let api = "http://localhost:5000/api/user/"; //them mới
+              if (tontai) api = "http://localhost:5000/api/user/update/" + tempuser[0]._id; //update
 
               axios
                 .post(api, this.editedItem, {
@@ -292,6 +358,7 @@ export default {
                   }
                 })
                 .then(response => {
+              
                   console.log(response.data.confirmation);
                   if (
                     response.data.confirmation == "add success" ||
@@ -301,9 +368,14 @@ export default {
                       .alert("Đăng ký thành công!", { okText: "Tiếp tục" })
                       .then(function(dialog) {});
 
-                      this.$store.state.cur_userdb = this.editedItem;
-                      localStorage.setItem('cur_userdb', JSON.stringify(this.editedItem));
-                    this.$router.push({ path: "/home" });
+                    this.$store.state.cur_userdb = this.editedItem;
+                    localStorage.setItem(
+                      "cur_userdb",
+                      JSON.stringify(this.editedItem)
+                    );
+                     if (this.usertype == 3) {this.$router.push({ path: "/home" });}
+                     else
+                     {this.$router.push({ path: "/me?email="+this.user.email });}
                     //  this.reload();
                     return true;
                   } else {
@@ -320,10 +392,14 @@ export default {
                   console.log(e);
                   return false;
                 });
-            }
+            
           })
-          .catch(e => {});
+          .catch(e => {
+                 alert('Lấy thông tin User thất bại')
+
+          });
       }
+    
     },
     validatethongtin() {
       if (this.$refs.form.validate()) {

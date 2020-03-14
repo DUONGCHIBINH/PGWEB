@@ -3,9 +3,15 @@ var mongoose = require('mongoose');
 
 
 var applySchema = new mongoose.Schema({
-    applyid: { type: String, trim: true },
+    
     eventid: { type: String, trim: true },
-    list_apply: [Object],
+    pgid: { type: String, trim: true },
+    ngayapply: Date,
+    obPG: Object,
+    obSukien: Object,
+    duyet:Boolean,
+    mua:Boolean,
+
 
 });
 

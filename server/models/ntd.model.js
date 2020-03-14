@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var pg = new mongoose.Schema({
+var ntd = new mongoose.Schema({
 
     mid: String,
     ten: String,
@@ -19,7 +19,9 @@ var pg = new mongoose.Schema({
     thongtin: String,
     email: String,
     sdt: String,
+    MST: String,
+    tenCTy: String,
 
 });
 
-module.exports = mongoose.model('PG', pg, 'PG');
+module.exports = mongoose.model('NTD', ntd, 'NTD');

@@ -122,13 +122,13 @@
                     <b-col class="text-center">
                       <v-avatar
                         class="handhover"
-                        @click="$router.push({ path: 'me', query: { id: n._id } })"
+                        @click="$router.push({ path: 'me', query: { email:n.email } })"
                         size="120"
                         style="margin-bottom:5px;"
                       >
                         <img
                           style="object-fit: cover"
-                          :src="`https://picsum.photos/500/300?image=${n.avatar * 5 + 10}`"
+                          :src="`http://localhost:5000/api/photo/${n.avatar}`"
                           alt="AVATAR"
                         />
                       </v-avatar>
@@ -181,6 +181,7 @@
 </template>
 
 <script>
+
 import axios from "axios";
 export default {
   data: () => {

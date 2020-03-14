@@ -72,23 +72,19 @@ export default {
     dialog: false,
     headers: [
       {
-        text: "ID",
+        text: "Email",
         align: "left",
-        value: "_id"
-      },
-      {
-        text: "pg ID",
-        align: "left",
-        value: "mid"
+        value: "email"
       },
       { text: "Ten", value: "ten" },
       { text: "loai", value: "loai" },
-      { text: "Số event", value: "sosukien" },
-      { text: "yêu thích", value: "soyeuthich" },
-      { text: "lượt mua", value: "soluotmua" },
+      // { text: "Số event", value: "sosukien" },
+      // { text: "yêu thích", value: "soyeuthich" },
+      // { text: "lượt mua", value: "soluotmua" },
       { text: "nơi làm việc", value: "noilamviec" },
       { text: "sống tại", value: "songtai" },
-
+       { text: "Đến từ", value: "dentu" },
+    { text: "ngày tham gia", value: "ngaythamgia" },
       { text: "Actions", value: "action" }
     ],
     desserts: [],

@@ -6,14 +6,14 @@
           <v-avatar size="150">
             <img
               style="object-fit: cover"
-              :src="`https://picsum.photos/500/300?image=${cur_PG.avatar * 5 + 10}`"
+              :src="`http://localhost:5000/api/photo/${cur_PG.avatar}`"
               alt="AVATAR"
             />
           </v-avatar>
           <br />
           <br />
           <b-col sm="12">
-            <v-btn class="ma-2" tile outlined color="success" @click="momo" >
+            <v-btn class="ma-2" tile outlined color="success" @click="momo">
               <v-icon left>mdi-phone</v-icon>Liên hệ
             </v-btn>
           </b-col>
@@ -51,53 +51,57 @@
                           <v-text-field v-model="edit_item.ten" label="Họ và tên*" required></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6" md="4">
-                           <v-menu
-                        ref="menu"
-                        v-model="menu"
-                        :close-on-content-click="false"
-                        :return-value.sync="date"
-                        transition="scale-transition"
-                        offset-y
-                        min-width="290px"
-                      >
-                        <template v-slot:activator="{ on }">
-                          <v-text-field
-                            v-model="edit_item.ngaysinh"
-                            label="Ngày sinh"
-                            prepend-icon
-                            readonly
-                            v-on="on"
-                          ></v-text-field>
-                        </template>
-                        <v-date-picker v-model="edit_item.ngaysinh" no-title scrollable>
-                          <v-spacer></v-spacer>
-                          <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
-                          <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
-                        </v-date-picker>
-                      </v-menu>
-                        </v-col>
-                        
-                         <v-col cols="12" sm="6" md="4">
-                          <v-text-field v-model="edit_item.dentu" label="Đến từ" required></v-text-field>
-                        </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                          <v-text-field v-model="edit_item.songtai" label="Đang sống tại" required></v-text-field>
-                        </v-col>
-                     <v-col cols="12" sm="6" md="4">
-                          <v-text-field v-model="edit_item.noilamviec" label="Làm việc tại" required></v-text-field>
+                          <v-menu
+                            ref="menu"
+                            v-model="menu"
+                            :close-on-content-click="false"
+                            :return-value.sync="date"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="290px"
+                          >
+                            <template v-slot:activator="{ on }">
+                              <v-text-field
+                                v-model="edit_item.ngaysinh"
+                                label="Ngày sinh"
+                                prepend-icon
+                                readonly
+                                v-on="on"
+                              ></v-text-field>
+                            </template>
+                            <v-date-picker v-model="edit_item.ngaysinh" no-title scrollable>
+                              <v-spacer></v-spacer>
+                              <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
+                              <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
+                            </v-date-picker>
+                          </v-menu>
                         </v-col>
 
-                          <v-col cols="12" sm="6" md="4">
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field v-model="edit_item.dentu" label="Đến từ" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field v-model="edit_item.songtai" label="Đang sống tại" required></v-text-field>
+                        </v-col>
+                        <v-col cols="12" sm="6" md="4">
+                          <v-text-field
+                            v-model="edit_item.noilamviec"
+                            label="Làm việc tại"
+                            required
+                          ></v-text-field>
+                        </v-col>
+
+                        <v-col cols="12" sm="6" md="4">
                           <v-text-field v-model="edit_item.sdt" label="Số điện thoại*" required></v-text-field>
                         </v-col>
-<!-- 
+                        <!-- 
                         <v-col cols="12" sm="6">
                           <v-select
                             :items="['18','19','20','21','22','23','24',]"
                             label="Age*"
                             required
                           ></v-select>
-                        </v-col> -->
+                        </v-col>-->
                       </v-row>
                     </v-container>
                     <small>* là những trường bắt buộc</small>
@@ -110,11 +114,48 @@
                 </v-card>
               </v-dialog>
             </b-col>
-            <!-- <b-col sm="3">
-              <v-btn class="ma-2" tile outlined color="success">
-                <v-icon left>mdi-phone</v-icon>Liên hệ
-              </v-btn>
-            </b-col>-->
+
+            <b-col sm="2">
+              <!-- <v-btn class="ma-2" outlined small fab color="indigo">
+                <v-icon>mdi-pencil</v-icon>
+              </v-btn>-->
+              <v-dialog v-model="dialogAVT" persistent max-width="600px">
+                <template v-slot:activator="{ on }">
+                  <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
+                  <v-btn class="ma-2" outlined small fab color="indigo" v-on="on">
+                    <v-icon>mdi-account-circle</v-icon>
+                  </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">Cập nhật ảnh đại diện</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-form>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="8" md="8">
+                            <v-file-input
+                              v-model="AVTImg"
+                              accept="image/png, image/jpeg, image/bmp"
+                              placeholder="Tải lên ảnh đại diện"
+                              prepend-icon="mdi-camera"
+                              label="Avatar"
+                              required
+                            ></v-file-input>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-form>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialogAVT = false">Close</v-btn>
+                    <v-btn color="blue darken-1" text @click="saveAVT">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </b-col>
           </b-row>
 
           <b-row align-v="center" align-h="start">
@@ -147,7 +188,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Ngày sinh:
-                <b>{{cur_PG.ngaysinh.slice(0,10).split("-").reverse().join("/") }}</b>
+                <b>{{ (cur_PG.ngaysinh!=null)?cur_PG.ngaysinh.split("T")[0]:'' }}</b>
               </div>
             </b-col>
           </b-row>
@@ -172,7 +213,7 @@
             <b-col sm="*">
               <div class="font-weight-regular subtitle-1 mr-5">
                 Đã tham gia từ:
-                <b>{{cur_PG.ngaythamgia.slice(0,10).split("-").reverse().join("/") }}</b>
+                <b>{{ (cur_PG.ngaythamgia!=null)?cur_PG.ngaythamgia.split("T")[0]:'' }}</b>
               </div>
             </b-col>
           </b-row>
@@ -373,10 +414,10 @@
             <br />
             <br />
             <div class="text-center">
-              <v-btn @click="momo"  outline color="pink" dark >Lấy thông tin liên hệ</v-btn>
+              <v-btn @click="momo" outline color="pink" dark>Lấy thông tin liên hệ</v-btn>
             </div>
-                <br />
-                    <br />
+            <br />
+            <br />
           </v-tab-item>
         </v-tabs-items>
       </v-card>
@@ -392,11 +433,13 @@ import axios from "axios";
 export default {
   data() {
     return {
+      AVTImg: null,
       dialogm1: "",
       dialog: false,
+      dialogAVT: false,
       tab: null,
-     edit_item:{},
-      cur_PG:{},
+      edit_item: {},
+      cur_PG: {},
       items: ["Sự kiện đã tham gia", "Hình ảnh", "Thông tin"],
       text:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
@@ -405,35 +448,118 @@ export default {
   methods: {
     reload(id) {
       axios
-        .get(`http://localhost:5000/api/pg?_id=` + id)
+        .get(`http://localhost:5000/api/pg?email=` + id)
         .then(response => {
-     
-          if (response.data.confirmation != "success" || response.data.data.length==0) {
+          if (
+            response.data.confirmation != "success" ||
+            response.data.data.length == 0
+          ) {
             this.$router.push({
               path: "Page404",
               query: { id: id, mess: "Không_tìm_thấy_PG_có_id_này" }
             });
           }
           this.cur_PG = response.data.data[0];
-          this.edit_item ={...this.cur_PG};
-
+          this.edit_item = { ...this.cur_PG };
         })
         .catch(e => {
           this.errors.push(e);
-           this.$router.push({
-              path: "Page404",
-              query: { id: id, mess: "Có_lỗi_xảy_ra" }
-            });
+          this.$router.push({
+            path: "Page404",
+            query: { id: id, mess: "Có_lỗi_xảy_ra" }
+          });
         });
     },
-    save(){
+    save() {
       this.dialog = false;
-      this.cur_PG = {...this.edit_item};
+      this.cur_PG = { ...this.edit_item };
+      //save o day
+
+      axios
+        .post(
+          "http://localhost:5000/api/pg/update/" + this.cur_PG._id,
+          this.cur_PG,
+          {
+            headers: {
+              "content-type": "application/json"
+            }
+          }
+        )
+        .then(response => {
+          console.log(response.data);
+          this.$dialog
+            .alert("Cập nhật thành công!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+        })
+        .catch(e => {
+          this.$dialog
+            .alert("Cập nhật thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+        });
+
+      this.dialog = false;
     },
-    momo(){
-     // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
-        window.location.href = 'https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMOBKUN20180529&accessKey=klm05TvNBzhg7h7j&requestId=1578020735&amount=99999&orderId=1578020735&signature=752c9232f58958387dfc9c89dd73a6a3e87c98e584abfb52b4bb9909cc784eb7&requestType=captureMoMoWallet'
-    
+    saveAVT() {
+      if (this.AVTImg == null) return;
+
+      let data = new FormData();
+      data.append("file", this.AVTImg, this.AVTImg.name);
+      axios
+        .post(
+          "http://localhost:5000/api/photo/" +
+            this.cur_PG.email +
+            "_avt." +
+            this.AVTImg.name.split(".").pop(),
+          data,
+          {
+            headers: {
+              accept: "application/json",
+              "Accept-Language": "en-US,en;q=0.8",
+              "Content-Type": `multipart/form-data; boundary=${data._boundary}`
+            }
+          }
+        )
+        .then(response => {
+          this.cur_PG.avatar =
+            this.cur_PG.email + "_avt." + this.AVTImg.name.split(".").pop();
+
+          axios
+            .post(
+              "http://localhost:5000/api/pg/update/" + this.cur_PG._id,
+              this.cur_PG,
+              {
+                headers: {
+                  "content-type": "application/json"
+                }
+              }
+            )
+            .then(response => {
+              console.log(response.data);
+              this.$dialog
+                .alert("Cập nhật thành công!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+            })
+            .catch(e => {
+              this.$dialog
+                .alert("Cập nhật thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+            });
+        })
+        .catch(error => {
+          this.$dialog
+            .alert("Cập nhật thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+        });
+
+      this.dialogAVT = false;
+      this.cur_PG.avatar = "avt.png";
+      //  this.cur_PG.avatar = this.cur_PG.email+'_avt.'+this.AVTImg.name.split('.').pop();
+    },
+    momo() {
+      // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
+      window.location.href =
+        "https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMOBKUN20180529&accessKey=klm05TvNBzhg7h7j&requestId=1578020735&amount=99999&orderId=1578020735&signature=752c9232f58958387dfc9c89dd73a6a3e87c98e584abfb52b4bb9909cc784eb7&requestType=captureMoMoWallet";
+
       //   var order ={
       //   "accessKey": "QIomPPOMzVHXcXMY",
       //   "partnerCode": "MOMOAOBT20191229",
@@ -448,34 +574,34 @@ export default {
       //   "signature": "72818b03fe10e467414287b6eeb1973017db2cabf38ba67dbc0edb6f3beda34c"
       // };
 
-    //     var order ={
-    //     "orderId": "test01",
-        
-    //     "orderInfo": "testinfo",
-    //     "requestId": "test01",
-    //     "extraData": "name=binh",    
-    //   };
-    //   var request = 'orderId=pg'+(new Date).toTimeString()+ '&requestId=pg'+(new Date).toTimeString()+ '&orderInfo=Lấy thông tin '+this.cur_PG.ten + '&extraData=pgid='+this.cur_PG._id
-    //   alert(request);
-    //   axios
-    //     .get(`http://localhost:5000/momo?`+request)
-    //     .then(response => {
-    //       if(response.date!='')
-    //  window.location.href = response.data;
-    
-    //     })
-    //     .catch(e => {
-    //       this.errors.push(e);
-    //        this.$router.push({
-    //           path: "Page404",
-    //           query: { id: id, mess: "Có_lỗi_xảy_ra" }
-    //         });
-    //     });
-    },
-           
+      //     var order ={
+      //     "orderId": "test01",
+
+      //     "orderInfo": "testinfo",
+      //     "requestId": "test01",
+      //     "extraData": "name=binh",
+      //   };
+      //   var request = 'orderId=pg'+(new Date).toTimeString()+ '&requestId=pg'+(new Date).toTimeString()+ '&orderInfo=Lấy thông tin '+this.cur_PG.ten + '&extraData=pgid='+this.cur_PG._id
+      //   alert(request);
+      //   axios
+      //     .get(`http://localhost:5000/momo?`+request)
+      //     .then(response => {
+      //       if(response.date!='')
+      //  window.location.href = response.data;
+
+      //     })
+      //     .catch(e => {
+      //       this.errors.push(e);
+      //        this.$router.push({
+      //           path: "Page404",
+      //           query: { id: id, mess: "Có_lỗi_xảy_ra" }
+      //         });
+      //     });
+    }
   },
   mounted() {
-    this.reload(this.$route.query.id);
+    this.reload(this.$route.query.email);
   }
 };
+//.slice(0,10).split("-").reverse().join("/")
 </script>

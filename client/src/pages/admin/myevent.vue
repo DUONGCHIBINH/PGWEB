@@ -5,7 +5,7 @@
         <h3>Sự kiện của tôi</h3>
       </v-row>
       <v-row>
-        <v-col cols="2">
+        <v-col cols="4">
           <v-card>
             <v-list-item>
               <v-list-item-content>
@@ -33,7 +33,7 @@
                     @click="eventclick(item._id)"
                   >
                     <v-list-item-content>
-                      <v-list-item-title>{{ item.ten }}</v-list-item-title>
+                      <v-list-item-title>{{ item.tensukien }}</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list-item-group>
@@ -42,7 +42,7 @@
           </v-card>
         </v-col>
         <v-divider vertical></v-divider>
-        <v-col>
+        <v-col >
           <v-tabs fixed-tabs color="#34495e">
             <v-tab>Ứng tuyển</v-tab>
             <v-tab>Đã duyệt</v-tab>
@@ -102,21 +102,25 @@ export default {
     events: [],
     ungtuyen: [],
     headers: [
+      {
+        text: "Email",
+        align: "left",
+        value: "email"
+      },
       { text: "Ten", value: "ten" },
       { text: "loai", value: "loai" },
-      { text: "Số event", value: "sosukien" },
-      { text: "yêu thích", value: "soyeuthich" },
-      { text: "lượt mua", value: "soluotmua" },
+      // { text: "Số event", value: "sosukien" },
+      // { text: "yêu thích", value: "soyeuthich" },
+      // { text: "lượt mua", value: "soluotmua" },
       { text: "nơi làm việc", value: "noilamviec" },
       { text: "sống tại", value: "songtai" },
-
       { text: "Actions", value: "action" }
-    ]
+    ],
   }),
   methods: {
     reload() {
       axios
-        .get(`http://localhost:5000/api/event`)
+        .get(`http://localhost:5000/api/event?nguoitao=`+this.$store.state.cur_user.email)
         .then(response => {
           this.events = response.data.data;
           this.event_loading = false;
@@ -128,9 +132,14 @@ export default {
     eventclick(id) {
       //  alert(id);
       axios
-        .get(`http://localhost:5000/api/pg`)
+        .get(`http://localhost:5000/api/apply?obPG.email=`+this.$store.state.cur_user.email)
         .then(response => {
-          this.ungtuyen = response.data.data;
+      
+          let temp = response.data.data;
+             
+          temp.forEach(e => {
+            this.ungtuyen.push(e.obPG);
+          });
         })
         .catch(e => {
           this.errors.push(e);

@@ -15,7 +15,7 @@
             <v-row>
               <v-col cols="12" sm="8" md="8">
                 <v-text-field
-                  v-model="editedItem.userid"
+                  v-model="editedItem.tensukien"
                   label="Tên sự kiện"
                   :rules="[rules.required]"
                 ></v-text-field>
@@ -23,24 +23,24 @@
 
               <v-col cols="12" sm="4" md="4">
                 <v-text-field
-                  v-model="editedItem.userpass"
+                  v-model="editedItem.tencongty"
                   label="Tên công ty (hoặc người đại diện)"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="8" md="8">
-                <v-text-field v-model="editedItem.username" label="Địa điểm tổ chức"></v-text-field>
+                <v-text-field v-model="editedItem.diadiem" label="Địa điểm tổ chức"></v-text-field>
               </v-col>
 
               <v-col cols="12" sm="4" md="4">
-                <v-text-field v-model="editedItem.userpass" label="Email liên hệ"></v-text-field>
+                <v-text-field v-model="editedItem.email" label="Email liên hệ"></v-text-field>
               </v-col>
 
               <v-col cols="12" sm="4" md="4">
-                <v-text-field v-model="editedItem.userpass" label="Số lượng tuyển"></v-text-field>
+                <v-text-field v-model="editedItem.soluongtuyen" label="Số lượng tuyển"></v-text-field>
               </v-col>
 
               <v-col cols="12" sm="4" md="4">
-                <v-text-field  v-model="editedItem.userpass" label="Mức lương" suffix="VNĐ/1 giờ"></v-text-field>
+                <v-text-field  v-model="editedItem.mucluong" label="Mức lương" suffix="VNĐ/1 giờ"></v-text-field>
               </v-col>
 
               <v-col cols="12" sm="4" md="4">
@@ -120,17 +120,17 @@
               </v-col>
 
               <v-col cols="12" sm="3" md="3">
-                <v-text-field label="Thời gian bắt đầu"  value="08:00:00" type="time"></v-text-field>
+                <v-text-field label="Thời gian bắt đầu"  v-model="timebd"  value="08:00:00" type="time"></v-text-field>
               </v-col>
               <v-col cols="12" sm="3" md="3">
-                <v-text-field label="Thời gian kết thúc" value="18:00:00" type="time"></v-text-field>
+                <v-text-field label="Thời gian kết thúc" v-model="timekt"  value="18:00:00" type="time"></v-text-field>
               </v-col>
 
               <v-col cols="12" sm="12" md="12">
-                <v-textarea label="Mô tả công việc" auto-grow outlined></v-textarea>
+                <v-textarea v-model="editedItem.mota" label="Mô tả công việc" auto-grow outlined></v-textarea>
               </v-col>
               <v-col cols="12" sm="12" md="12">
-                <v-textarea label="Yêu cầu công việc" auto-grow outlined></v-textarea>
+                <v-textarea  v-model="editedItem.yeucau" label="Yêu cầu công việc" auto-grow outlined></v-textarea>
               </v-col>
               <v-col cols="12" sm="8" md="8">
                 <v-checkbox label="Bạn có đồng ý với các điều khoản của chúng tôi" value="true"></v-checkbox>
@@ -164,7 +164,10 @@ export default {
     menudatekt: false,
     datebd: new Date().toISOString().substr(0, 10),
     datekt: new Date().toISOString().substr(0, 10),
+    timebd: null,
+    timekt: null,
     menudatebd: false,
+    obcurNTD : null,
 
 
     rules: {
@@ -172,6 +175,7 @@ export default {
     },
 
     editedItem: {
+      id:"",
       tensukien: "",
       tencongty: "",
       diadiem: "",
@@ -184,64 +188,95 @@ export default {
       thoigianbatdau: "",
       thoigianketthuc: "",
       mota: "",
-      yeucau: ""
+      yeucau: "",
+      trangthai:'Chờ',
+      duyet: false,
+      SLungtuyen:0,
+      SLxem:0,
     }
   }),
 
   computed: {},
-
+ mounted() {
+   
+    this.reload();
+  },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
         //ham save o day
-        var today = new Date().toISOString().substr(0, 10);
+        var today = new Date().toISOString();
         // this.edit_item.ngaytao = today.getDate() +"/"+today.getMonth() +"/"+ today.getFullYear();
         // this.editedItem.ngaytao = today;
-        console.log(this.datebd);
-        console.log(this.timekt);
-        var temp = {
-          thongtinchung: null,
-          nguoitao: {},
-          dsapply: [],
-          trangthai: "chờ duyệt",
-          type: "bình thường",
-          mid: "id001",
-          duyet: false,
-          ngaytao: today
-        };
+        // console.log(this.datebd);
+        // console.log(this.timekt);
+        // var temp = {
+        //   thongtinchung: null,
+        //   nguoitao: {},
+        //   dsapply: [],
+        //   trangthai: "chờ duyệt",
+        //   type: "bình thường",
+        //   mid: "id001",
+        //   duyet: false,
+        //   ngaytao: today
+        // };
 
-        temp.nguoitao = this.$store.state.cur_userdb;
-        temp.thongtinchung = this.editedItem;
+        // temp.nguoitao = this.$store.state.cur_userdb;
+        // temp.thongtinchung = this.editedItem;
 
-        // axios
-        //   .post(`http://localhost:5000/api/event/`, temp, {
-        //     headers: {
-        //       "content-type": "application/json"
-        //     }
-        //   })
-        //   .then(response => {
-        //     console.log(response.data.confirmation);
-        //     if (response.data.confirmation == "add success") {
-        //       this.$dialog
-        //         .alert("Thêm thành công!", { okText: "Tiếp tục" })
-        //         .then(function(dialog) {});
-        //       // this.reload();
-        //       return true;
-        //     } else {
-        //       this.$dialog
-        //         .alert("Thêm thất bại!", { okText: "Tiếp tục" })
-        //         .then(function(dialog) {});
-        //       return false;
-        //     }
-        //   })
-        //   .catch(e => {
-        //     this.$dialog
-        //       .alert("Thêm thất bại!", { okText: "Tiếp tục" })
-        //       .then(function(dialog) {});
-        //     console.log(e);
-        //     return false;
-        //   });
+        this.editedItem.nguoitao =this.$store.state.cur_user.email;
+        this.editedItem.ngaytao = today;
+
+         this.editedItem.ngaybatdau =this.datebd;
+        this.editedItem.ngayketthuc = this.datekt;
+         this.editedItem.thoigianbatdau =this.timebd;
+        this.editedItem.thoigianketthuc = this.timekt;
+
+        axios
+          .post(`http://localhost:5000/api/event/`, this.editedItem, {
+            headers: {
+              "content-type": "application/json"
+            }
+          })
+          .then(response => {
+            console.log(response.data.confirmation);
+            if (response.data.confirmation == "add success") {
+              this.$dialog
+                .alert("Thêm thành công!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+              // this.reload();
+              this.$router.push({ path: "/sukien" });
+              return true;
+            } else {
+              this.$dialog
+                .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+              return false;
+            }
+          })
+          .catch(e => {
+            this.$dialog
+              .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            console.log(e);
+            return false;
+          });
       }
+    },
+    reload(){
+   
+      axios
+        .get(`http://localhost:5000/api/ntd?email=` + this.$store.state.cur_user.email)
+        .then(response => {     
+          this.obcurNTD = response.data.data[0];
+         this.editedItem.email = this.obcurNTD.email;
+         this.editedItem.tencongty = this.obcurNTD.tenCTy;
+         
+        })
+        .catch(e => {
+    
+        });
+
     }
   }
 };

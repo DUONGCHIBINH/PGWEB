@@ -57,12 +57,12 @@
                   >
                     <v-row style="  max-height: 4.5em; " align="center">
                       <v-col sm="9">
-                        <h6>{{n.ten}} ( {{ n.ngaydienra.slice(0,10).split("-").reverse().join("/") }} )</h6>
+                        <h6>{{n.tensukien}} </h6>
 
                         <p style="font-size:14px">
                           tại
                           <strong>{{n.diadiem}}</strong>
-                          - {{n.congty}}
+                          - {{n.tencongty}}
                         </p>
                       </v-col>
                       <v-col align="end">
@@ -74,7 +74,7 @@
                     <v-divider class="info" style="opacity: 0.22; margin:0"></v-divider>
                     <v-row align="center">
                       <v-col class="grow">
-                        <div class="text2line" style="font-size:15px;">{{n.mieutacv}}</div>
+                        <div class="text2line" style="font-size:15px;">{{n.mota}}</div>
                       </v-col>
                       <v-col class="shrink">
                         <v-btn color="pink" style="color:white"  @click="$router.push({ path: 'eventchitiet', query: { id: n._id } })" >Xem ngay</v-btn>
@@ -241,6 +241,7 @@ export default {
       axios
         .get(`http://localhost:5000/api/event`)
         .then(response => {
+          
           this.posts = response.data.data;
         })
         .catch(e => {
