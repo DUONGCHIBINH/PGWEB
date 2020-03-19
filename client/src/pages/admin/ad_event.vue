@@ -1,56 +1,50 @@
+  
 <template>
-  <v-data-table :headers="headers" :items="desserts" class="elevation-1">
-    <template v-slot:top>
-      <v-toolbar flat color="white">
-        <v-toolbar-title>Danh mục sự kiện</v-toolbar-title>
-        <v-divider class="mx-6" inset vertical></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="800px">
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on">Thêm mới</v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
+  <v-tabs fixed-tabs>
+    <v-tab>Đang chờ ({{events.length}})</v-tab>
+    <v-tab>Đã duyệt ({{events_duyet.length}})</v-tab>
+    <v-tab>Đã hủy ({{events_huy.length}})</v-tab>
+    <v-tab-item>
+      <v-data-table :headers="headers" :items="events" class="elevation-1">
+        <template v-slot:item.action="{ item }">
+          <!-- <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+          <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>-->
 
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="editedItem.eventid" label="ID"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="editedItem.eventname" label="Name"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="editedItem.eventpass" label="Pass"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-combobox v-model="editedItem.type" :items="event_types" label="Loại event"></v-combobox>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-
-    <template v-slot:item.action="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-      <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Thêm mới</v-btn>
-    </template>
-  </v-data-table>
+          <v-btn style=" margin-right: 3px;" color="success" @click="Duyet(item)" dark>Duyệt</v-btn>
+          <v-btn color="grey darken-1" @click="Huy(item)" dark>Hủy</v-btn>
+        </template>
+        <template v-slot:no-data>
+          <h4>Không có dữ liệu hiển thị</h4>
+          <!-- <v-btn color="primary" @click="initialize">Thêm mới</v-btn> -->
+        </template>
+      </v-data-table>
+    </v-tab-item>
+    <v-tab-item>
+      <v-data-table :headers="headers" :items="events_duyet" class="elevation-1">
+        <template v-slot:item.action="{ item }">
+          <!-- <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+          <v-icon small @click="deleteItem(item)">mdi-delete</v-icon> -->
+          <v-btn style=" margin-right: 3px;" color="pink" @click="HuyDuyet(item)" dark>Bỏ Duyệt</v-btn>
+          <v-btn color="grey darken-1" @click="Huy(item)" dark>Hủy</v-btn>
+        </template>
+        <template v-slot:no-data>
+          <h4>Không có dữ liệu hiển thị</h4>
+          <!-- <v-btn color="primary" @click="initialize">Thêm mới</v-btn> -->
+        </template>
+      </v-data-table>
+    </v-tab-item>
+    <v-tab-item>
+      <v-data-table :headers="headers" :items="events_huy" class="elevation-1">
+        <template v-slot:item.action="{ item }">
+         <v-btn color="blue lighten-1" @click="BoHuy(item)" dark>Khôi phục</v-btn>
+        </template>
+        <template v-slot:no-data>
+          <h4>Không có dữ liệu hiển thị</h4>
+          <!-- <v-btn color="primary" @click="initialize">Thêm mới</v-btn> -->
+        </template>
+      </v-data-table>
+    </v-tab-item>
+  </v-tabs>
 </template>
 <script>
 import axios from "axios";
@@ -69,6 +63,8 @@ Vue.use(VuejsDialog);
 export default {
   data: () => ({
     events: [],
+    events_duyet: [],
+    events_huy: [],
     dialog: false,
     headers: [
       // {
@@ -81,12 +77,11 @@ export default {
       //   align: "left",
       //   value: "mid"
       // },
-       { text: "Người tạo", value: "nguoitao" },
+      { text: "Người tạo", value: "nguoitao" },
       { text: "Tên sự kiện", value: "tensukien" },
       { text: "Địa điểm", value: "diadiem" },
       { text: "Ngày tạo", value: "ngaytao" },
-      { text: "Ngày bắt đầu", value: "ngaybatdau" },
-
+      // { text: "Ngày bắt đầu", value: "ngaybatdau" },
       { text: "Công ty", value: "tencongty" },
 
       { text: "Actions", value: "action" }
@@ -128,11 +123,21 @@ export default {
   },
   methods: {
     reload() {
+      this.events=[];
+        this.events_duyet=[];
+          this.events_huy=[];
+          
       axios
         .get(`http://localhost:5000/api/event`)
         .then(response => {
-          this.events = response.data;
           this.desserts = response.data.data;
+          this.events = this.desserts.filter(
+            o => o.duyet == false && o.huy == false
+          );
+          this.events_duyet = this.desserts.filter(
+            o => o.duyet == true && o.huy == false
+          );
+          this.events_huy = this.desserts.filter(o => o.huy == true);
         })
         .catch(e => {
           this.errors.push(e);
@@ -269,6 +274,114 @@ export default {
             .then(function(dialog) {});
           console.log(e);
           return false;
+        });
+    },
+    Duyet(item) {
+ 
+      item.duyet = true;
+      axios
+        .post("http://localhost:5000/api/event/update/" + item._id, item, {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          console.log(response.data)
+          if (response.data.confirmation == "update success") {
+            this.$dialog
+              .alert("Duyệt thành công!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            this.reload();
+          } else {
+            this.$dialog
+              .alert("Duyệt thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+          }
+        })
+        .catch(e => {
+          this.$dialog
+            .alert("Duyệt thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+        });
+    },
+    HuyDuyet(item) {
+ 
+      item.duyet = false;
+      axios
+        .post("http://localhost:5000/api/event/update/" + item._id, item, {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          console.log(response.data)
+          if (response.data.confirmation == "update success") {
+            this.$dialog
+              .alert("Bỏ Duyệt thành công!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            this.reload();
+          } else {
+            this.$dialog
+              .alert("Bỏ Duyệt thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+          }
+        })
+        .catch(e => {
+          this.$dialog
+            .alert("Bỏ Duyệt thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+        });
+    },
+    Huy(item) {
+      item.huy = true;
+      axios
+        .post("http://localhost:5000/api/event/update/" + item._id, item, {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          if (response.data.confirmation == "update success") {
+            this.$dialog
+              .alert("Hủy thành công!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            this.reload();
+          } else {
+            this.$dialog
+              .alert("Hủy thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+          }
+        })
+        .catch(e => {
+          this.$dialog
+            .alert("Hủy thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+        });
+    },
+     BoHuy(item) {
+      item.huy = false;
+      axios
+        .post("http://localhost:5000/api/event/update/" + item._id, item, {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          if (response.data.confirmation == "update success") {
+            this.$dialog
+              .alert("Khôi phục thành công!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            this.reload();
+          } else {
+            this.$dialog
+              .alert("Khôi phục thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+          }
+        })
+        .catch(e => {
+          this.$dialog
+            .alert("Khôi phục thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
         });
     }
   }

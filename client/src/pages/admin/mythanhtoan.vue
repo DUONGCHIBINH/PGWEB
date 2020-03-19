@@ -2,9 +2,9 @@
   <v-container class="ma-0 pa-0" fill-height>
     <v-col class="ma-0 pa-0">
       <v-row>
-        <h3>Lịch sử thanh toán</h3>
+        <v-col><h3>Lịch sử thanh toán</h3></v-col>
       </v-row>
-      <v-row>
+      <v-card elevation="5"><v-row>
         <v-col cols="2">
           <v-card>
             <v-list-item>
@@ -141,7 +141,7 @@
             </v-tab-item>
           </v-tabs>
         </v-col>
-      </v-row>
+      </v-row></v-card>
     </v-col>
   </v-container>
 </template>
@@ -229,7 +229,8 @@ export default {
       { text: "Số tiền", value: "sotien" },
       { text: "Trạng thái", value: "trangthai" },
       { text: "Actions", value: "action" }
-    ]
+    ],
+    
   }),
   methods: {
     reload() {

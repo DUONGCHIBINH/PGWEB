@@ -18,6 +18,7 @@ var evtSchema = new mongoose.Schema({
       yeucau: String,
       trangthai:String,
       duyet: Boolean,
+      huy: Boolean,
       nguoitao:String,
       ngaytao: Date,
       SLxem: Number,

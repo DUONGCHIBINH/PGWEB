@@ -10,13 +10,57 @@
               alt="AVATAR"
             />
           </v-avatar>
-          <br />
-          <br />
-          <b-col sm="12">
-            <v-btn class="ma-2" tile outlined color="success" @click="momo">
+           <b-col >
+          <v-col>
+           <v-row align="center" justify="center" >
+               <v-dialog v-model="dialogAVT" persistent max-width="600px">
+                <template v-slot:activator="{ on }">
+                  <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
+                 
+               <v-btn class="ma-2" tile dark color="success" v-on="on">
+              <v-icon left>mdi-image-edit</v-icon>Đổi Avatar
+            </v-btn>
+                </template>
+                <v-card>
+                  <v-card-title>
+                    <span class="headline">Cập nhật ảnh đại diện</span>
+                  </v-card-title>
+                  <v-card-text>
+                    <v-form>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12" sm="8" md="8">
+                            <v-file-input
+                              v-model="AVTImg"
+                              accept="image/png, image/jpeg, image/bmp"
+                              placeholder="Tải lên ảnh đại diện"
+                              prepend-icon="mdi-camera"
+                              label="Avatar"
+                              required
+                            ></v-file-input>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-form>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="blue darken-1" text @click="dialogAVT = false">Close</v-btn>
+                    <v-btn color="blue darken-1" text @click="saveAVT">Save</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+           </v-row>
+           <v-row align="center" justify="center">
+               <v-btn class="ma-2" tile outlined color="primary" @click="momo">
               <v-icon left>mdi-phone</v-icon>Liên hệ
             </v-btn>
+           </v-row>
+          </v-col>
           </b-col>
+        
+     
+          
         </b-col>
         <b-col>
           <!-- style="background-color:blue" -->

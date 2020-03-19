@@ -1,19 +1,21 @@
 const express = require('express');
 const router = express.Router();
 
-var Apply = require('../../models/apply.model')
+var GD = require('../../models/gd.model')
+
+var PG = require('../../models/pg.model')
 
 
-
-//Get GET     find: api/apply?username=Binh  
+//Get GET     find: api/gd?username=Binh  
 router.get('/', async(req, res) => {
     const query = req.query
-    Apply
+
+    GD
     .find(query)
-        .then(apply => {
+        .then(gd => {
             res.json({
                 confirmation: 'success',
-                data: apply
+                data: gd
             })
         })
         .catch(err => {
@@ -23,21 +25,21 @@ router.get('/', async(req, res) => {
             })
         })
 });
-//GET by id   /api/apply/5da89ed01c9d440000a149fa
+//GET by id   /api/gd/5da89ed01c9d440000a149fa
 router.get('/:id', async(req, res) => {
     const id = req.params.id
 
-    ;(await Apply.findById(id))
-        .then(apply => {
+    ;(await GD.findById(id))
+        .then(gd => {
             res.json({
                 confirmation: 'success',
-                data: apply
+                data: gd
             })
         })
         .catch(err => {
             res.json({
                 confirmation: 'fail',
-                message: 'Apply ' + id + ' not found'
+                message: 'GD ' + id + ' not found'
             })
         })
 });
@@ -46,7 +48,7 @@ router.post('/update/:id', async (req, res) => {
     const body = req.body;
     const id = req.params.id
     console.log(id)
-    Apply.findByIdAndUpdate(id, body, { new: true })
+    GD.findByIdAndUpdate(id, body, { new: true })
         .then(ap => {
             res.json({
                 confirmation: 'update success',
@@ -56,19 +58,19 @@ router.post('/update/:id', async (req, res) => {
         .catch(err => {
             res.json({
                 confirmation: 'fail',
-                message: 'Apply ' + id + ' not found'
+                message: 'GD ' + id + ' not found'
             })
         })
 });
 
 //POST ADD
 router.post('/', async(req, res) => {
-    Apply.create(req.body)
-        .then(apply => {
-            console.log(apply);
+    GD.create(req.body)
+        .then(gd => {
+            console.log(gd);
             res.json({
                 confirmation: 'add success',
-                data: apply
+                data: gd
             })
         })
         .catch(err => {

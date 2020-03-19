@@ -1,56 +1,34 @@
 <template>
-  <v-data-table :headers="headers" :items="desserts" class="elevation-1">
-    <template v-slot:top>
-      <v-toolbar flat color="white">
-        <v-toolbar-title>Danh mục sự kiện</v-toolbar-title>
-        <v-divider class="mx-6" inset vertical></v-divider>
-        <v-spacer></v-spacer>
-        <v-dialog v-model="dialog" max-width="800px">
-          <template v-slot:activator="{ on }">
-            <v-btn color="primary" dark class="mb-2" v-on="on">Thêm mới</v-btn>
-          </template>
-          <v-card>
-            <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="editedItem.pgid" label="ID"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="editedItem.pgname" label="Name"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-text-field v-model="editedItem.pgpass" label="Pass"></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-combobox v-model="editedItem.type" :items="pg_types" label="Loại pg"></v-combobox>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
-              <v-btn color="blue darken-1" text @click="save">Save</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-      </v-toolbar>
-    </template>
-
-    <template v-slot:item.action="{ item }">
-      <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-      <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-    </template>
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize">Thêm mới</v-btn>
-    </template>
-  </v-data-table>
+  <v-tabs fixed-tabs>
+    <v-tab>Đang hoạt động ({{pgs.length}})</v-tab>
+    <v-tab>Ngừng cấp phép ({{pgs_block.length}})</v-tab>
+    <v-tab-item>
+      <v-data-table :headers="headers" :items="pgs" class="elevation-1">
+        <template v-slot:item.action="{ item }">
+          <!-- <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+          <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>-->
+          <v-btn color="pink" @click="khoa(item)" dark>Khóa tài khoản</v-btn>
+        </template>
+        <template v-slot:no-data>
+          <!-- <v-btn color="primary" @click="initialize">Thêm mới</v-btn> -->
+          <h4>Không có dữ liệu hiển thị</h4>
+        </template>
+      </v-data-table>
+    </v-tab-item>
+    <v-tab-item>
+      <v-data-table :headers="headers" :items="pgs_block" class="elevation-1">
+        <template v-slot:item.action="{ item }">
+          <!-- <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+          <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>-->
+          <v-btn color="pink" @click="Mo(item)" dark>Khôi phục</v-btn>
+        </template>
+        <template v-slot:no-data>
+          <!-- <v-btn color="primary" @click="initialize">Thêm mới</v-btn> -->
+          <h4>Không có dữ liệu hiển thị</h4>
+        </template>
+      </v-data-table>
+    </v-tab-item>
+  </v-tabs>
 </template>
 <script>
 import axios from "axios";
@@ -69,6 +47,7 @@ Vue.use(VuejsDialog);
 export default {
   data: () => ({
     pgs: [],
+    pgs_lọk: [],
     dialog: false,
     headers: [
       {
@@ -83,8 +62,8 @@ export default {
       // { text: "lượt mua", value: "soluotmua" },
       { text: "nơi làm việc", value: "noilamviec" },
       { text: "sống tại", value: "songtai" },
-       { text: "Đến từ", value: "dentu" },
-    { text: "ngày tham gia", value: "ngaythamgia" },
+      { text: "Đến từ", value: "dentu" },
+      { text: "ngày tham gia", value: "ngaythamgia" },
       { text: "Actions", value: "action" }
     ],
     desserts: [],
@@ -124,11 +103,14 @@ export default {
   },
   methods: {
     reload() {
+      this.pgs = [];
+      this.pgs_block = [];
       axios
         .get(`http://localhost:5000/api/pg`)
         .then(response => {
-          this.pgs = response.data;
           this.desserts = response.data.data;
+          this.pgs = this.desserts .filter(o => o.huy == false);
+          this.pgs_block = this.desserts .filter(o => o.huy == true);
         })
         .catch(e => {
           this.errors.push(e);
@@ -265,6 +247,62 @@ export default {
             .then(function(dialog) {});
           console.log(e);
           return false;
+        });
+    },
+    khoa(item) {
+      item.huy = true;
+      axios
+        .post("http://localhost:5000/api/pg/update/" + item._id, item, {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          console.log(response.data.confirmation);
+          if (response.data.confirmation == "update success") {
+            this.$dialog
+              .alert("Khóa tài khoản thành công!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            this.reload();
+          } else {
+            this.$dialog
+              .alert("Khóa tài khoản thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+          }
+        })
+        .catch(e => {
+          this.$dialog
+            .alert("Khóa tài khoản thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+          console.log(e);
+        });
+    },
+    Mo(item) {
+      item.huy = false;
+      axios
+        .post("http://localhost:5000/api/pg/update/" + item._id, item, {
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        .then(response => {
+          console.log(response.data.confirmation);
+          if (response.data.confirmation == "update success") {
+            this.$dialog
+              .alert("Khôi phục tài khoản thành công!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            this.reload();
+          } else {
+            this.$dialog
+              .alert("Khôi phục tài khoản thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+          }
+        })
+        .catch(e => {
+          this.$dialog
+            .alert("Khôi phục tài khoản thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+          console.log(e);
         });
     }
   }

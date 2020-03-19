@@ -191,6 +191,7 @@ export default {
       yeucau: "",
       trangthai:'Chờ',
       duyet: false,
+      huy: false,
       SLungtuyen:0,
       SLxem:0,
     }

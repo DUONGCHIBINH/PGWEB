@@ -50,6 +50,9 @@ app.use('/api/pg', pg);
 const ntd = require('./routes/api/ntd');
 app.use('/api/ntd', ntd);
 
+const gd = require('./routes/api/gd');
+app.use('/api/gd', gd);
+
 const apply = require('./routes/api/apply');
 app.use('/api/apply', apply);
 

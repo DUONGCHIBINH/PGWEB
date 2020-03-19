@@ -72,7 +72,7 @@ router.post('/update/:id', async (req, res) => {
     User.findByIdAndUpdate(id, body, { new: true })
         .then(user => {
             res.json({
-                confirmation: 'success',
+                confirmation: 'update success',
                 data: user
             })
         })

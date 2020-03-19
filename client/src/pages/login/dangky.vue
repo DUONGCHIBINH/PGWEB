@@ -313,6 +313,7 @@ export default {
             sosukien: 0,
             soyeuthich: 0,
             soluotmua: 0,
+            huy: false,
             ngaythamgia: today.toISOString().slice(0, 10),
           };
 

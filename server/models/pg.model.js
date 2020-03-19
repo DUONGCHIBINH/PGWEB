@@ -19,6 +19,7 @@ var pg = new mongoose.Schema({
     thongtin: String,
     email: String,
     sdt: String,
+    huy:Boolean,
 
 });
 
