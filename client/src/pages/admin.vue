@@ -20,11 +20,12 @@
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
-   <v-content style=" margin-bottom: 125px;">
-        <v-container >
+   <v-content style="padding:15px; margin-bottom: 125px;" fluid>
+        <!-- <v-container style="padding:0px; " >
         <router-view></router-view>
-      </v-container>
-   </v-content>
+      </v-container> -->
+         <router-view></router-view>
+   </v-content >
     </v-layout>
   </v-content>
 </template>
@@ -38,7 +39,7 @@ export default {
         { title: "PG/PB/QL", icon: "mdi-help-box", link: "/admin/adpg" },
         // { title: "Quản lý", icon: "mdi-help-box", link: "/admin/adql" },
         { title: "Sự kiện", icon: "mdi-help-box", link: "/admin/adevent" },
-                { title: "Sự kiện của tôi", icon: "mdi-help-box", link: "/admin/myevent" },
+        { title: "Sự kiện của tôi", icon: "mdi-help-box", link: "/admin/myevent" },
         { title: "Thanh toán", icon: "mdi-help-box", link: "/admin/mythanhtoan" },
 
       ],

@@ -66,7 +66,7 @@ export default {
 
 
         axios
-        .post(`http://localhost:5000/api/GD/updatemany/`+this.$route.query.orderId)
+        .post(`http://localhost:5000/api/GD/updatemany/`+this.$route.query.orderId+'?magiaodich='+ this.$route.query.transId)
         .then(response => {
         console.log (response.data)
  

@@ -7,7 +7,7 @@
         <v-sheet height="100%">
           <v-img :src="banner[i]" height="430">
             <v-row class="fill-height" align="center" justify="center">
-              <div class="display-3">Slide {{ slide }}</div>
+              <div class="display-3">{{ slide }}</div>
             </v-row>
           </v-img>
         </v-sheet>
@@ -26,8 +26,8 @@
             <div class="headline">NHÀ TUYỂN DỤNG HÀNG ĐẦU</div>
           </v-row>
           <br />
-          <v-row class="fill-height" align="center" justify="center"> 
-            <template v-for="item in 5 ">
+          <v-row class="fill-height" align="center" justify="center">
+            <template v-for="item in NTDS ">
               <v-card
                 style="color:#34495e;"
                 class="ma-5"
@@ -46,11 +46,11 @@
                     >
                       <img
                         style="object-fit: cover"
-                        :src="`https://picsum.photos/500/300?image=15`"
+                        :src="`http://localhost:5000/api/photo/sys/ntd${item.id}.jpg`"
                         alt="AVATAR"
                       />
                     </v-avatar>
-                    <div class="subtitle-2 font-weight-bold handhover">VinFast</div>
+                    <div class="subtitle-2 font-weight-bold handhover">{{item.name}}</div>
                   </b-col>
                 </div>
               </v-card>
@@ -63,19 +63,19 @@
           </v-row>
           <br />
           <v-row class="fill-height" align="center" justify="center">
-            <v-col >
+            <v-col>
               <v-list elevation="5">
-                <template v-for="item in 4">
+                <template v-for="item in EVENTS">
                   <v-list-item three-line>
                     <v-list-item-avatar tile size="50">
                       <v-img height="50" src="http://localhost:5000/api/photo/sys/ntd1.png"></v-img>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                      <v-list-item-title>TẬP ĐOÀN VINFAST</v-list-item-title>
-                      <v-list-item-subtitle>Lễ ra mắt dòng xe cao cấp thế hệ turbo 3.0, Với sự góp mặt của đông đảo nhà báo và quý khách mời</v-list-item-subtitle>
+                      <v-list-item-title>{{item.tencongty}}</v-list-item-title>
+                      <v-list-item-subtitle>{{item.tensukien}}</v-list-item-subtitle>
                     </v-list-item-content>
                     <v-list-item-action>
-                      <v-list-item-action-text>27 phút trước</v-list-item-action-text>
+                      <v-list-item-action-text>2 ngày trước</v-list-item-action-text>
                       <v-icon large color="red">mdi-new-box</v-icon>
                     </v-list-item-action>
                   </v-list-item>
@@ -85,18 +85,18 @@
             </v-col>
             <v-col>
               <v-list elevation="5">
-                <template v-for="item in 4">
-                  <v-list-item three-line>
+                <template v-for="item in EVENTS1">
+                 <v-list-item three-line>
                     <v-list-item-avatar tile size="50">
                       <v-img height="50" src="http://localhost:5000/api/photo/sys/ntd1.png"></v-img>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                      <v-list-item-title>TẬP ĐOÀN VINFAST</v-list-item-title>
-                      <v-list-item-subtitle>Lễ ra mắt dòng xe cao cấp thế hệ turbo 3.0, Với sự góp mặt của đông đảo nhà báo và quý khách mời</v-list-item-subtitle>
+                      <v-list-item-title>{{item.tencongty}}</v-list-item-title>
+                      <v-list-item-subtitle>{{item.tensukien}}</v-list-item-subtitle>
                     </v-list-item-content>
                     <v-list-item-action>
                       <v-list-item-action-text>27 phút trước</v-list-item-action-text>
-                      <v-icon large color="red">mdi-alert-octagram</v-icon>
+                      <v-icon large color="red">mdi-new-box</v-icon>
                     </v-list-item-action>
                   </v-list-item>
                   <v-divider></v-divider>
@@ -181,12 +181,21 @@
 </template>
 
 <script>
-
 import axios from "axios";
 export default {
   data: () => {
     return {
+      EVENTS: [],
+         EVENTS1: [],
       PGS: [],
+      NTDS: [
+        { id: 1, name: "Yamaha" },
+        { id: 2, name: "Lâm Thành Phát" },
+        { id: 3, name: "BMW" },
+        { id: 4, name: "Mazda" },
+        { id: 5, name: "Mercedes-Benz" },
+        { id: 6, name: "Golden Group" }
+      ],
       colors: [
         "indigo",
         "warning",
@@ -194,13 +203,13 @@ export default {
         "red lighten-1",
         "deep-purple accent-4"
       ],
-      slides: ["Sự kiện", "PG", "PB", "Giới thiệu", "Quảng cáo"],
+      slides: ["Trang Web hàng đầu về tuyển dụng nhân sự Event", "Tìm kiếm nhanh chóng", "Thông tin tin cậy", "Đa dạng việc làm"],
       banner: [
         "http://localhost:5000/api/photo/SYS/bn1.png",
         "http://localhost:5000/api/photo/SYS/bn2.png",
         "http://localhost:5000/api/photo/SYS/bn3.png",
         "http://localhost:5000/api/photo/SYS/bn1.png",
-        "http://localhost:5000/api/photo/SYS/bn1.png"
+   
       ],
       sukien: [
         {
@@ -232,7 +241,18 @@ export default {
         .catch(e => {
           this.errors.push(e);
         });
+
+      axios
+        .get(`http://localhost:5000/api/event`)
+        .then(response => {
+          this.EVENTS = response.data.data.slice(0,4);
+          this.EVENTS1 = response.data.data.slice(4,8);
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
     },
+
     avaclick() {
       alert("chaocacban");
     }

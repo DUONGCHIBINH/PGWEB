@@ -547,9 +547,9 @@
       <div style="margin-bottom:150px"></div>
     </b-container>
     <v-row justify="center">
-      <v-dialog v-model="dialogImg"  width="1000">
+      <v-dialog v-model="dialogImg"  width="1000" >
         <v-card class="p-1">
-          <v-img   contain  :src="curImg" :lazy-src="curImg"  class="grey lighten-2"></v-img>
+          <v-img max-height="800" max-width="1000"  contain  :src="curImg" :lazy-src="curImg"  class="grey lighten-2"></v-img>
         </v-card>
       </v-dialog>
     </v-row>

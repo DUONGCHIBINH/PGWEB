@@ -5,7 +5,7 @@
         <div class="display-1" align="center" justify="center" style="color:#34495e;">Tìm nhân sự event</div>
          <br>
         <div align="center" justify="center">
-          <v-btn class="m-1" rounded outlined color="primary">Tạo hồ sơ PG/PB</v-btn>
+          <v-btn class="m-1" @click="$router.push({ path: 'dangky'} )" rounded outlined color="primary">Tạo hồ sơ PG/PB</v-btn>
         </div>
         <br>
         <v-tabs centered color="#34495e">

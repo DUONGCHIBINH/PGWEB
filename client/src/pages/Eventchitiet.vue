@@ -7,22 +7,19 @@
             <v-row>
               <v-col cols="auto">
                 <v-avatar color="blue-grey" size="150">
-                  <span class="white--text display-4">{{cur_event.tencongty.substring(0, 1).toUpperCase()}}</span>
+                  <span
+                    class="white--text display-4"
+                  >{{cur_event.tencongty.substring(0, 1).toUpperCase()}}</span>
                 </v-avatar>
               </v-col>
               <v-col>
                 <v-row>
                   <v-col style="padding: 0px 15px 0px 15px">
-                    <component
-                       :transition="'scale-transition'"
-                     :is="'div'"
-                      hide-on-leave
-                    >
-                      <v-skeleton-loader v-if="loading"  type="article"></v-skeleton-loader>
-                    <h3>{{cur_event.tensukien}}</h3>
-                    <h5>{{cur_event.tencongty}}</h5>
+                    <component :transition="'scale-transition'" :is="'div'" hide-on-leave>
+                      <v-skeleton-loader v-if="loading" type="article"></v-skeleton-loader>
+                      <h3>{{cur_event.tensukien}}</h3>
+                      <h5>{{cur_event.tencongty}}</h5>
                     </component>
-                   
                   </v-col>
                   <v-col align="end" style="padding: 0px 15px 0px 15px">
                     <v-dialog v-model="dialog" persistent max-width="600px">
@@ -94,20 +91,24 @@
                 </v-row>
                 <v-divider></v-divider>
                 <v-row>
-                <v-col style="padding: 0px 15px 0px 15px">
-                    <strong>Ngày đăng tin:</strong> {{edit_item.ngaytao.split("T")[0]}}
+                  <v-col style="padding: 0px 15px 0px 15px">
+                    <strong>Ngày đăng tin:</strong>
+                    {{edit_item.ngaytao.split("T")[0]}}
                   </v-col>
-                   <v-col align="end" style="padding: 0px 15px 0px 15px;  color: gray;">
-                     <strong>Ngày bắt đầu:</strong>  {{edit_item.ngaybatdau.split("T")[0]}}
+                  <v-col align="end" style="padding: 0px 15px 0px 15px;  color: gray;">
+                    <strong>Ngày bắt đầu:</strong>
+                    {{edit_item.ngaybatdau.split("T")[0]}}
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col style="padding: 0px 15px 0px 15px">
-                    <strong>Đã ứng tuyển:</strong>  {{SLungtuyen}}
-                   
+                    <strong>Đã ứng tuyển:</strong>
+
+                    {{SLungtuyen}}
                   </v-col>
                   <v-col align="end" style="padding: 0px 15px 0px 15px;  color: gray;">
-                    <strong>Ngày kết thúc:</strong> {{edit_item.ngayketthuc.split("T")[0]}}
+                    <strong>Ngày kết thúc:</strong>
+                    {{edit_item.ngayketthuc.split("T")[0]}}
                   </v-col>
                 </v-row>
               </v-col>
@@ -125,7 +126,8 @@
                 <v-row>
                   <v-col>
                     <div>
-                      <b>Đối tượng tuyển:</b> {{edit_item.doituong}}
+                      <b>Đối tượng tuyển:</b>
+                      {{edit_item.doituong}}
                     </div>
                   </v-col>
                   <v-col align="end">
@@ -135,24 +137,28 @@
                 <v-row>
                   <v-col>
                     <div>
-                      <b>Thời gian:</b> {{edit_item.ngaybatdau.split("T")[0]}}
+                      <b>Thời gian:</b>
+                      {{edit_item.ngaybatdau.split("T")[0]}}
                     </div>
                   </v-col>
                   <v-col align="end">
                     <div>
-                      <b>Địa điểm:</b> {{edit_item.diadiem}}
+                      <b>Địa điểm:</b>
+                      {{edit_item.diadiem}}
                     </div>
                   </v-col>
                 </v-row>
                 <v-row>
                   <v-col>
                     <div>
-                      <b>Số lượng tuyển:</b>  {{edit_item.soluongtuyen}}
+                      <b>Số lượng tuyển:</b>
+                      {{edit_item.soluongtuyen}}
                     </div>
                   </v-col>
                   <v-col align="end">
                     <div>
-                      <b>Mức lương:</b>   {{edit_item.mucluong}} VNĐ/Giờ
+                      <b>Mức lương:</b>
+                      {{edit_item.mucluong}} VNĐ/Giờ
                     </div>
                   </v-col>
                 </v-row>
@@ -160,15 +166,13 @@
                 <div class="title font-weight-black" style="color:#01579B">Yêu cầu</div>
                 <v-divider></v-divider>
                 <div>
-                  <p>  {{edit_item.soluongtuyen}}</p>
-                 
+                  <p>{{edit_item.yeucau}}</p>
                 </div>
                 <br />
                 <div class="title font-weight-black" style="color:#01579B">Mô tả</div>
                 <v-divider></v-divider>
                 <div>
-                  <p>  {{edit_item.mota}}</p>
-            
+                  <p>{{edit_item.mota}}</p>
                 </div>
               </v-col>
             </v-row>
@@ -176,7 +180,14 @@
         </v-col>
         <v-col>
           <v-card class="pa-3" elevation="3">
-            <v-btn class="mt-2" block color="pink" :dark="!daungtuyen"  @click="ungtuyen" :disabled="daungtuyen">Ứng tuyển ngay</v-btn>
+            <v-btn
+              class="mt-2"
+              block
+              color="pink"
+              :dark="!daungtuyen"
+              @click="ungtuyen"
+              :disabled="daungtuyen"
+            >Ứng tuyển ngay</v-btn>
             <v-btn class="mt-2" block outlined color="indigo">Thêm vào yêu thích</v-btn>
             <v-divider></v-divider>
             <div class="text-center">
@@ -277,13 +288,13 @@
 import axios from "axios";
 export default {
   data: () => ({
-     daungtuyen:false,
-    SLungtuyen:0,
-    loading:true,
+    daungtuyen: false,
+    SLungtuyen: 0,
+    loading: true,
     dialog: false,
     edit_item: {},
     cur_event: {},
-      cur_pg: {}
+    cur_pg: {}
   }),
   methods: {
     reload(id) {
@@ -301,7 +312,7 @@ export default {
           }
           this.cur_event = response.data.data[0];
           this.edit_item = { ...this.cur_event };
-          this.loading =false;
+          this.loading = false;
         })
         .catch(e => {
           this.errors.push(e);
@@ -311,28 +322,30 @@ export default {
           // });
         });
 
-
-        axios
-        .get(`http://localhost:5000/api/apply?eventid=`+id)
+      axios
+        .get(`http://localhost:5000/api/apply?eventid=` + id)
         .then(response => {
           this.SLungtuyen = response.data.data.length;
           response.data.data[0].forEach(element => {
-            if(element.obPG.email==this.$store.state.cur_user.email) this.daungtuyen=true;
+            if (element.obPG.email == this.$store.state.cur_user.email)
+              this.daungtuyen = true;
           });
         })
         .catch(e => {
           this.errors.push(e);
         });
 
-         axios
-        .get(`http://localhost:5000/api/PG?email=`+this.$store.state.cur_user.email)
+      axios
+        .get(
+          `http://localhost:5000/api/PG?email=` +
+            this.$store.state.cur_user.email
+        )
         .then(response => {
           this.cur_pg = response.data.data[0];
         })
         .catch(e => {
           this.errors.push(e);
         });
-
     },
     save() {
       this.dialog = false;
@@ -340,20 +353,20 @@ export default {
     },
     ungtuyen() {
       console.log("----------------------------------------------------");
-   
-    let today = new Date();
-    
-    var ob_ungtuyen = {
-    eventid: this.edit_item._id,
-    pgid: this.$store.state.cur_user.email,
-    ngayapply: today.toISOString() ,
-    obSukien : this.edit_item,
-    obPG : this.cur_pg,
-    duyet:false,
-    mua:false,
-    }
+
+      let today = new Date();
+
+      var ob_ungtuyen = {
+        eventid: this.edit_item._id,
+        pgid: this.$store.state.cur_user.email,
+        ngayapply: today.toISOString(),
+        obSukien: this.edit_item,
+        obPG: this.cur_pg,
+        duyet: false,
+        mua: false
+      };
       axios
-        .post(`http://localhost:5000/api/apply/`,ob_ungtuyen, {
+        .post(`http://localhost:5000/api/apply/`, ob_ungtuyen, {
           headers: {
             "content-type": "application/json"
           }
@@ -361,28 +374,27 @@ export default {
         .then(response => {
           console.log(response);
           if (response.data.confirmation == "add success") {
-           this.$dialog
-                .alert("Thêm thành công!", { okText: "Tiếp tục" })
-                .then(function(dialog) {});
-            this.daungtuyen=true;
+            this.$dialog
+              .alert("Thêm thành công!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
+            this.daungtuyen = true;
             // this.reload();
             return true;
           } else {
-           this.$dialog
-                .alert("Thêm thất bại!", { okText: "Tiếp tục" })
-                .then(function(dialog) {});
+            this.$dialog
+              .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+              .then(function(dialog) {});
             return false;
           }
         })
         .catch(e => {
-         this.$dialog
-                .alert("Thêm thất bại!", { okText: "Tiếp tục" })
-                .then(function(dialog) {});
+          this.$dialog
+            .alert("Thêm thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
           console.log(e);
           return false;
         });
     }
-   
   },
   mounted() {
     this.reload(this.$route.query.id);

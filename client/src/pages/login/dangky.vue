@@ -288,6 +288,7 @@ export default {
             soyeuthich: 0,
             soluotmua: 0,
             ngaythamgia: today.toISOString().slice(0, 10),
+            album:[],
           };
 
              axios
@@ -306,6 +307,7 @@ export default {
         }
          else {
           let obPG = {
+              avatar: 'avt.png',
             email: this.user.email,
             sdt: this.user.sdt,
             ten: this.user.name,
@@ -315,6 +317,7 @@ export default {
             soluotmua: 0,
             huy: false,
             ngaythamgia: today.toISOString().slice(0, 10),
+                album:[],
           };
 
           if (this.usertype == 0) obPG.loai = "PG";
