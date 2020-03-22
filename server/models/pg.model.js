@@ -15,7 +15,7 @@ var pg = new mongoose.Schema({
     dentu: String,
     ngaythamgia: Date,
     Sukiendathamgia: String,
-    album: String,
+    album: Object,
     thongtin: String,
     email: String,
     sdt: String,

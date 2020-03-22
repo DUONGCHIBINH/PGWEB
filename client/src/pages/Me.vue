@@ -3,64 +3,61 @@
     <b-container>
       <b-row class="mb-4">
         <b-col cols="4" class="text-center">
-          <v-avatar size="150">
+          <v-avatar size="150" @click="xemanh(`http://localhost:5000/api/photo/${cur_PG.avatar}`)">
             <img
               style="object-fit: cover"
               :src="`http://localhost:5000/api/photo/${cur_PG.avatar}`"
               alt="AVATAR"
             />
           </v-avatar>
-           <b-col >
-          <v-col>
-           <v-row align="center" justify="center" >
-               <v-dialog v-model="dialogAVT" persistent max-width="600px">
-                <template v-slot:activator="{ on }">
-                  <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
-                 
-               <v-btn class="ma-2" tile dark color="success" v-on="on">
-              <v-icon left>mdi-image-edit</v-icon>Đổi Avatar
-            </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    <span class="headline">Cập nhật ảnh đại diện</span>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-form>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12" sm="8" md="8">
-                            <v-file-input
-                              v-model="AVTImg"
-                              accept="image/png, image/jpeg, image/bmp"
-                              placeholder="Tải lên ảnh đại diện"
-                              prepend-icon="mdi-camera"
-                              label="Avatar"
-                              required
-                            ></v-file-input>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                    </v-form>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="dialogAVT = false">Close</v-btn>
-                    <v-btn color="blue darken-1" text @click="saveAVT">Save</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-           </v-row>
-           <v-row align="center" justify="center">
-               <v-btn class="ma-2" tile outlined color="primary" @click="momo">
-              <v-icon left>mdi-phone</v-icon>Liên hệ
-            </v-btn>
-           </v-row>
-          </v-col>
+          <b-col>
+            <v-col>
+              <v-row align="center" justify="center">
+                <v-dialog v-model="dialogAVT" persistent max-width="600px">
+                  <template v-slot:activator="{ on }">
+                    <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
+
+                    <v-btn class="ma-2" tile dark color="success" v-on="on">
+                      <v-icon left>mdi-image-edit</v-icon>Đổi Avatar
+                    </v-btn>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">Cập nhật ảnh đại diện</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-form>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" sm="8" md="8">
+                              <v-file-input
+                                v-model="AVTImg"
+                                accept="image/png, image/jpeg, image/bmp"
+                                placeholder="Tải lên ảnh đại diện"
+                                prepend-icon="mdi-camera"
+                                label="Avatar"
+                                required
+                              ></v-file-input>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-form>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="dialogAVT = false">Close</v-btn>
+                      <v-btn color="blue darken-1" text @click="saveAVT">Save</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </v-row>
+              <v-row align="center" justify="center">
+                <v-btn class="ma-2" tile outlined color="primary" @click="momo">
+                  <v-icon left>mdi-phone</v-icon>Liên hệ
+                </v-btn>
+              </v-row>
+            </v-col>
           </b-col>
-        
-     
-          
         </b-col>
         <b-col>
           <!-- style="background-color:blue" -->
@@ -312,8 +309,30 @@
                       <h6>Hình ảnh</h6>
                       <v-container fluid style=" padding:0px">
                         <v-row>
+                          <v-col class="d-flex child-flex" cols="2">
+                            <v-card flat tile class="d-flex" @click="addImg">
+                              <v-img
+                                :src="`http://localhost:5000/api/photo/add.png`"
+                                :lazy-src="`http://localhost:5000/api/photo/add.png`"
+                                aspect-ratio="1"
+                                class="white"
+                              >
+                                <template v-slot:placeholder>
+                                  <v-row class="fill-height ma-0" align="center" justify="center">
+                                    <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                                  </v-row>
+                                </template>
+                              </v-img>
+                            </v-card>
+                          </v-col>
+
                           <v-col v-for="n in 9" :key="n" class="d-flex child-flex" cols="2">
-                            <v-card flat tile class="d-flex">
+                            <v-card
+                              flat
+                              tile
+                              class="d-flex"
+                              @click="xemanh(`https://picsum.photos/500/300?image=${n * 5 + 10}`)"
+                            >
                               <v-img
                                 :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
                                 :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
@@ -435,11 +454,70 @@
           <v-tab-item>
             <v-container fluid>
               <v-row>
-                <v-col v-for="n in 9" :key="n" class="d-flex child-flex" cols="3">
-                  <v-card flat tile class="d-flex">
+
+ <v-dialog v-model="dialogAlbum" persistent max-width="600px">
+                  <template v-slot:activator="{ on }">
+                    <!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
+
+  
+                <v-col class="d-flex child-flex" cols="3">
+                  <v-card flat tile class="d-flex" v-on="on">
                     <v-img
-                      :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                      :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                      :src="`http://localhost:5000/api/photo/add.png`"
+                      :lazy-src="`http://localhost:5000/api/photo/add.png`"
+                      aspect-ratio="1"
+                      class="white"
+                    >
+                      <template v-slot:placeholder>
+                        <v-row class="fill-height ma-0" align="center" justify="center">
+                          <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </v-card>
+                </v-col>
+                  </template>
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">Thêm ảnh vào Album</span>
+                    </v-card-title>
+                    <v-card-text>
+                      <v-form>
+                        <v-container>
+                          <v-row>
+                            <v-col cols="12" sm="8" md="8">
+                              <v-file-input
+                                v-model="AlbumImg"
+                                accept="image/png, image/jpeg, image/bmp"
+                                placeholder="Tải ảnh lên Album"
+                                prepend-icon="mdi-camera"
+                                label="Hình ảnh"
+                                required
+                              ></v-file-input>
+                            </v-col>
+                          </v-row>
+                        </v-container>
+                      </v-form>
+                    </v-card-text>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="dialogAlbum = false">Close</v-btn>
+                      <v-btn color="blue darken-1" text @click="addImg">Save</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+
+                
+                <v-col v-for="n in cur_PG.album" :key="n" class="d-flex child-flex" cols="3">
+                  <v-card
+                    flat
+                    tile
+                    class="d-flex"
+                    @click="xemanh(`http://localhost:5000/api/photo/${n}`)"
+                  >
+                    <v-img
+                      :src="`http://localhost:5000/api/photo/${n}`"
+                      :lazy-src="`http://localhost:5000/api/photo/${n}`"
                       aspect-ratio="1"
                       class="grey lighten-2"
                     >
@@ -468,6 +546,13 @@
 
       <div style="margin-bottom:150px"></div>
     </b-container>
+    <v-row justify="center">
+      <v-dialog v-model="dialogImg"  width="1000">
+        <v-card class="p-1">
+          <v-img   contain  :src="curImg" :lazy-src="curImg"  class="grey lighten-2"></v-img>
+        </v-card>
+      </v-dialog>
+    </v-row>
   </div>
 </template>
 
@@ -477,14 +562,19 @@ import axios from "axios";
 export default {
   data() {
     return {
+      curImg: "",
       AVTImg: null,
+      AlbumImg: null,
       dialogm1: "",
       dialog: false,
+      dialogImg: false,
       dialogAVT: false,
+      dialogAlbum:false,
       tab: null,
       edit_item: {},
       cur_PG: {},
       items: ["Sự kiện đã tham gia", "Hình ảnh", "Thông tin"],
+      albums: [],
       text:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
     };
@@ -603,44 +693,69 @@ export default {
       // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
       window.location.href =
         "https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMOBKUN20180529&accessKey=klm05TvNBzhg7h7j&requestId=1578020735&amount=99999&orderId=1578020735&signature=752c9232f58958387dfc9c89dd73a6a3e87c98e584abfb52b4bb9909cc784eb7&requestType=captureMoMoWallet";
+    },
+    xemanh(link) {
+      this.dialogImg = true;
+      this.curImg = link;
+    },
+    addImg() {
+  
+      if (this.AlbumImg == null) return;
 
-      //   var order ={
-      //   "accessKey": "QIomPPOMzVHXcXMY",
-      //   "partnerCode": "MOMOAOBT20191229",
-      //   "requestType": "captureMoMoWallet",
-      //   "notifyUrl": "https://momo.vn",
-      //   "returnUrl": "https://momo.vn",
-      //   "orderId": "test01",
-      //   "amount": "99999",
-      //   "orderInfo": "testinfo",
-      //   "requestId": "test01",
-      //   "extraData": "name=binh",
-      //   "signature": "72818b03fe10e467414287b6eeb1973017db2cabf38ba67dbc0edb6f3beda34c"
-      // };
+      let data = new FormData();
+      data.append("file", this.AlbumImg, this.AlbumImg.name);
+      console.log(this.cur_PG);
+      let tenAnh= this.cur_PG.email +
+            "_album_" + Date.now() + "." +
+            this.AlbumImg.name.split(".").pop();
+      axios
+        .post(
+          "http://localhost:5000/api/photo/" +tenAnh,
+           
+          data,
+          {
+            headers: {
+              accept: "application/json",
+              "Accept-Language": "en-US,en;q=0.8",
+              "Content-Type": `multipart/form-data; boundary=${data._boundary}`
+            }
+          }
+        )
+        .then(response => {
+          this.cur_PG.album.push(tenAnh);
 
-      //     var order ={
-      //     "orderId": "test01",
+          axios
+            .post(
+              "http://localhost:5000/api/pg/update/" + this.cur_PG._id,
+              this.cur_PG,
+              {
+                headers: {
+                  "content-type": "application/json"
+                }
+              }
+            )
+            .then(response => {
+              this.albums = this.cur_PG.album
+              this.$dialog
+                .alert("Cập nhật thành công!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+            })
+            .catch(e => {
+              
+              this.$dialog
+                .alert("Cập nhật thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+            });
+        })
+        .catch(error => {
+       
+          this.$dialog
+            .alert("Cập nhật thất bại!", { okText: "Tiếp tục" })
+            .then(function(dialog) {});
+        });
 
-      //     "orderInfo": "testinfo",
-      //     "requestId": "test01",
-      //     "extraData": "name=binh",
-      //   };
-      //   var request = 'orderId=pg'+(new Date).toTimeString()+ '&requestId=pg'+(new Date).toTimeString()+ '&orderInfo=Lấy thông tin '+this.cur_PG.ten + '&extraData=pgid='+this.cur_PG._id
-      //   alert(request);
-      //   axios
-      //     .get(`http://localhost:5000/momo?`+request)
-      //     .then(response => {
-      //       if(response.date!='')
-      //  window.location.href = response.data;
-
-      //     })
-      //     .catch(e => {
-      //       this.errors.push(e);
-      //        this.$router.push({
-      //           path: "Page404",
-      //           query: { id: id, mess: "Có_lỗi_xảy_ra" }
-      //         });
-      //     });
+      this.dialogAlbum = false;
+  
     }
   },
   mounted() {

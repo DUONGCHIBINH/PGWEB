@@ -65,7 +65,7 @@
                 <v-data-table :headers="headers" :items="daduyet" class="elevation-1">
                   <template v-slot:item.action="{ item }">
                     <v-btn style=" margin-right: 3px;" color="grey darken-1" @click="Huy(item)" dark >Hủy</v-btn>                    
-                    <v-btn color="pink" @click="momo(item._id,item.ten)" dark>Mua</v-btn>
+                    <v-btn color="pink" @click="momo(item)" dark>Mua</v-btn>
                   </template>
                   <template v-slot:no-data>
                     <v-btn color="primary">Chưa có dữ liệu</v-btn>
@@ -252,11 +252,24 @@ export default {
       
      
     },
-    momo(id, name) {
+    momo(apply) {
       // this.$router.push({ path: 'https://test-payment.momo.vn/gw_payment/payment/qr', query: { partnerCode: 'MOMOAOBT20191229',accessKey: 'QIomPPOMzVHXcXMY', orderId:'orderid123', requestId:'orderid123',amount:'99999' ,requestType:'captureMoMoWallet'} })
       // window.location.href = 'https://test-payment.momo.vn/gw_payment/payment/qr?partnerCode=MOMO&accessKey=F8BBA842ECF85&requestId=MM87419&amount=1100&orderId=MM87419&signature=90e946d6a3e74b228b685e9ce6d5283f3b9404f205746532e2991d2da89d430b&requestType=captureMoMoWallet'
       //   alert(name);
       //  return;
+var today = new Date();
+      let GD= 
+      {
+        applyid: apply._id,
+        obapply:apply,
+        nguoitao:this.$store.state.cur_user.email,
+        trangthai:'Chờ',
+        thanhcong:false,
+        ngaytao:today,
+        sotien:99999,
+      }
+
+       
       let req = {
         requestId: "ID007",
         amount: 99000,
@@ -273,8 +286,44 @@ export default {
             console.log(response.data);
           } else {
             //  alert(response.data.localMessage);
-            //  console.log(response.data)
+            // console.log(response.data)
             window.open(response.data.payUrl, "_blank");
+
+            GD.obmomo = response.data;
+
+            ///luu giao dich
+             axios
+     .post('http://localhost:5000/api/gd',GD,{
+          headers: {
+            "content-type": "application/json"
+          }
+        })        
+        .then(response => {
+
+          if (response.data.confirmation == "add success") {
+           this.$dialog
+                .alert("Lưu giao dịch thành công!", { okText: "Tiếp tục" })
+                .then(function(dialog) {
+                  
+                 
+                });
+                 this.reload();
+          } else {
+           this.$dialog
+                .alert("Lưu giao dịch thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});
+          }
+        })
+        .catch(e => {
+         this.$dialog
+                .alert("Lưu giao dịch thất bại!", { okText: "Tiếp tục" })
+                .then(function(dialog) {});  
+        });
+
+
+
+
+
           }
         })
         .catch(e => {

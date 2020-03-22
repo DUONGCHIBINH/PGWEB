@@ -63,6 +63,27 @@ router.post('/update/:id', async (req, res) => {
         })
 });
 
+//UPDATE many  User.update({"created": false}, {"$set":{"created": true}}, {"multi": true}, (err, writeResult) => {});
+//UPDATE by id 
+router.post('/updatemany/:id', async (req, res) => {
+    const body = req.body;
+    const id = req.params.id
+    console.log(id)
+    GD.update({"obmomo.orderId": id}, {"$set":{"thanhcong": true , "trangthai":"Thành công"}}, {"multi": true}, (err, writeResult) => {     })
+        .then(ap => {
+            res.json({
+                confirmation: 'update success',
+                data: ap
+            })
+        })
+        .catch(err => {
+            res.json({
+                confirmation: 'fail',
+                message: 'GD ' + id + ' not found'
+            })
+        })
+});
+
 //POST ADD
 router.post('/', async(req, res) => {
     GD.create(req.body)

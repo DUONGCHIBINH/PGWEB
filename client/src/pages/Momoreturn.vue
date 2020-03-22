@@ -63,6 +63,20 @@ export default {
         this.madonhang = "Mã đơn hàng: " + this.$route.query.orderId;
         this.magiaodich = "Mã giao dịch: " + this.$route.query.transId;
         this.sotien = "Số tiền: " + this.$route.query.amount;
+
+
+        axios
+        .post(`http://localhost:5000/api/GD/updatemany/`+this.$route.query.orderId)
+        .then(response => {
+        console.log (response.data)
+ 
+        })
+        .catch(e => {
+          this.errors.push(e);
+        });
+
+
+
         // +this.$route.query.orderInfo;
         //  alert(this.$route.query.errorCode+"|")
       } else {
